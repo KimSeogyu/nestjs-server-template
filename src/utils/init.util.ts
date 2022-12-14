@@ -22,7 +22,7 @@ export const createCustomLogger = (ENV_MODE: string) =>
     ],
   });
 
-export const openApiInit = (app: INestApplication) => {
+export const initSwaggerDocs = (app: INestApplication) => {
   const swaggerCfg = new DocumentBuilder()
     .setTitle('Backend OPEN-API Document')
     .setDescription('API Specification for functions provided by this server')

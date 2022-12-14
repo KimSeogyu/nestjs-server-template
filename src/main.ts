@@ -4,7 +4,7 @@ import helmet from 'helmet';
 
 import { ValidationPipe, Logger, RequestMethod } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { createCustomLogger, openApiInit } from './utils/init.util';
+import { createCustomLogger, initSwaggerDocs } from '@app/utils';
 import { getNodeEnv } from './utils/node-env.util';
 
 async function bootstrap() {
@@ -28,7 +28,7 @@ async function bootstrap() {
 
   const logger = new Logger(bootstrap.name);
 
-  openApiInit(app);
+  initSwaggerDocs(app);
 
   await app.listen(configService.get('PORT', 8080));
   logger.debug(`Server starts with ${ENV_MODE} mode ...`);
