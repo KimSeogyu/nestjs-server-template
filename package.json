@@ -56,6 +56,7 @@
     "class-validator": "^0.14.0",
     "helmet": "^6.0.1",
     "moment": "^2.29.4",
+    "mysql2": "^2.3.3",
     "nest-winston": "^1.8.0",
     "passport": "^0.6.0",
     "passport-http": "^0.3.0",
@@ -64,6 +65,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "typeorm": "^0.3.11",
     "winston": "^3.8.2"
   },
   "devDependencies": {
@@ -87,6 +89,7 @@
     "mocha": "^10.2.0",
     "prettier": "^2.3.2",
     "source-map-support": "^0.5.20",
+    "sqlite3": "^5.1.4",
     "supertest": "^6.1.3",
     "ts-jest": "28.0.8",
     "ts-loader": "^9.2.3",

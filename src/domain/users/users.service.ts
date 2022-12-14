@@ -1,34 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-
-export interface User {
-  userId: number;
-  username: string;
-  password: string;
-}
+import { UsersRepository } from './users.repository';
+import { UserEntity } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-    },
-  ];
+  constructor(private userRepository: UsersRepository) {}
 
-  async findOne(username: string): Promise<User | null> {
-    return this.users.find((user) => user.username === username) ?? null;
+  async findOneOrNull(username: string): Promise<UserEntity | null> {
+    return this.userRepository.findOne({
+      where: {
+        username,
+      },
+    });
   }
 
-  create(createUserDto: CreateUserDto) {
-    return createUserDto;
+  async create(createUserDto: CreateUserDto) {
+    const created = this.userRepository.create(createUserDto);
+    const { salt, password, ...result } = await this.userRepository.save(
+      created,
+    );
+    return result;
   }
 
   findAll() {
