@@ -22,7 +22,6 @@ export class UserEntity extends BaseEntity {
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword() {
-    console.log(this);
     if (this.password) {
       const { password, salt } = (await createHashedPassword(
         this.password,
@@ -35,11 +34,10 @@ export class UserEntity extends BaseEntity {
 
 const createHashedPassword = (plainPassword: string) =>
   new Promise(async (res, rej) => {
+    const createSalt = async () => crypto.randomBytes(64).toString('base64');
     const salt = await createSalt();
     crypto.pbkdf2(plainPassword, salt, 9999, 64, 'sha512', (err, key) => {
       if (err) rej(err);
       res({ password: key.toString('base64'), salt });
     });
   });
-
-const createSalt = async () => crypto.randomBytes(64).toString('base64');
