@@ -6,10 +6,10 @@ import { UserEntity } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  constructor(private userRepository: UsersRepository) {}
+  constructor(private usersRepository: UsersRepository) {}
 
   async findOneOrNull(username: string): Promise<UserEntity | null> {
-    return this.userRepository.findOne({
+    return this.usersRepository.findOne({
       where: {
         username,
       },
@@ -17,22 +17,24 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto) {
-    const created = this.userRepository.create(createUserDto);
-    const { salt, password, ...result } = await this.userRepository.save(
+    const created = this.usersRepository.create(createUserDto);
+    const { salt, password, ...result } = await this.usersRepository.save(
       created,
     );
     return result;
   }
 
   findAll() {
-    return `This action returns all users`;
+    return this.usersRepository.find();
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return updateUserDto;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const updated = await this.usersRepository.update(id, updateUserDto);
+    return !!updated.affected;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    const deleted = await this.usersRepository.delete(id);
+    return !!deleted.affected;
   }
 }
