@@ -1,3 +1,4 @@
+import { getNodeEnv } from '@app/utils';
 import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,
@@ -5,8 +6,9 @@ import {
 import * as winston from 'winston';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import SlackHook = require('winston-slack-webhook-transport');
 
-export const createCustomLogger = (ENV_MODE: string) =>
+export const createCustomLogger = (ENV_MODE: string, WEBHOOK_URL: string) =>
   WinstonModule.createLogger({
     transports: [
       new winston.transports.Console({
@@ -18,6 +20,28 @@ export const createCustomLogger = (ENV_MODE: string) =>
             colors: ENV_MODE !== 'prod',
           }),
         ),
+      }),
+      new SlackHook({
+        level: 'error',
+        webhookUrl: WEBHOOK_URL,
+        formatter: (data: SlackHook.TransformableInfo) => {
+          return {
+            blocks: [
+              {
+                type: 'section',
+                text: {
+                  type: 'mrkdwn',
+                  text:
+                    '```' +
+                    `[${getNodeEnv().toUpperCase()}][${data.level.toUpperCase()}] ${
+                      data.message
+                    }` +
+                    '```',
+                },
+              },
+            ],
+          };
+        },
       }),
     ],
   });

@@ -8,7 +8,7 @@ import { UserEntity } from './entities/user.entity';
 export class UsersService {
   constructor(private usersRepository: UsersRepository) {}
 
-  async findOneOrNull(username: string): Promise<UserEntity | null> {
+  async findOneByUsername(username: string): Promise<UserEntity | null> {
     return this.usersRepository.findOne({
       where: {
         username,

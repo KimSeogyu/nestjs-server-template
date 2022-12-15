@@ -15,15 +15,17 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, password: string) {
-    const user = await this.usersService.findOneOrNull(username);
+    const user = await this.usersService.findOneByUsername(username);
     const userPrivData = await this.usersService.findSaltAndPasswordByUsername(
       username,
     );
+
     if (!user || !userPrivData) throw new UnauthorizedException();
     const hashed = await createHashedPassword(password, userPrivData.salt);
-    if (hashed.password !== userPrivData.password)
-      throw new UnauthorizedException();
 
+    if (hashed.password !== userPrivData.password) {
+      throw new UnauthorizedException();
+    }
     return user;
   }
 

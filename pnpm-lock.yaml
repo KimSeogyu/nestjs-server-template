@@ -54,6 +54,7 @@ specifiers:
   typescript: ^4.7.4
   webpack: ^5.0.0
   winston: ^3.8.2
+  winston-slack-webhook-transport: ^2.2.2
 
 dependencies:
   '@nestjs/common': 9.2.1_537f4dyna5eqdupcxnvaoq3vwa
@@ -81,6 +82,7 @@ dependencies:
   rxjs: 7.6.0
   typeorm: 0.3.11_b4kiuwje4fyhtzguxrfstaisbe
   winston: 3.8.2
+  winston-slack-webhook-transport: 2.2.2
 
 devDependencies:
   '@nestjs/cli': 9.1.5
@@ -1907,6 +1909,14 @@ packages:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
     dev: true
 
+  /axios/0.22.0:
+    resolution: {integrity: sha512-Z0U3uhqQeg1oNcihswf4ZD57O3NrR1+ZXhxaROaWpDmsDTx7T2HNBV2ulBtie2hwJptu8UvgnJoK+BIqdzh/1w==}
+    dependencies:
+      follow-redirects: 1.15.2
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /babel-jest/28.1.3_@babel+core@7.20.5:
     resolution: {integrity: sha512-epUaPOEWMk3cWX0M/sPvCHHCe9fMFAa/9hXEgKP8nFfNl/jlGkE9ucq9NqkZGXLDduCJYS0UvSlPUwC0S+rH6Q==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
@@ -3063,6 +3073,16 @@ packages:
 
   /fn.name/1.1.0:
     resolution: {integrity: sha512-GRnmB5gPyJpAhTQdSZTSp9uaPSvl09KoYcMQtsB9rQoOmzs9dH6ffeccH+Z+cv6P68Hu5bC6JjRh4Ah/mHSNRw==}
+    dev: false
+
+  /follow-redirects/1.15.2:
+    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /fork-ts-checker-webpack-plugin/7.2.13_qqxisngxjbp7lstdk7boexbu3e:
@@ -6151,6 +6171,15 @@ packages:
     dependencies:
       execa: 4.1.0
     dev: true
+
+  /winston-slack-webhook-transport/2.2.2:
+    resolution: {integrity: sha512-OEVDFowbaaJCk3rdHsPBFVrLYVr1Midg5q7BH8TaOoTDdlT/UZuVhrgzTh/sMXrmWwLiuOueh5fSuV/nrT0+Wg==}
+    dependencies:
+      axios: 0.22.0
+      winston-transport: 4.5.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /winston-transport/4.5.0:
     resolution: {integrity: sha512-YpZzcUzBedhlTAfJg6vJDlyEai/IFMIVcaEZZyl3UXIl4gmqRpU7AE89AHLkbzLUsv0NVmw7ts+iztqKxxPW1Q==}
