@@ -20,11 +20,11 @@ export class AuthService {
       username,
     );
     if (!user || !userPrivData) throw new UnauthorizedException();
-    const hashedPassword = await createHashedPassword(
+    const hashed = (await createHashedPassword(
       password,
       userPrivData.salt,
-    );
-    if (hashedPassword !== userPrivData.password)
+    )) as { password: string; salt: string };
+    if (hashed.password !== userPrivData.password)
       throw new UnauthorizedException();
 
     return user;
