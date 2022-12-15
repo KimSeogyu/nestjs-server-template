@@ -19,5 +19,15 @@ import { DatabaseModule } from '@app/database/database.module';
       inject: ['DATA_SOURCE'],
     },
   ],
+  exports: [
+    UsersService,
+    UsersRepository,
+    {
+      provide: 'USER_REPOSITORY',
+      useFactory: (dataSource: DataSource) =>
+        dataSource.getRepository(UserEntity),
+      inject: ['DATA_SOURCE'],
+    },
+  ],
 })
 export class UsersModule {}

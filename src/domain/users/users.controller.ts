@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiController, BasicAuthGuard } from '@app/utils/decorators';
+import { JwtAuthGuard } from '@app/utils/decorators/swagger.decorator';
 
 @ApiController('users')
 @BasicAuthGuard()
@@ -15,6 +16,7 @@ export class UsersController {
   }
 
   @Get()
+  @JwtAuthGuard()
   findAll() {
     return this.usersService.findAll();
   }

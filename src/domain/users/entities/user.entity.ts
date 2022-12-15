@@ -32,12 +32,18 @@ export class UserEntity extends BaseEntity {
   }
 }
 
-const createHashedPassword = (plainPassword: string) =>
+export const createHashedPassword = (plainPassword: string, salt?: string) =>
   new Promise(async (res, rej) => {
     const createSalt = async () => crypto.randomBytes(64).toString('base64');
-    const salt = await createSalt();
-    crypto.pbkdf2(plainPassword, salt, 9999, 64, 'sha512', (err, key) => {
-      if (err) rej(err);
-      res({ password: key.toString('base64'), salt });
-    });
+    crypto.pbkdf2(
+      plainPassword,
+      salt || (await createSalt()),
+      9999,
+      64,
+      'sha512',
+      (err, key) => {
+        if (err) rej(err);
+        res({ password: key.toString('base64'), salt });
+      },
+    );
   });

@@ -16,6 +16,18 @@ export class UsersService {
     });
   }
 
+  async findSaltAndPasswordByUsername(username: string) {
+    return this.usersRepository.findOne({
+      where: {
+        username,
+      },
+      select: {
+        salt: true,
+        password: true,
+      },
+    });
+  }
+
   async create(createUserDto: CreateUserDto) {
     const created = this.usersRepository.create(createUserDto);
     const { salt, password, ...result } = await this.usersRepository.save(
