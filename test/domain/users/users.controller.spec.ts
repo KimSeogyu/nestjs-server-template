@@ -2,13 +2,13 @@ import { DatabaseModule } from '@app/database/database.module';
 import { Test, TestingModule } from '@nestjs/testing';
 import { expect } from 'chai';
 import { DataSource } from 'typeorm';
-import { UserEntity } from './entities/user.entity';
-import { UsersController } from './users.controller';
-import { UsersRepository } from './users.repository';
-import { UsersService } from './users.service';
+import { UserEntity } from '@app/domain/users/entities/user.entity';
+import { UsersController } from '@app/domain/users/users.controller';
+import { UsersRepository } from '@app/domain/users/users.repository';
+import { UsersService } from '@app/domain/users/users.service';
 
-describe('UsersService', () => {
-  let service: UsersService;
+describe('UsersController', () => {
+  let controller: UsersController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -26,10 +26,10 @@ describe('UsersService', () => {
       ],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
+    controller = module.get<UsersController>(UsersController);
   });
 
   it('should be defined', () => {
-    expect(service).instanceOf(UsersService);
+    expect(controller).instanceOf(UsersController);
   });
 });

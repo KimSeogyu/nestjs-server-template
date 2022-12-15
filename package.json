@@ -15,7 +15,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "mocha ./src/**/*spec.ts ./test/**/*spec.ts -r ts-node/register -r tsconfig-paths/register",
+    "test": "mocha ./test/**/*.ts -r ts-node/register -r tsconfig-paths/register",
     "prepare": "husky install"
   },
   "engines": {
