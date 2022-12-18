@@ -1,4 +1,4 @@
-import { ConfigSchema, IConfig } from '@app/utils/config.schema';
+import { ConfigSchema, IConfig } from '@app/utils/zod';
 import { registerAs } from '@nestjs/config';
 
 const parsedConfig = ConfigSchema.parse({
