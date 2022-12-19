@@ -20,6 +20,7 @@ specifiers:
   '@types/passport-jwt': ^3.0.7
   '@types/passport-local': ^1.0.34
   '@types/supertest': ^2.0.11
+  '@types/uuid': ^9.0.0
   '@typescript-eslint/eslint-plugin': ^5.0.0
   '@typescript-eslint/parser': ^5.0.0
   chai: ^4.3.7
@@ -52,6 +53,7 @@ specifiers:
   tsconfig-paths: 4.1.0
   typeorm: ^0.3.11
   typescript: ^4.7.4
+  uuid: ^9.0.0
   webpack: ^5.0.0
   winston: ^3.8.2
   winston-slack-webhook-transport: ^2.2.2
@@ -82,6 +84,7 @@ dependencies:
   rimraf: 3.0.2
   rxjs: 7.6.0
   typeorm: 0.3.11_b4kiuwje4fyhtzguxrfstaisbe
+  uuid: 9.0.0
   winston: 3.8.2
   winston-slack-webhook-transport: 2.2.2
   zod: 3.20.2
@@ -97,6 +100,7 @@ devDependencies:
   '@types/passport-jwt': 3.0.7
   '@types/passport-local': 1.0.34
   '@types/supertest': 2.0.12
+  '@types/uuid': 9.0.0
   '@typescript-eslint/eslint-plugin': 5.46.1_imrg37k3svwu377c6q7gkarwmi
   '@typescript-eslint/parser': 5.46.1_ha6vam6werchizxrnqvarmz2zu
   eslint: 8.29.0
@@ -1443,6 +1447,10 @@ packages:
     resolution: {integrity: sha512-X3HPWTwXRerBZS7Mo1k6vMVR1Z6zmJcDVn5O/31whe0tnjE4te6ZJSJGq1RiqHPjzPdMTfjCFogDJmwng9xHaQ==}
     dependencies:
       '@types/superagent': 4.1.16
+    dev: true
+
+  /@types/uuid/9.0.0:
+    resolution: {integrity: sha512-kr90f+ERiQtKWMz5rP32ltJ/BtULDI5RVO0uavn1HQUOwjx0R1h0rnDYNL0CepF1zL5bSY6FISAfd9tOdDhU5Q==}
     dev: true
 
   /@types/validator/13.7.10:
