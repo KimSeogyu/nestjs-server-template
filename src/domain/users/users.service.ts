@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto } from './zod/update-user.dto';
 import { UsersRepository } from './users.repository';
 import { UserEntity } from './entities/user.entity';
+import { SignUpDto } from '../auth/zod/auth.zod';
 
 @Injectable()
 export class UsersService {
@@ -28,8 +28,8 @@ export class UsersService {
     });
   }
 
-  async create(createUserDto: CreateUserDto) {
-    const created = this.usersRepository.create(createUserDto);
+  async create(dto: SignUpDto) {
+    const created = this.usersRepository.create(dto);
     const { salt, password, ...result } = await this.usersRepository.save(
       created,
     );

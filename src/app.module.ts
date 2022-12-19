@@ -1,7 +1,9 @@
 import { MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { Module } from '@nestjs/common';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { ConfigModule } from '@nestjs/config';
+
+import { ZodValidationPipe } from '@anatine/zod-nestjs';
 
 import DefaultConfig from '@app/config';
 
@@ -17,13 +19,13 @@ import {
   LoggerMiddleware,
   ResponseTransformerInterceptor,
 } from '@app/infra';
-import { getNodeEnv } from '@app/utils';
+import { APP_NODE_ENV } from '@app/utils';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       load: [DefaultConfig],
-      envFilePath: [`${__dirname}/config/env/.${getNodeEnv()}.env`],
+      envFilePath: [`${__dirname}/config/env/.${APP_NODE_ENV}.env`],
       isGlobal: true,
       cache: true,
     }),
@@ -41,6 +43,10 @@ import { getNodeEnv } from '@app/utils';
     {
       provide: APP_INTERCEPTOR,
       useClass: ResponseTransformerInterceptor,
+    },
+    {
+      provide: APP_PIPE,
+      useClass: ZodValidationPipe,
     },
   ],
 })

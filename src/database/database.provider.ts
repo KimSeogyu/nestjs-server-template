@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
-import { getNodeEnv } from '../utils/node-env.util';
+import { APP_NODE_ENV } from '../utils/node-env.util';
 
 export const databaseProviders = [
   {
@@ -8,7 +8,7 @@ export const databaseProviders = [
     useFactory: async (configService: ConfigService) => {
       let dbConfig;
 
-      if (getNodeEnv() === 'local') {
+      if (APP_NODE_ENV === 'local') {
         dbConfig = {
           type: 'sqlite',
           database: ':memory:',

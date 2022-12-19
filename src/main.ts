@@ -5,10 +5,10 @@ import helmet from 'helmet';
 import { ValidationPipe, Logger, RequestMethod } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { createCustomLogger, initSwaggerDocs } from '@app/utils';
-import { getNodeEnv } from './utils/node-env.util';
+import { APP_NODE_ENV } from './utils/node-env.util';
 
 async function bootstrap() {
-  const ENV_MODE = getNodeEnv();
+  const ENV_MODE = APP_NODE_ENV;
   const app = await NestFactory.create(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
   app.useLogger(

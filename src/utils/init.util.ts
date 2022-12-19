@@ -1,4 +1,4 @@
-import { getNodeEnv } from '@app/utils';
+import { APP_NODE_ENV } from '@app/utils';
 import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,
@@ -7,6 +7,7 @@ import * as winston from 'winston';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import SlackHook = require('winston-slack-webhook-transport');
+import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 
 export const createCustomLogger = (ENV_MODE: string, WEBHOOK_URL: string) =>
   WinstonModule.createLogger({
@@ -33,7 +34,7 @@ export const createCustomLogger = (ENV_MODE: string, WEBHOOK_URL: string) =>
                   type: 'mrkdwn',
                   text:
                     '```' +
-                    `[${getNodeEnv().toUpperCase()}][${data.level.toUpperCase()}] ${
+                    `[${APP_NODE_ENV.toUpperCase()}][${data.level.toUpperCase()}] ${
                       data.message
                     }` +
                     '```',
@@ -47,6 +48,8 @@ export const createCustomLogger = (ENV_MODE: string, WEBHOOK_URL: string) =>
   });
 
 export const initSwaggerDocs = (app: INestApplication) => {
+  patchNestjsSwagger();
+
   const swaggerCfg = new DocumentBuilder()
     .setTitle('Backend OPEN-API Document')
     .setDescription('API Specification for functions provided by this server')

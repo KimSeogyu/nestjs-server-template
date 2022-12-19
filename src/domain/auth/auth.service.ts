@@ -6,6 +6,7 @@ import {
   createHashedPassword,
 } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
+import { SignUpDto } from './zod/auth.zod';
 
 @Injectable()
 export class AuthService {
@@ -29,8 +30,13 @@ export class AuthService {
     return user;
   }
 
+  async signUp(user: SignUpDto) {
+    return this.usersService.create(user);
+  }
+
   async login(user: Partial<UserEntity>) {
     const { username, id } = user;
+
     return {
       accessToken: this.jwtService.sign({ username, id }),
     };

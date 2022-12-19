@@ -1,7 +1,7 @@
 import { Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from './zod/create-user.dto';
+import { UpdateUserDto } from './zod/update-user.dto';
 import { ApiController, BasicAuthGuard } from '@app/utils/decorators';
 import { JwtAuthGuard } from '@app/utils/decorators/swagger.decorator';
 

@@ -1,7 +1,8 @@
 import { ApiController } from '@app/utils/decorators';
-import { Request, Post } from '@nestjs/common';
+import { Request, Post, Body } from '@nestjs/common';
 import { BasicAuthGuard } from '../../utils/decorators/swagger.decorator';
 import { AuthService } from './auth.service';
+import { SignUpDto } from './zod/auth.zod';
 
 @ApiController('auth')
 export class AuthController {
@@ -9,9 +10,11 @@ export class AuthController {
   @Post('login')
   @BasicAuthGuard()
   login(@Request() req: any) {
-    console.log('====================================');
-    console.log(req.user);
-    console.log('====================================');
     return this.authService.login(req.user);
+  }
+
+  @Post('signup')
+  signUp(@Body() dto: SignUpDto) {
+    return this.authService.signUp(dto);
   }
 }

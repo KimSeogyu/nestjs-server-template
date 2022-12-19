@@ -1,8 +1,11 @@
+import * as util from 'util';
+import * as crypto from 'crypto';
+
+import { ApiHideProperty } from '@nestjs/swagger';
 import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
+
 import { BaseEntity } from '@app/utils';
 
-import * as crypto from 'crypto';
-import { ApiHideProperty } from '@nestjs/swagger';
 @Entity()
 export class UserEntity extends BaseEntity {
   @Column()
@@ -11,6 +14,7 @@ export class UserEntity extends BaseEntity {
   @Column({
     select: false,
   })
+  @ApiHideProperty()
   password!: string;
 
   @Column({
@@ -32,18 +36,24 @@ export class UserEntity extends BaseEntity {
   }
 }
 
-export const createHashedPassword = (
+const randomBytesPromise = util.promisify(crypto.randomBytes);
+const pbkdf2Promise = util.promisify(crypto.pbkdf2);
+
+export const createHashedPassword = async (
   plainPassword: string,
-  salt?: string,
+  givenSalt?: string,
 ): Promise<{
   password: string;
-  salt?: string;
-}> =>
-  new Promise(async (res, rej) => {
-    const createSalt = async () => crypto.randomBytes(64).toString('base64');
-    if (!salt) salt = await createSalt();
-    crypto.pbkdf2(plainPassword, salt, 9999, 64, 'sha512', (err, key) => {
-      if (err) rej(err);
-      res({ password: key.toString('base64'), salt });
-    });
-  });
+  salt: string;
+}> => {
+  const salt = givenSalt ?? (await randomBytesPromise(64)).toString('base64');
+  const hashedPassword = await pbkdf2Promise(
+    plainPassword,
+    salt,
+    100000,
+    64,
+    'sha512',
+  );
+
+  return { salt, password: hashedPassword.toString('base64') };
+};

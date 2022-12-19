@@ -1,5 +1,5 @@
-export const getNodeEnv = (ENV = process.env.NODE_ENV) => {
-  switch (ENV) {
+export const APP_NODE_ENV = (() => {
+  switch (process.env.NODE_ENV) {
     case 'local':
     case 'test':
       return 'local';
@@ -14,4 +14,4 @@ export const getNodeEnv = (ENV = process.env.NODE_ENV) => {
     default:
       return 'local';
   }
-};
+})();

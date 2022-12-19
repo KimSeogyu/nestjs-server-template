@@ -1,4 +1,4 @@
-import { ConfigSchema, IConfig } from '@app/utils/zod';
+import { ConfigSchema, IConfig } from './zod';
 import { registerAs } from '@nestjs/config';
 
 const parsedConfig = ConfigSchema.parse({
@@ -16,3 +16,5 @@ const parsedConfig = ConfigSchema.parse({
 });
 
 export default registerAs('', async (): Promise<IConfig> => parsedConfig);
+
+export * from './zod';
