@@ -1,10 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 import { JwtService } from '@nestjs/jwt';
-import {
-  createHashedPassword,
-  UserEntity,
-} from '../users/entities/user.entity';
+import { createHashedPassword } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
 import { SignUpDto } from './zod/auth.zod';
 
@@ -17,15 +14,18 @@ export class AuthService {
 
   async validateUser(username: string, password: string) {
     const user = await this.usersService.findOneByUsername(username);
-    const userPrivData = await this.usersService.findSaltAndPasswordByUsername(
+    const privateData = await this.usersService.findSaltAndPasswordByUsername(
       username,
     );
 
-    if (!user || !userPrivData) throw new UnauthorizedException();
-    const hashed = await createHashedPassword(password, userPrivData.salt);
+    if (!user || !privateData)
+      throw new UnauthorizedException(
+        `USER OR PASSWORD NOT EXISTS, username=${username}`,
+      );
+    const hashed = await createHashedPassword(password, privateData.salt);
 
-    if (hashed.password !== userPrivData.password) {
-      throw new UnauthorizedException();
+    if (hashed.password !== privateData.password) {
+      throw new UnauthorizedException(`PASSWORD DOES NOT MATCHED`);
     }
     return user;
   }
@@ -34,7 +34,7 @@ export class AuthService {
     return this.usersService.create(user);
   }
 
-  async login(user: Partial<UserEntity>) {
+  async login(user: { username: string; id: number }) {
     const { username, id } = user;
 
     return {

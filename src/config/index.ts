@@ -11,7 +11,7 @@ const parsedConfig = ConfigSchema.parse({
   DATABASE_PASSWORD: process.env.DATABASE_PASSWORD?.toString() || 'example',
   DATABASE_SCHEMA: process.env.DATABASE_SCHEMA?.toString() || 'example',
   JWT_SECRET: process.env.JWT_SECRET?.toString() || 'example',
-  JWT_EXPIRE_TIME: process.env.JWT_EXPIRE_TIME?.toString() || 'example',
+  JWT_EXPIRE_TIME: process.env.JWT_EXPIRE_TIME || '1h',
   SLACK_WEBHOOK_URL: process.env.SLACK_WEBHOOK_URL?.toString() || 'example',
 });
 
