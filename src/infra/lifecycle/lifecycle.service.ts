@@ -1,11 +1,11 @@
 import {
+  BeforeApplicationShutdown,
   Injectable,
   Logger,
   OnApplicationBootstrap,
   OnApplicationShutdown,
-  OnModuleInit,
   OnModuleDestroy,
-  BeforeApplicationShutdown,
+  OnModuleInit,
 } from '@nestjs/common';
 
 @Injectable()

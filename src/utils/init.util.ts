@@ -6,8 +6,8 @@ import {
 import * as winston from 'winston';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import SlackHook = require('winston-slack-webhook-transport');
 import { patchNestjsSwagger } from '@anatine/zod-nestjs';
+import SlackHook = require('winston-slack-webhook-transport');
 
 export const createCustomLogger = (ENV_MODE: string, WEBHOOK_URL: string) =>
   WinstonModule.createLogger({

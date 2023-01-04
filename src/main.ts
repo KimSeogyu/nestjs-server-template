@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
 
-import { ValidationPipe, Logger, RequestMethod } from '@nestjs/common';
+import { Logger, RequestMethod, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { createCustomLogger, initSwaggerDocs } from '@app/utils';
 import { APP_NODE_ENV } from './utils/node-env.util';

@@ -1,5 +1,5 @@
 import { ApiController } from '@app/utils/decorators';
-import { Request, Post, Body } from '@nestjs/common';
+import { Body, Post, Request } from '@nestjs/common';
 import { BasicAuthGuard } from '../../utils/decorators/swagger.decorator';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './zod/auth.zod';
