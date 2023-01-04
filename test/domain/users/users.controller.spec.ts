@@ -41,6 +41,7 @@ describe('UsersController', () => {
     const result = await controller.create(dto);
     expect(result.username).eq(dto.username);
     expect(result).not.haveOwnProperty('password');
+    return result;
   };
 
   it('유저 생성', createUser);
@@ -51,5 +52,12 @@ describe('UsersController', () => {
     for (const userEntity of userEntities) {
       expect(userEntity).instanceOf(UserEntity);
     }
+  });
+
+  it('유저 수정', async () => {
+    const { id } = await createUser();
+
+    const result = await controller.update(id, { password: '5678' });
+    expect(result).eq(true);
   });
 });
