@@ -13,7 +13,7 @@ export const databaseProviders = [
           type: 'sqlite',
           database: ':memory:',
           dropSchema: true,
-          logging: true,
+          // logging: true,
           entities: [__dirname + '/../**/*.entity.{ts,js}'],
           synchronize: true,
         };
