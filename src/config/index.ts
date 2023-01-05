@@ -4,7 +4,7 @@ import { registerAs } from '@nestjs/config';
 const parsedConfig = ConfigSchema.parse({
   AUTH_USERNAME: process.env.AUTH_USERNAME?.toString() || 'example',
   AUTH_PASSWORD: process.env.AUTH_PASSWORD?.toString() || 'example',
-  APP_VERSION: process.env.APP_VERSION?.toString() || 'example',
+  APP_VERSION: process.env.APP_VERSION?.toString() || '1',
   DATABASE_HOST: process.env.DATABASE_HOST?.toString() || 'example',
   DATABASE_PORT: Number(process.env.DATABASE_PORT) || 3306,
   DATABASE_USERNAME: process.env.DATABASE_USERNAME?.toString() || 'example',

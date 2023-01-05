@@ -25,7 +25,7 @@ async function bootstrap() {
   });
 
   app.use(helmet());
-  app.useGlobalPipes(new ValidationPipe());
+  // app.useGlobalPipes(new ValidationPipe());
 
   initSwaggerDocs(app);
 

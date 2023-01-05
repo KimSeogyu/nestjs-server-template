@@ -11,12 +11,12 @@ export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     const input = req?.body || {};
 
-    this.logger.log(`start ${req.path} ${JSON.stringify(input)}`);
+    this.logger.log(`start ${req.originalUrl} ${JSON.stringify(input)}`);
     const originalSend = res.send;
 
     res.send = (content) => {
       res.send = originalSend;
-      this.logger.log(`end ${req.path} ${JSON.stringify(content)}`);
+      this.logger.log(`end ${req.originalUrl} ${JSON.stringify(content)}`);
       return res.send(content);
     };
 

@@ -9,19 +9,21 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 import SlackHook = require('winston-slack-webhook-transport');
 
-export const createCustomLogger = (ENV_MODE: string, WEBHOOK_URL: string) =>
-  WinstonModule.createLogger({
-    transports: [
-      new winston.transports.Console({
-        level: 'silly',
-        format: winston.format.combine(
-          winston.format.timestamp(),
-          nestWinstonModuleUtilities.format.nestLike('Server', {
-            prettyPrint: ENV_MODE !== 'prod',
-            colors: ENV_MODE !== 'prod',
-          }),
-        ),
-      }),
+export const createCustomLogger = (ENV_MODE: string, WEBHOOK_URL: string) => {
+  const transports: any[] = [
+    new winston.transports.Console({
+      level: 'silly',
+      format: winston.format.combine(
+        winston.format.timestamp(),
+        nestWinstonModuleUtilities.format.nestLike('Server', {
+          prettyPrint: ENV_MODE !== 'prod',
+          colors: ENV_MODE !== 'prod',
+        }),
+      ),
+    }),
+  ];
+  if (ENV_MODE === 'prod') {
+    transports.push(
       new SlackHook({
         level: 'error',
         webhookUrl: WEBHOOK_URL,
@@ -44,8 +46,12 @@ export const createCustomLogger = (ENV_MODE: string, WEBHOOK_URL: string) =>
           };
         },
       }),
-    ],
+    );
+  }
+  return WinstonModule.createLogger({
+    transports: transports,
   });
+};
 
 export const initSwaggerDocs = (app: INestApplication) => {
   patchNestjsSwagger();

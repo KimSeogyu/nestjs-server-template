@@ -1,6 +1,6 @@
 import { Body, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ApiController, BasicAuthGuard } from '@app/utils/decorators';
+import { ApiController } from '@app/utils/decorators';
 import { JwtAuthGuard } from '@app/utils/decorators/swagger.decorator';
 import {
   CreateUserDto,
@@ -8,7 +8,7 @@ import {
 } from '@app/domain/users/zod/user.zod';
 
 @ApiController('users')
-@BasicAuthGuard()
+@JwtAuthGuard()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
