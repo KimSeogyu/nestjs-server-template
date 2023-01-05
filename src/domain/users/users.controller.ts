@@ -1,9 +1,11 @@
 import { Body, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './zod/create-user.dto';
-import { UpdateUserDto } from './zod/update-user.dto';
 import { ApiController, BasicAuthGuard } from '@app/utils/decorators';
 import { JwtAuthGuard } from '@app/utils/decorators/swagger.decorator';
+import {
+  CreateUserDto,
+  UpdateUsernameDto,
+} from '@app/domain/users/zod/user.zod';
 
 @ApiController('users')
 @BasicAuthGuard()
@@ -26,9 +28,9 @@ export class UsersController {
     return this.usersService.findOneByUsername(username);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Patch(':id/username')
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUsernameDto) {
+    return this.usersService.updateUsername(+id, updateUserDto);
   }
 
   @Delete(':id')

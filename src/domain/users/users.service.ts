@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { UpdateUserDto } from './zod/update-user.dto';
 import { UsersRepository } from './users.repository';
 import { UserEntity } from './entities/user.entity';
 import { SignUpDto } from '../auth/zod/auth.zod';
+import { UpdateUsernameDto } from '@app/domain/users/zod/user.zod';
 
 @Injectable()
 export class UsersService {
@@ -40,7 +40,7 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async updateUsername(id: number, updateUserDto: UpdateUsernameDto) {
     const updated = await this.usersRepository.update(id, updateUserDto);
     return !!updated.affected;
   }

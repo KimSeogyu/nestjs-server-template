@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 
 import { JwtService } from '@nestjs/jwt';
 import { createHashedPassword } from '../users/entities/user.entity';
@@ -30,15 +34,18 @@ export class AuthService {
     return user;
   }
 
-  async signUp(user: SignUpDto) {
-    return this.usersService.create(user);
-  }
-
   async login(user: { username: string; id: number }) {
     const { username, id } = user;
 
     return {
       accessToken: this.jwtService.sign({ username, id }),
     };
+  }
+
+  async signup(userDto: SignUpDto) {
+    const user = await this.usersService.findOneByUsername(userDto.username);
+    if (user) throw new BadRequestException('USERNAME IS NOT UNIQUE');
+
+    return this.usersService.create(userDto);
   }
 }

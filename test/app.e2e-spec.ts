@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '@app/app.module';
 import { UsersService } from '@app/domain/users/users.service';
-import { CreateUserDto } from '@app/domain/users/zod/create-user.dto';
+import { CreateUserDto } from '@app/domain/users/zod/user.zod';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;

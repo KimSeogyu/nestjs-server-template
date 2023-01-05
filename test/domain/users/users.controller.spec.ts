@@ -6,7 +6,7 @@ import { UserEntity } from '@app/domain/users/entities/user.entity';
 import { UsersController } from '@app/domain/users/users.controller';
 import { UsersRepository } from '@app/domain/users/users.repository';
 import { UsersService } from '@app/domain/users/users.service';
-import { CreateUserDto } from '@app/domain/users/zod/create-user.dto';
+import { CreateUserDto } from '@app/domain/users/zod/user.zod';
 
 describe('UsersController', () => {
   let controller: UsersController;
