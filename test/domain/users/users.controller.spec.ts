@@ -22,7 +22,7 @@ describe('UsersController', () => {
           provide: 'USER_REPOSITORY',
           useFactory: (dataSource: DataSource) =>
             dataSource.getRepository(UserEntity),
-          inject: ['DATA_SOURCE'],
+          inject: ['MYSQL_PROVIDER'],
         },
       ],
     }).compile();

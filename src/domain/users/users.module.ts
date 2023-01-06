@@ -5,6 +5,7 @@ import { UsersRepository } from './users.repository';
 import { DataSource } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { DatabaseModule } from '@app/database/database.module';
+import { databaseProviders } from '@app/database/database.provider';
 
 @Module({
   imports: [DatabaseModule],
@@ -12,11 +13,12 @@ import { DatabaseModule } from '@app/database/database.module';
   providers: [
     UsersService,
     UsersRepository,
+    ...databaseProviders,
     {
       provide: 'USER_REPOSITORY',
       useFactory: (dataSource: DataSource) =>
         dataSource.getRepository(UserEntity),
-      inject: ['DATA_SOURCE'],
+      inject: ['MYSQL_PROVIDER'],
     },
   ],
   exports: [
@@ -26,7 +28,7 @@ import { DatabaseModule } from '@app/database/database.module';
       provide: 'USER_REPOSITORY',
       useFactory: (dataSource: DataSource) =>
         dataSource.getRepository(UserEntity),
-      inject: ['DATA_SOURCE'],
+      inject: ['MYSQL_PROVIDER'],
     },
   ],
 })

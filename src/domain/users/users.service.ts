@@ -3,63 +3,32 @@ import { UsersRepository } from './users.repository';
 import { UserEntity } from './entities/user.entity';
 import { SignUpDto } from '../auth/zod/auth.zod';
 import { UpdateUsernameDto } from '@app/domain/users/zod/user.zod';
-import { DEFAULT_ISOLATION_LEVEL } from '@app/constants';
-import { EntityManager } from 'typeorm';
 
 @Injectable()
 export class UsersService {
   constructor(private usersRepository: UsersRepository) {}
 
-  async findOneByUsernameInTx(username: string) {
-    return this.usersRepository.manager.transaction(
-      DEFAULT_ISOLATION_LEVEL,
-      (entityManager: EntityManager) => {
-        return entityManager.findOneBy(UserEntity, {
-          username,
-        });
-      },
-    );
-  }
-
   async findOneByUsername(username: string): Promise<UserEntity | null> {
-    return this.usersRepository.findOne({
-      where: {
-        username,
-      },
-    });
+    return this.usersRepository.findOneByUsername(username);
   }
 
   async findSaltAndPasswordByUsername(username: string) {
-    return this.usersRepository.findOne({
-      where: {
-        username,
-      },
-      select: {
-        salt: true,
-        password: true,
-      },
-    });
+    return this.usersRepository.findSecretValuesByUsername(username);
   }
 
   async create(dto: SignUpDto) {
-    const created = this.usersRepository.create(dto);
-    const { salt, password, ...result } = await this.usersRepository.save(
-      created,
-    );
-    return result;
+    return this.usersRepository.saveUser(dto);
   }
 
   findAll() {
-    return this.usersRepository.find();
+    return this.usersRepository.findAllUsers();
   }
 
-  async updateUsername(id: number, updateUserDto: UpdateUsernameDto) {
-    const updated = await this.usersRepository.update(id, updateUserDto);
-    return !!updated.affected;
+  async updateUsername(id: number, dto: UpdateUsernameDto) {
+    return this.usersRepository.updateUsernameById(id, dto);
   }
 
   async remove(id: number) {
-    const deleted = await this.usersRepository.delete(id);
-    return !!deleted.affected;
+    return this.usersRepository.deleteById(id);
   }
 }

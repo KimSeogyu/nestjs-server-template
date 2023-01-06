@@ -5,7 +5,7 @@ import { DataSourceOptions } from 'typeorm/data-source/DataSourceOptions';
 
 export const databaseProviders = [
   {
-    provide: 'DATA_SOURCE',
+    provide: 'MYSQL_PROVIDER',
     useFactory: async (configService: ConfigService) => {
       let dbConfig: DataSourceOptions;
 
