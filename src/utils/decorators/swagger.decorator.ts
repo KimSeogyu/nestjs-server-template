@@ -36,11 +36,11 @@ export const AdminController = (name: string) => {
       },
     }),
     ApiHeader({
-      name: 'X-Coinone-Id',
-      description: 'Authorized Account_id from PLUS-API-GATEWAY',
+      name: 'X-User-Id',
+      description: 'Authorized user id from API-GATEWAY',
       required: false,
       allowEmptyValue: true,
-      example: 29618,
+      example: 1,
     }),
   );
 };
