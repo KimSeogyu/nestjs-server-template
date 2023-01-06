@@ -1,12 +1,13 @@
 import { ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
 import { NODE_ENV } from '@app/utils';
+import { DataSourceOptions } from 'typeorm/data-source/DataSourceOptions';
 
 export const databaseProviders = [
   {
     provide: 'DATA_SOURCE',
     useFactory: async (configService: ConfigService) => {
-      let dbConfig;
+      let dbConfig: DataSourceOptions;
 
       if (NODE_ENV === 'local') {
         dbConfig = {
@@ -30,7 +31,7 @@ export const databaseProviders = [
         };
       }
 
-      const dataSource = new DataSource(dbConfig as any);
+      const dataSource = new DataSource(dbConfig);
 
       return dataSource.initialize();
     },
