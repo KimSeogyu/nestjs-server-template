@@ -1,4 +1,4 @@
-import { APP_NODE_ENV } from '@app/utils';
+import { NODE_ENV } from '@app/utils';
 import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,
@@ -36,7 +36,7 @@ export const createCustomLogger = (ENV_MODE: string, WEBHOOK_URL: string) => {
                   type: 'mrkdwn',
                   text:
                     '```' +
-                    `[${APP_NODE_ENV.toUpperCase()}][${data.level.toUpperCase()}] ${
+                    `[${NODE_ENV.toUpperCase()}][${data.level.toUpperCase()}] ${
                       data.message
                     }` +
                     '```',

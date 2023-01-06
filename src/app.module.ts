@@ -18,13 +18,13 @@ import {
   LoggerMiddleware,
   ResponseTransformerInterceptor,
 } from '@app/infra';
-import { APP_NODE_ENV } from '@app/utils';
+import { NODE_ENV } from '@app/utils';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       load: [DefaultConfig],
-      envFilePath: [`${__dirname}/config/env/.${APP_NODE_ENV}.env`],
+      envFilePath: [`${__dirname}/config/env/.${NODE_ENV}.env`],
       isGlobal: true,
       cache: true,
     }),

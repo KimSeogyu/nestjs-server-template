@@ -2,13 +2,13 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
 
-import { Logger, RequestMethod, ValidationPipe } from '@nestjs/common';
+import { Logger, RequestMethod } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { createCustomLogger, initSwaggerDocs } from '@app/utils';
-import { APP_NODE_ENV } from './utils/node-env.util';
+import { NODE_ENV } from './utils/node-env.util';
 
 async function bootstrap() {
-  const ENV_MODE = APP_NODE_ENV;
+  const ENV_MODE = NODE_ENV;
   const app = await NestFactory.create(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
   app.useLogger(
@@ -25,7 +25,6 @@ async function bootstrap() {
   });
 
   app.use(helmet());
-  // app.useGlobalPipes(new ValidationPipe());
 
   initSwaggerDocs(app);
 

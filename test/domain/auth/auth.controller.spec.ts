@@ -15,7 +15,7 @@ import { BasicAuthStrategy } from '@app/domain/auth/basic-auth.strategy';
 import { JwtAuthStrategy } from '@app/domain/auth/jwt-auth.strategy';
 import { expect } from 'chai';
 import DefaultConfig from '@app/config';
-import { APP_NODE_ENV } from '@app/utils';
+import { NODE_ENV } from '@app/utils';
 
 describe('AuthController', function () {
   let controller: AuthController;
@@ -28,7 +28,7 @@ describe('AuthController', function () {
         ConfigModule.forRoot({
           load: [DefaultConfig],
           envFilePath: [
-            `${__dirname}/../../../src/config/env/.${APP_NODE_ENV}.env`,
+            `${__dirname}/../../../src/config/env/.${NODE_ENV}.env`,
           ],
           isGlobal: true,
           cache: true,
