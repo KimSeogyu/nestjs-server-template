@@ -29,7 +29,6 @@ const SignupOutput = z.object({
 });
 
 export class SignUpDto extends createZodDto(SignUpInput) {}
-export class LoginDto extends createZodDto(LoginInput) {}
 
 export const SignupZod = extendApi(SignUpInput, {
   title: '회원가입',

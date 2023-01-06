@@ -7,7 +7,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { v4 as uuidv4 } from 'uuid';
+import * as crypto from 'crypto';
 
 export const ApiController = (name: string) =>
   applyDecorators(Controller(name.toLowerCase()), ApiTags(name.toUpperCase()));
@@ -30,9 +30,9 @@ export const AdminController = (name: string) => {
         'Definition of the requestId header A unique request ID, represented by a UUID.',
       required: true,
       allowEmptyValue: true,
-      example: uuidv4(),
+      example: crypto.randomUUID(),
       schema: {
-        default: uuidv4(),
+        default: crypto.randomUUID(),
       },
     }),
     ApiHeader({
