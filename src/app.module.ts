@@ -18,7 +18,7 @@ import {
   LoggerMiddleware,
   ResponseTransformerInterceptor,
 } from '@app/infra';
-import { NODE_ENV } from '@app/utils';
+import { NODE_ENV } from '@app/constants';
 
 @Module({
   imports: [

@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
-import { NODE_ENV } from '@app/utils';
+import { NODE_ENV } from '@app/constants';
 import { DataSourceOptions } from 'typeorm/data-source/DataSourceOptions';
 import { MysqlDatasourceKey } from '@app/constants';
 

@@ -5,14 +5,13 @@ import helmet from 'helmet';
 import { Logger, RequestMethod } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { createCustomLogger, initSwaggerDocs } from '@app/utils';
-import { NODE_ENV } from './utils/node-env.util';
+import { NODE_ENV } from '@app/constants';
 
 async function bootstrap() {
-  const ENV_MODE = NODE_ENV;
   const app = await NestFactory.create(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
   app.useLogger(
-    createCustomLogger(ENV_MODE, configService.getOrThrow('SLACK_WEBHOOK_URL')),
+    createCustomLogger(NODE_ENV, configService.getOrThrow('SLACK_WEBHOOK_URL')),
   );
 
   const version = configService.getOrThrow('APP_VERSION');
@@ -29,6 +28,7 @@ async function bootstrap() {
   initSwaggerDocs(app);
 
   await app.listen(configService.get('PORT', 8080));
-  Logger.debug(`Server starts with ${ENV_MODE} mode ...`);
+  Logger.debug(`Server starts with ${NODE_ENV} mode ...`);
 }
+
 bootstrap();

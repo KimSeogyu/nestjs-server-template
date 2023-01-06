@@ -1,10 +1,4 @@
-import { UsersController } from '@app/domain/users/users.controller';
 import { Test, TestingModule } from '@nestjs/testing';
-import { DatabaseModule } from '@app/database/database.module';
-import { UsersService } from '@app/domain/users/users.service';
-import { UsersRepository } from '@app/domain/users/users.repository';
-import { DataSource } from 'typeorm';
-import { UserEntity } from '@app/domain/users/entities/user.entity';
 import { AuthController } from '@app/domain/auth/auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { UsersModule } from '@app/domain/users/users.module';
@@ -15,7 +9,7 @@ import { BasicAuthStrategy } from '@app/domain/auth/basic-auth.strategy';
 import { JwtAuthStrategy } from '@app/domain/auth/jwt-auth.strategy';
 import { expect } from 'chai';
 import DefaultConfig from '@app/config';
-import { NODE_ENV } from '@app/utils';
+import { NODE_ENV } from '@app/constants';
 
 describe('AuthController', function () {
   let controller: AuthController;

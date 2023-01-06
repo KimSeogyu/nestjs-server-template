@@ -1,4 +1,4 @@
-import { NODE_ENV } from '@app/utils';
+import { NODE_ENV } from '@app/constants';
 import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,
