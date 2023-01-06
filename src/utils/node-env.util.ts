@@ -1,4 +1,4 @@
-let _NODE_ENV: string;
+let _NODE_ENV: 'local' | 'dev' | 'prod';
 
 switch (process.env.NODE_ENV?.toLowerCase()) {
   case 'local':
@@ -19,4 +19,4 @@ switch (process.env.NODE_ENV?.toLowerCase()) {
     _NODE_ENV = 'local';
 }
 
-export const NODE_ENV = _NODE_ENV;
+export const NODE_ENV: 'local' | 'dev' | 'prod' = _NODE_ENV;
