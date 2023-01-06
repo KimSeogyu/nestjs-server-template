@@ -6,6 +6,7 @@ import { UserEntity } from '@app/domain/users/entities/user.entity';
 import { UsersController } from '@app/domain/users/users.controller';
 import { UsersRepository } from '@app/domain/users/users.repository';
 import { UsersService } from '@app/domain/users/users.service';
+import { MysqlDatasourceKey, UserRepositoryKey } from '@app/constants';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -18,10 +19,10 @@ describe('UsersService', () => {
         UsersService,
         UsersRepository,
         {
-          provide: 'USER_REPOSITORY',
+          provide: UserRepositoryKey,
           useFactory: (dataSource: DataSource) =>
             dataSource.getRepository(UserEntity),
-          inject: ['MYSQL_PROVIDER'],
+          inject: [MysqlDatasourceKey],
         },
       ],
     }).compile();

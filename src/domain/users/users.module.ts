@@ -6,6 +6,7 @@ import { DataSource } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { DatabaseModule } from '@app/database/database.module';
 import { databaseProviders } from '@app/database/database.provider';
+import { MysqlDatasourceKey, UserRepositoryKey } from '@app/constants';
 
 @Module({
   imports: [DatabaseModule],
@@ -15,10 +16,10 @@ import { databaseProviders } from '@app/database/database.provider';
     UsersRepository,
     ...databaseProviders,
     {
-      provide: 'USER_REPOSITORY',
+      provide: UserRepositoryKey,
       useFactory: (dataSource: DataSource) =>
         dataSource.getRepository(UserEntity),
-      inject: ['MYSQL_PROVIDER'],
+      inject: [MysqlDatasourceKey],
     },
   ],
   exports: [UsersService],

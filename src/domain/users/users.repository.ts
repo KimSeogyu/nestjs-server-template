@@ -3,12 +3,13 @@ import { DataSource, Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { SignUpDto } from '@app/domain/auth/zod/auth.zod';
 import { UpdateUsernameDto } from '@app/domain/users/zod/user.zod';
+import { MysqlDatasourceKey, UserRepositoryKey } from '@app/constants';
 
 @Injectable()
 export class UsersRepository {
   constructor(
-    @Inject('USER_REPOSITORY') private usersRepository: Repository<UserEntity>,
-    @Inject('MYSQL_PROVIDER') private mysqlProvider: DataSource,
+    @Inject(UserRepositoryKey) private usersRepository: Repository<UserEntity>,
+    @Inject(MysqlDatasourceKey) private mysqlProvider: DataSource,
   ) {}
 
   async findOneByUsername(username: string) {

@@ -2,10 +2,11 @@ import { ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
 import { NODE_ENV } from '@app/utils';
 import { DataSourceOptions } from 'typeorm/data-source/DataSourceOptions';
+import { MysqlDatasourceKey } from '@app/constants';
 
 export const databaseProviders = [
   {
-    provide: 'MYSQL_PROVIDER',
+    provide: MysqlDatasourceKey,
     useFactory: async (configService: ConfigService) => {
       let dbConfig: DataSourceOptions;
 
