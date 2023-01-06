@@ -29,7 +29,7 @@ describe('AppController (e2e)', () => {
     await usersService.create(dto);
     return request(app.getHttpServer())
       .post('/auth/login')
-      .auth('test', '1234')
+      .auth(dto.username, dto.password)
       .expect(200);
   });
 });
