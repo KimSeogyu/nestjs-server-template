@@ -21,15 +21,6 @@ import { databaseProviders } from '@app/database/database.provider';
       inject: ['MYSQL_PROVIDER'],
     },
   ],
-  exports: [
-    UsersService,
-    UsersRepository,
-    {
-      provide: 'USER_REPOSITORY',
-      useFactory: (dataSource: DataSource) =>
-        dataSource.getRepository(UserEntity),
-      inject: ['MYSQL_PROVIDER'],
-    },
-  ],
+  exports: [UsersService],
 })
 export class UsersModule {}
