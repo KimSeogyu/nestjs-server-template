@@ -10,7 +10,6 @@ import { JwtAuthStrategy } from '@app/domain/auth/jwt-auth.strategy';
 import { expect } from 'chai';
 import DefaultConfig from '@app/config';
 import { NODE_ENV } from '@app/constants';
-import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 
 describe('AuthController', function () {
   let controller: AuthController;
