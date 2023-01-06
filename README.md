@@ -3,6 +3,7 @@
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
 # Nestjs Server Template
@@ -16,7 +17,7 @@
 
 <p align='center'>
     <img src="https://img.shields.io/badge/Node-v18.12.1-2C8EBB?style=for-the-badge&logo=node.js&logoColor=green"/>
-    <img src="https://img.shields.io/badge/Typescript-v4.8.4-2C8EBB?style=for-the-badge&logoColor=blue&logo=typescript"/>
+    <img src="https://img.shields.io/badge/Typescript-v4.9.4-2C8EBB?style=for-the-badge&logoColor=blue&logo=typescript"/>
     <img src="https://img.shields.io/badge/pnpm-v7.18.2-2C8EBB?style=for-the-badge&logo=pnpm&logoColor=blue"/>
     <img src="https://img.shields.io/badge/nestjs-v9.1.6-2C8EBB?style=for-the-badge&logoColor=red&logo=nestjs"/>
     <img src="https://img.shields.io/badge/mocha-v10.2.0-2C8EBB?style=for-the-badge&logoColor=red&logo=mocha"/>
@@ -28,6 +29,70 @@
 
 - Edit files in `./src/config/env`
 
-# How to test
+## How to test
 
 - `~/<project-root>  $ pnpm test`
+
+## Notice
+
+- Using zod to validate data, including DTOs, Request & Response Data, ...etc
+
+## Project structure
+
+```
+src
+├── app.controller.ts
+├── app.module.ts
+├── app.service.ts
+├── config
+│   ├── env
+│   ├── index.ts
+│   └── zod
+│       └── index.ts
+├── constants
+│   └── index.ts
+├── database
+│   ├── database.module.ts
+│   └── database.provider.ts
+├── domain
+│   ├── auth
+│   │   ├── auth.controller.ts
+│   │   ├── auth.module.ts
+│   │   ├── auth.service.ts
+│   │   ├── basic-auth.strategy.ts
+│   │   ├── jwt-auth.strategy.ts
+│   │   └── zod
+│   │       └── auth.zod.ts
+│   └── users
+│       ├── entities
+│       │   └── user.entity.ts
+│       ├── users.controller.ts
+│       ├── users.module.ts
+│       ├── users.repository.ts
+│       ├── users.service.ts
+│       └── zod
+│           └── user.zod.ts
+├── infra
+│   ├── filters
+│   │   └── all-exception.filter.ts
+│   ├── index.ts
+│   ├── interceptors
+│   │   └── response-transformer.interceptor.ts
+│   ├── lifecycle
+│   │   └── lifecycle.service.ts
+│   └── middlewares
+│       └── logger.middlewares.ts
+├── interfaces
+│   └── response.interface.ts
+├── main.ts
+└── utils
+    ├── base.entity.ts
+    ├── decorators
+    │   ├── index.ts
+    │   ├── request-id.decorator.ts
+    │   ├── swagger.decorator.ts
+    │   └── user-id.decorator.ts
+    ├── index.ts
+    ├── init.util.ts
+    └── node-env.util.ts
+```

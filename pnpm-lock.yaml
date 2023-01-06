@@ -55,7 +55,7 @@ specifiers:
   ts-node: ^10.9.1
   tsconfig-paths: 4.1.0
   typeorm: ^0.3.11
-  typescript: ^4.7.4
+  typescript: ^4.9.4
   webpack: ^5.0.0
   winston: ^3.8.2
   winston-slack-webhook-transport: ^2.2.2
