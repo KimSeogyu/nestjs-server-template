@@ -1,5 +1,5 @@
 export const APP_NODE_ENV = (() => {
-  switch (process.env.NODE_ENV) {
+  switch (process.env.NODE_ENV?.toLowerCase()) {
     case 'local':
     case 'test':
       return 'local';
