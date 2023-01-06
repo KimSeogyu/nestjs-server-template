@@ -23,9 +23,7 @@ export class AuthService {
     );
 
     if (!user || !privateData)
-      throw new UnauthorizedException(
-        `USER OR PASSWORD NOT EXISTS, username=${username}`,
-      );
+      throw new UnauthorizedException(`INVALID USERNAME, username=${username}`);
     const hashed = await createHashedPassword(password, privateData.salt);
 
     if (hashed.password !== privateData.password) {

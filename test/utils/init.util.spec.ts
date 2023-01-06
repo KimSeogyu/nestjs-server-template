@@ -6,10 +6,7 @@ import { AppModule } from '@app/app.module';
 
 describe('INIT UTILS', function () {
   it('should instanceof WinstonLogger', function () {
-    const loggerService = createCustomLogger(
-      process.env.NODE_ENV ?? 'test',
-      '',
-    );
+    const loggerService = createCustomLogger('prod', '');
     expect(loggerService).instanceOf(WinstonLogger);
   });
 

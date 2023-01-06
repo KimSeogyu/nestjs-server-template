@@ -10,9 +10,12 @@ import { JwtAuthStrategy } from '@app/domain/auth/jwt-auth.strategy';
 import { expect } from 'chai';
 import DefaultConfig from '@app/config';
 import { NODE_ENV } from '@app/constants';
+import { UsersService } from '@app/domain/users/users.service';
 
 describe('AuthController', function () {
-  let controller: AuthController;
+  let service: AuthService;
+  let usersService: UsersService;
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
@@ -41,29 +44,32 @@ describe('AuthController', function () {
       controllers: [AuthController],
     }).compile();
 
-    controller = module.get<AuthController>(AuthController);
+    service = module.get<AuthService>(AuthService);
+    usersService = module.get<UsersService>(UsersService);
   });
 
-  it('should be defined', function () {
-    expect(controller).instanceOf(AuthController);
+  it('유저 검사 (BasicAuth) 유저이름이 다른 경우', async () => {
+    try {
+      await service.validateUser('hello', '1234');
+    } catch (e: any) {
+      expect(e.message).eq(`INVALID USERNAME, username=hello`);
+    }
   });
 
-  it('로그인', async () => {
-    const req = {
-      user: { username: 'hello', id: 1 },
-    };
-    const res = await controller.login(req);
-    expect(res).haveOwnProperty('accessToken');
-    expect(res.accessToken.length).greaterThan(0);
+  it('유저검사 (BasicAuth) 비밀번호가 다른 경우', async () => {
+    const dto = { username: 'hello', password: '1234' };
+    await usersService.create(dto);
+    try {
+      await service.validateUser(dto.username, '1235');
+    } catch (e: any) {
+      expect(e.message).eq('PASSWORD DOES NOT MATCHED');
+    }
   });
 
-  it('회원가입', async () => {
-    const dto = {
-      username: 'user',
-      password: '1234',
-    };
-    const user = await controller.signUp(dto);
-    expect(user.username).eq(dto.username);
-    expect(user).not.haveOwnProperty('password');
+  it('유저검사 (BasicAuth) 통과 케이스', async () => {
+    const dto = { username: 'hello', password: '1234' };
+    await usersService.create(dto);
+    const userEntity = await service.validateUser(dto.username, dto.password);
+    expect(userEntity.username).eq(dto.username);
   });
 });

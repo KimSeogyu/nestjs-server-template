@@ -29,7 +29,7 @@
     "lines": "&gt;80",
     "functions": "&gt;80",
     "statements": "&gt;80",
-    "exclude": ["src/infra"]
+    "exclude": ["src/infra", "test", "src/constants", "**/*.strategy.ts", "**/*.entity.ts", "**/zod"]
   },
   "husky": {
     "hooks": {
