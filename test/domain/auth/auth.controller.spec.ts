@@ -10,10 +10,11 @@ import { JwtAuthStrategy } from '@app/domain/auth/jwt-auth.strategy';
 import { expect } from 'chai';
 import DefaultConfig from '@app/config';
 import { NODE_ENV } from '@app/constants';
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 
 describe('AuthController', function () {
   let controller: AuthController;
-
+  let service: AuthService;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
@@ -43,6 +44,7 @@ describe('AuthController', function () {
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
+    service = module.get<AuthService>(AuthService);
   });
 
   it('should be defined', function () {
@@ -66,5 +68,13 @@ describe('AuthController', function () {
     const user = await controller.signUp(dto);
     expect(user.username).eq(dto.username);
     expect(user).not.haveOwnProperty('password');
+  });
+
+  it('유저 검사 (BasicAuth)', async () => {
+    try {
+      await service.validateUser('hello', '1234');
+    } catch (e: any) {
+      expect(e.message).eq(`USER OR PASSWORD NOT EXISTS, username=hello`);
+    }
   });
 });

@@ -66,4 +66,6 @@ export const initSwaggerDocs = (app: INestApplication) => {
 
   const document = SwaggerModule.createDocument(app, swaggerCfg);
   SwaggerModule.setup('api', app, document);
+
+  return true;
 };
