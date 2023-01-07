@@ -16,7 +16,7 @@ export const AdminController = (name: string) => {
   applyDecorators(
     Controller(name.toLowerCase()),
     ApiHeader({
-      name: 'admin-id',
+      name: 'x-admin-id',
       required: true,
       allowEmptyValue: false,
       example: 'example.email@google.com',
@@ -25,7 +25,7 @@ export const AdminController = (name: string) => {
       },
     }),
     ApiHeader({
-      name: 'request-id',
+      name: 'x-request-id',
       description:
         'Definition of the requestId header A unique request ID, represented by a UUID.',
       required: true,
@@ -36,7 +36,7 @@ export const AdminController = (name: string) => {
       },
     }),
     ApiHeader({
-      name: 'X-User-Id',
+      name: 'x-user-id',
       description: 'Authorized user id from API-GATEWAY',
       required: false,
       allowEmptyValue: true,
