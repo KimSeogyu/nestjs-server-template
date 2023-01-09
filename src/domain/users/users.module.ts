@@ -9,7 +9,7 @@ import { databaseProviders } from '@app/database/database.provider';
 import { MysqlDatasourceKey, UserRepositoryKey } from '@app/constants';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule.register()],
   controllers: [UsersController],
   providers: [
     UsersService,
