@@ -13,6 +13,8 @@ export const ConfigSchema = z
     JWT_SECRET: z.string(),
     JWT_EXPIRE_TIME: z.string(),
     SLACK_WEBHOOK_URL: z.string(),
+    REDIS_HOST: z.string(),
+    REDIS_TTL: z.number(),
   })
   .strict();
 

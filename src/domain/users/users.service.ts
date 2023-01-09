@@ -3,6 +3,7 @@ import { UsersRepository } from './users.repository';
 import { UserEntity } from './entities/user.entity';
 import { SignUpDto } from '../auth/zod/auth.zod';
 import { UpdateUsernameDto } from '@app/domain/users/zod/user.zod';
+import { UseCache } from '@app/infra/cache/cache.decorator';
 
 @Injectable()
 export class UsersService {
@@ -20,6 +21,7 @@ export class UsersService {
     return this.usersRepository.saveUser(dto);
   }
 
+  @UseCache()
   findAll() {
     return this.usersRepository.findAllUsers();
   }

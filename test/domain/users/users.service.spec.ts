@@ -7,6 +7,7 @@ import { UsersController } from '@app/domain/users/users.controller';
 import { UsersRepository } from '@app/domain/users/users.repository';
 import { UsersService } from '@app/domain/users/users.service';
 import { MysqlDatasourceKey, UserRepositoryKey } from '@app/constants';
+import { sleep } from '@app/utils';
 
 describe('UsersService', () => {
   let service: UsersService;

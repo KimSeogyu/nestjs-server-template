@@ -13,6 +13,8 @@ const parsedConfig = ConfigSchema.parse({
   JWT_SECRET: process.env.JWT_SECRET?.toString() || 'example',
   JWT_EXPIRE_TIME: process.env.JWT_EXPIRE_TIME || '1h',
   SLACK_WEBHOOK_URL: process.env.SLACK_WEBHOOK_URL?.toString() || 'example',
+  REDIS_HOST: process.env.REDIS_HOST || 'localhost',
+  REDIS_TTL: Number(process.env.TTL || 600),
 });
 
 export default registerAs('', async (): Promise<IConfig> => parsedConfig);

@@ -19,6 +19,7 @@ import {
   ResponseTransformerInterceptor,
 } from '@app/infra';
 import { NODE_ENV } from '@app/constants';
+import { AppCacheModule } from '@app/infra/cache/cache.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { NODE_ENV } from '@app/constants';
     }),
     UsersModule,
     AuthModule,
+    AppCacheModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [

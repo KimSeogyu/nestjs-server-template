@@ -7,6 +7,7 @@ import { UsersController } from '@app/domain/users/users.controller';
 import { UsersRepository } from '@app/domain/users/users.repository';
 import { UsersService } from '@app/domain/users/users.service';
 import { CreateUserDto } from '@app/domain/users/zod/user.zod';
+import { sleep } from '@app/utils';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -52,6 +53,13 @@ describe('UsersController', () => {
     for (const userEntity of userEntities) {
       expect(userEntity).instanceOf(UserEntity);
     }
+  });
+
+  it('유저 목록 조회 캐싱 테스트', async () => {
+    await createUser();
+    await controller.findAll();
+    await sleep(1000);
+    await controller.findAll();
   });
 
   it('유저 수정', async () => {
