@@ -3,7 +3,7 @@ import { z } from 'zod';
 const ServerResponseSchema = z.object({
   meta: z
     .object({
-      timestamp: z.string(),
+      timestamp: z.date(),
       isError: z.boolean(),
     })
     .required(),

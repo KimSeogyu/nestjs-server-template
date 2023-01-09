@@ -35,7 +35,7 @@ export class AllExceptionFilter implements ExceptionFilter {
       error: errorResponse,
       meta: {
         isError: true,
-        timestamp: moment().toISOString(),
+        timestamp: moment().toDate(),
       },
     };
 

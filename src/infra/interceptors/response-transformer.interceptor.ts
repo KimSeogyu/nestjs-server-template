@@ -22,7 +22,7 @@ export class ResponseTransformerInterceptor<T>
           output: data,
           meta: {
             isError: false,
-            timestamp: moment().toISOString(),
+            timestamp: moment().toDate(),
           },
         }),
       ),
