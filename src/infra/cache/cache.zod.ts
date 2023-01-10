@@ -7,3 +7,5 @@ const CacheOptionsSchema = z.object({
 });
 
 export type AppCacheOption = z.infer<typeof CacheOptionsSchema>;
+
+export const APP_CACHE_METADATA = 'APP_CACHE_METADATA';

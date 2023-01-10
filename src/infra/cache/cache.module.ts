@@ -3,7 +3,6 @@ import {
   CacheModule,
   DynamicModule,
   Inject,
-  Logger,
   Module,
   OnModuleInit,
 } from '@nestjs/common';
@@ -14,9 +13,9 @@ import {
   Reflector,
 } from '@nestjs/core';
 import { Cache } from 'cache-manager';
-import { APP_CACHE_METADATA } from './cache.decorator.js';
 import { ConfigService } from '@nestjs/config';
-import { AppCacheOption } from './cache.zod.js';
+import { APP_CACHE_METADATA, AppCacheOption } from './cache.zod.js';
+
 @Module({
   imports: [DiscoveryModule, CacheModule.register()],
 })
