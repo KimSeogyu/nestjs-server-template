@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { AppModule } from '@app/app.module';
-import { UsersService } from '@app/domain/users/users.service';
-import { CreateUserDto } from '@app/domain/users/zod/user.zod';
-import { AuthService } from '@app/domain/auth/auth.service';
+import request from 'supertest';
+import { AppModule } from '../src/app.module.js';
+import { UsersService } from '../src/domain/users/users.service.js';
+import { CreateUserDto } from '../src/domain/users/zod/user.zod.js';
+import { AuthService } from '../src/domain/auth/auth.service.js';
 import moment from 'moment';
 import { expect } from 'chai';
-import { sleep } from '@app/utils';
+import { sleep } from '../src/utils/index.js';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;

@@ -1,4 +1,4 @@
-import { IsolationLevel } from 'typeorm/driver/types/IsolationLevel';
+import { type IsolationLevel } from 'typeorm/driver/types/IsolationLevel.js';
 
 export const UserRepositoryKey = 'USER_REPOSITORY';
 

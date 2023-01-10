@@ -1,12 +1,15 @@
 import { Module } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { UsersController } from './users.controller';
-import { UsersRepository } from './users.repository';
+import { UsersService } from './users.service.js';
+import { UsersController } from './users.controller.js';
+import { UsersRepository } from './users.repository.js';
 import { DataSource } from 'typeorm';
-import { UserEntity } from './entities/user.entity';
-import { DatabaseModule } from '@app/database/database.module';
-import { databaseProviders } from '@app/database/database.provider';
-import { MysqlDatasourceKey, UserRepositoryKey } from '@app/constants';
+import { UserEntity } from './entities/user.entity.js';
+import { DatabaseModule } from '../../database/database.module.js';
+import { databaseProviders } from '../../database/database.provider.js';
+import {
+  MysqlDatasourceKey,
+  UserRepositoryKey,
+} from '../../constants/index.js';
 
 @Module({
   imports: [DatabaseModule.register()],

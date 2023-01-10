@@ -1,4 +1,4 @@
-import { getNodeEnv, NODE_ENV } from '@app/constants';
+import { getNodeEnv, NODE_ENV } from '../../src/constants/index.js';
 import { expect } from 'chai';
 
 describe('CONSTANTS TEST', function () {

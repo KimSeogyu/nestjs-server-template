@@ -1,7 +1,7 @@
-import { ApiController, BasicAuthGuard } from '@app/utils/decorators';
+import { ApiController, BasicAuthGuard } from '../../utils/decorators/index.js';
 import { Body, HttpCode, HttpStatus, Post, Request } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { LoginResponse, SignUpDto, SignupResponse } from './zod/auth.zod';
+import { AuthService } from './auth.service.js';
+import { LoginResponse, SignUpDto, SignupResponse } from './zod/auth.zod.js';
 import { ApiResponse } from '@nestjs/swagger';
 
 @ApiController('auth')

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { UsersRepository } from './users.repository';
-import { UserEntity } from './entities/user.entity';
-import { SignUpDto } from '../auth/zod/auth.zod';
-import { UpdateUsernameDto } from '@app/domain/users/zod/user.zod';
-import { UseCache } from '@app/infra/cache/cache.decorator';
+import { UsersRepository } from './users.repository.js';
+import { UserEntity } from './entities/user.entity.js';
+import { SignUpDto } from '../auth/zod/auth.zod.js';
+import { UpdateUsernameDto } from '../users/zod/user.zod.js';
+import { UseCache } from '../../infra/cache/cache.decorator.js';
 
 @Injectable()
 export class UsersService {

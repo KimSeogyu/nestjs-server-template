@@ -1,9 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { UserEntity } from './entities/user.entity';
-import { SignUpDto } from '@app/domain/auth/zod/auth.zod';
-import { UpdateUsernameDto } from '@app/domain/users/zod/user.zod';
-import { MysqlDatasourceKey, UserRepositoryKey } from '@app/constants';
+import { UserEntity } from './entities/user.entity.js';
+import { SignUpDto } from '../auth/zod/auth.zod.js';
+import { UpdateUsernameDto } from './zod/user.zod.js';
+import {
+  MysqlDatasourceKey,
+  UserRepositoryKey,
+} from '../../constants/index.js';
 
 @Injectable()
 export class UsersRepository {

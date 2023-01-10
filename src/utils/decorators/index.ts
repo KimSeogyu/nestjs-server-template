@@ -1,5 +1,3 @@
-import { RequestId } from './request-id.decorator';
-import { ApiController, BasicAuthGuard } from './swagger.decorator';
-import { UserId } from './user-id.decorator';
-
-export { RequestId, ApiController, BasicAuthGuard, UserId };
+export * from './request-id.decorator.js';
+export * from './swagger.decorator.js';
+export * from './user-id.decorator.js';

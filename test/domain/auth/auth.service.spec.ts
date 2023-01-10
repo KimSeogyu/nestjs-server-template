@@ -1,16 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthController } from '@app/domain/auth/auth.controller';
+import { AuthController } from '../../../src/domain/auth/auth.controller.js';
 import { PassportModule } from '@nestjs/passport';
-import { UsersModule } from '@app/domain/users/users.module';
+import { UsersModule } from '../../../src/domain/users/users.module.js';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AuthService } from '@app/domain/auth/auth.service';
-import { BasicAuthStrategy } from '@app/domain/auth/basic-auth.strategy';
-import { JwtAuthStrategy } from '@app/domain/auth/jwt-auth.strategy';
+import { AuthService } from '../../../src/domain/auth/auth.service.js';
+import { BasicAuthStrategy } from '../../../src/domain/auth/basic-auth.strategy.js';
+import { JwtAuthStrategy } from '../../../src/domain/auth/jwt-auth.strategy.js';
 import { expect } from 'chai';
-import DefaultConfig from '@app/config';
-import { NODE_ENV } from '@app/constants';
-import { UsersService } from '@app/domain/users/users.service';
+import DefaultConfig from '../../../src/config/index.js';
+import { NODE_ENV } from '../../../src/constants/index.js';
+import { UsersService } from '../../../src/domain/users/users.service.js';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 describe('AuthController', function () {
   let service: AuthService;
@@ -24,7 +26,9 @@ describe('AuthController', function () {
         ConfigModule.forRoot({
           load: [DefaultConfig],
           envFilePath: [
-            `${__dirname}/../../../src/config/env/.${NODE_ENV}.env`,
+            `${dirname(
+              fileURLToPath(import.meta.url),
+            )}/../../../src/config/env/.${NODE_ENV}.env`,
           ],
           isGlobal: true,
           cache: true,

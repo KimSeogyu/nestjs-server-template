@@ -14,9 +14,9 @@ import {
   Reflector,
 } from '@nestjs/core';
 import { Cache } from 'cache-manager';
-import { APP_CACHE_METADATA } from '@app/infra/cache/cache.decorator';
+import { APP_CACHE_METADATA } from './cache.decorator.js';
 import { ConfigService } from '@nestjs/config';
-import { AppCacheOption } from '@app/infra/cache/cache.zod';
+import { AppCacheOption } from './cache.zod.js';
 @Module({
   imports: [DiscoveryModule, CacheModule.register()],
 })

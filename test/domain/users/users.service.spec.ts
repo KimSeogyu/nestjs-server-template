@@ -1,12 +1,15 @@
-import { DatabaseModule } from '@app/database/database.module';
+import { DatabaseModule } from '../../../src/database/database.module.js';
 import { Test, TestingModule } from '@nestjs/testing';
 import { expect } from 'chai';
 import { DataSource } from 'typeorm';
-import { UserEntity } from '@app/domain/users/entities/user.entity';
-import { UsersController } from '@app/domain/users/users.controller';
-import { UsersRepository } from '@app/domain/users/users.repository';
-import { UsersService } from '@app/domain/users/users.service';
-import { MysqlDatasourceKey, UserRepositoryKey } from '@app/constants';
+import { UserEntity } from '../../../src/domain/users/entities/user.entity.js';
+import { UsersController } from '../../../src/domain/users/users.controller.js';
+import { UsersRepository } from '../../../src/domain/users/users.repository.js';
+import { UsersService } from '../../../src/domain/users/users.service.js';
+import {
+  MysqlDatasourceKey,
+  UserRepositoryKey,
+} from '../../../src/constants/index.js';
 
 describe('UsersService', () => {
   let service: UsersService;

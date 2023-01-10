@@ -5,9 +5,9 @@ import {
 } from '@nestjs/common';
 
 import { JwtService } from '@nestjs/jwt';
-import { createHashedPassword } from '../users/entities/user.entity';
-import { UsersService } from '../users/users.service';
-import { SignUpDto } from './zod/auth.zod';
+import { createHashedPassword } from '../users/entities/user.entity.js';
+import { UsersService } from '../users/users.service.js';
+import { SignUpDto } from './zod/auth.zod.js';
 
 @Injectable()
 export class AuthService {

@@ -1,4 +1,4 @@
-import { NODE_ENV } from '@app/constants';
+import { NODE_ENV } from '../constants/index.js';
 import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,
@@ -7,7 +7,7 @@ import * as winston from 'winston';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { patchNestjsSwagger } from '@anatine/zod-nestjs';
-import SlackHook = require('winston-slack-webhook-transport');
+import SlackHook from 'winston-slack-webhook-transport';
 
 export const createCustomLogger = (ENV_MODE: string, WEBHOOK_URL: string) => {
   const transports: any[] = [

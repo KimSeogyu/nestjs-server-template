@@ -4,28 +4,33 @@ import { ConfigModule } from '@nestjs/config';
 
 import { ZodValidationPipe } from '@anatine/zod-nestjs';
 
-import DefaultConfig from '@app/config';
+import DefaultConfig from './config/index.js';
 
-import { AppController } from '@app/app.controller';
-import { AppService } from '@app/app.service';
+import { AppController } from './app.controller.js';
+import { AppService } from './app.service.js';
 
-import { AuthModule } from '@app/domain/auth/auth.module';
-import { UsersModule } from '@app/domain/users/users.module';
+import { AuthModule } from './domain/auth/auth.module.js';
+import { UsersModule } from './domain/users/users.module.js';
 
 import {
   AllExceptionFilter,
   LifecycleService,
   LoggerMiddleware,
   ResponseTransformerInterceptor,
-} from '@app/infra';
-import { NODE_ENV } from '@app/constants';
-import { AppCacheModule } from '@app/infra/cache/cache.module';
-
+} from './infra/index.js';
+import { NODE_ENV } from './constants/index.js';
+import { AppCacheModule } from './infra/cache/cache.module.js';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 @Module({
   imports: [
     ConfigModule.forRoot({
       load: [DefaultConfig],
-      envFilePath: [`${__dirname}/config/env/.${NODE_ENV}.env`],
+      envFilePath: [
+        `${dirname(
+          fileURLToPath(import.meta.url),
+        )}/config/env/.${NODE_ENV}.env`,
+      ],
       isGlobal: true,
       cache: true,
     }),

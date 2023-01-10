@@ -1,8 +1,8 @@
-import { createCustomLogger, initSwaggerDocs } from '@app/utils';
+import { createCustomLogger, initSwaggerDocs } from '../../src/utils/index.js';
 import { expect } from 'chai';
 import { WinstonLogger } from 'nest-winston';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from '@app/app.module';
+import { AppModule } from '../../src/app.module.js';
 
 describe('INIT UTILS', function () {
   it('should instanceof WinstonLogger', function () {

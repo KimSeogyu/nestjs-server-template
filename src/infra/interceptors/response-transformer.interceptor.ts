@@ -1,4 +1,4 @@
-import { IServerResponse } from '@app/interfaces/response.interface';
+import { IServerResponse } from '../../interfaces/response.interface.js';
 import {
   CallHandler,
   ExecutionContext,
@@ -8,7 +8,7 @@ import {
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Injectable()
 export class ResponseTransformerInterceptor<T>

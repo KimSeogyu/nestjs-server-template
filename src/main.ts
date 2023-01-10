@@ -1,11 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { AppModule } from './app.module.js';
 import helmet from 'helmet';
 
 import { Logger, RequestMethod } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { createCustomLogger, initSwaggerDocs } from '@app/utils';
-import { NODE_ENV } from '@app/constants';
+import { createCustomLogger, initSwaggerDocs } from './utils/index.js';
+import { NODE_ENV } from './constants/index.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
