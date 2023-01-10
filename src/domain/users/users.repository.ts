@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { UserEntity } from './entities/user.entity.js';
+import { UserEntity } from './user.entity.js';
 import { SignUpDto } from '../auth/auth.zod.js';
-import { UpdateUsernameDto } from './zod/user.zod.js';
+import { UpdateUsernameDto } from './user.zod.js';
 import {
   MysqlDatasourceKey,
   UserRepositoryKey,

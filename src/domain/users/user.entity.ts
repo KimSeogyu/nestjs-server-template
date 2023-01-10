@@ -4,7 +4,7 @@ import * as crypto from 'crypto';
 import { ApiHideProperty } from '@nestjs/swagger';
 import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 
-import { BaseEntity } from '../../../utils/index.js';
+import { BaseEntity } from '../../utils/index.js';
 
 @Entity()
 export class UserEntity extends BaseEntity {

@@ -8,7 +8,7 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 import {
-  SlackHook,
+  SlackTransport,
   TransformableInfo,
 } from 'winston-slack-webhook-transport-ts';
 
@@ -27,7 +27,7 @@ export const createCustomLogger = (ENV_MODE: string, WEBHOOK_URL: string) => {
   ];
   if (ENV_MODE === 'prod') {
     transports.push(
-      new SlackHook({
+      new SlackTransport({
         level: 'error',
         webhookUrl: WEBHOOK_URL,
         formatter: (data: TransformableInfo) => {

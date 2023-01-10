@@ -1,7 +1,7 @@
 import { Body, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { UsersService } from './users.service.js';
 import { ApiController, JwtAuthGuard } from '../../utils/decorators/index.js';
-import { CreateUserDto, UpdateUsernameDto } from './zod/user.zod.js';
+import { CreateUserDto, UpdateUsernameDto } from './user.zod.js';
 
 @ApiController('users')
 @JwtAuthGuard()

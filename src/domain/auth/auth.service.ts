@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 
 import { JwtService } from '@nestjs/jwt';
-import { createHashedPassword } from '../users/entities/user.entity.js';
+import { createHashedPassword } from '../users/user.entity.js';
 import { UsersService } from '../users/users.service.js';
 import { SignUpDto } from './auth.zod.js';
 

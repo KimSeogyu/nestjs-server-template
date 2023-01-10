@@ -2,11 +2,11 @@ import { DatabaseModule } from '../../../src/database/database.module.js';
 import { Test, TestingModule } from '@nestjs/testing';
 import { expect } from 'chai';
 import { DataSource } from 'typeorm';
-import { UserEntity } from '../../../src/domain/users/entities/user.entity.js';
+import { UserEntity } from '../../../src/domain/users/user.entity.js';
 import { UsersController } from '../../../src/domain/users/users.controller.js';
 import { UsersRepository } from '../../../src/domain/users/users.repository.js';
 import { UsersService } from '../../../src/domain/users/users.service.js';
-import { CreateUserDto } from '../../../src/domain/users/zod/user.zod.js';
+import { CreateUserDto } from '../../../src/domain/users/user.zod.js';
 import { sleep } from '../../../src/utils/index.js';
 
 describe('UsersController', () => {

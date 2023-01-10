@@ -44,11 +44,14 @@ src
 ├── app.controller.ts
 ├── app.module.ts
 ├── app.service.ts
+├── app.zod.ts
+├── cache
+│   ├── cache.module.ts
+│   └── cache.zod.ts
 ├── config
+│   ├── config.zod.ts
 │   ├── env
-│   ├── index.ts
-│   └── zod
-│       └── index.ts
+│   └── index.ts
 ├── constants
 │   └── index.ts
 ├── database
@@ -59,41 +62,39 @@ src
 │   │   ├── auth.controller.ts
 │   │   ├── auth.module.ts
 │   │   ├── auth.service.ts
+│   │   ├── auth.zod.ts
 │   │   ├── basic-auth.strategy.ts
-│   │   ├── jwt-auth.strategy.ts
-│   │   └── zod
-│   │       └── auth.zod.ts
+│   │   └── jwt-auth.strategy.ts
 │   └── users
-│       ├── entities
-│       │   └── user.entity.ts
+│       ├── user.entity.ts
+│       ├── user.zod.ts
 │       ├── users.controller.ts
 │       ├── users.module.ts
 │       ├── users.repository.ts
-│       ├── users.service.ts
-│       └── zod
-│           └── user.zod.ts
+│       └── users.service.ts
 ├── infra
 │   ├── filters
 │   │   └── all-exception.filter.ts
 │   ├── index.ts
+│   ├── infra.zod.ts
 │   ├── interceptors
 │   │   └── response-transformer.interceptor.ts
 │   ├── lifecycle
 │   │   └── lifecycle.service.ts
 │   └── middlewares
 │       └── logger.middlewares.ts
-├── interfaces
-│   └── response.interface.ts
 ├── main.ts
 └── utils
     ├── base.entity.ts
     ├── decorators
+    │   ├── cache.decorator.ts
     │   ├── index.ts
     │   ├── request-id.decorator.ts
     │   ├── swagger.decorator.ts
     │   └── user-id.decorator.ts
     ├── index.ts
-    └── init.util.ts
+    ├── init.util.ts
+    └── sleep.util.ts
 
-20 directories, 34 files
+16 directories, 39 files
 ```

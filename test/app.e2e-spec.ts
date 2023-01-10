@@ -3,11 +3,8 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '../src/app.module.js';
 import { UsersService } from '../src/domain/users/users.service.js';
-import { CreateUserDto } from '../src/domain/users/zod/user.zod.js';
+import { CreateUserDto } from '../src/domain/users/user.zod.js';
 import { AuthService } from '../src/domain/auth/auth.service.js';
-import moment from 'moment';
-import { expect } from 'chai';
-import { sleep } from '../src/utils/index.js';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
