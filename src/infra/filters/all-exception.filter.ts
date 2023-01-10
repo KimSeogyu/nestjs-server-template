@@ -1,4 +1,3 @@
-import { IServerResponse } from '../../interfaces/response.interface.js';
 import {
   ArgumentsHost,
   Catch,
@@ -11,6 +10,7 @@ import {
 import { Response } from 'express';
 
 import moment from 'moment';
+import { IServerResponse } from '../infra.zod.js';
 
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {

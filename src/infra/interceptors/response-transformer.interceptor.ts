@@ -1,4 +1,3 @@
-import { IServerResponse } from '../../interfaces/response.interface.js';
 import {
   CallHandler,
   ExecutionContext,
@@ -9,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import moment from 'moment';
+import { IServerResponse } from '../infra.zod.js';
 
 @Injectable()
 export class ResponseTransformerInterceptor<T>
@@ -24,6 +24,7 @@ export class ResponseTransformerInterceptor<T>
             isError: false,
             timestamp: moment().toDate(),
           },
+          error: {},
         }),
       ),
     );
