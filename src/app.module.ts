@@ -19,7 +19,7 @@ import {
   ResponseTransformerInterceptor,
 } from './infra/index.js';
 import { NODE_ENV } from './constants/index.js';
-import { AppCacheModule } from './infra/cache/cache.module.js';
+import { AppCacheModule } from './cache/cache.module.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 @Module({
