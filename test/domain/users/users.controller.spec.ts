@@ -11,9 +11,10 @@ import { sleep } from '../../../src/utils/index.js';
 
 describe('UsersController', () => {
   let controller: UsersController;
+  let module: TestingModule;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       imports: [DatabaseModule.register()],
       controllers: [UsersController],
       providers: [
@@ -58,7 +59,7 @@ describe('UsersController', () => {
   it('유저 목록 조회 캐싱 테스트', async () => {
     await createUser();
     await controller.findAll();
-    await sleep(1000);
+    await sleep({ seconds: 1 });
     await controller.findAll();
   });
 

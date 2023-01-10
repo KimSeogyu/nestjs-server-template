@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { UsersRepository } from './users.repository.js';
 import { UserEntity } from './entities/user.entity.js';
 import { SignUpDto } from '../auth/zod/auth.zod.js';
-import { UpdateUsernameDto } from '../users/zod/user.zod.js';
-import { UseCache } from '../../utils/decorators/cache.decorator.js';
+import { UpdateUsernameDto } from './zod/user.zod.js';
+import { UseCache } from '../../utils/decorators/index.js';
 
 @Injectable()
 export class UsersService {
