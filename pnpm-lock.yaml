@@ -58,7 +58,7 @@ specifiers:
   typescript: ^4.9.4
   webpack: ^5.0.0
   winston: ^3.8.2
-  winston-slack-webhook-transport-ts: ^1.1.1
+  winston-slack-webhook-transport-ts: ^1.2.7
   zod: ^3.20.2
 
 dependencies:
@@ -91,7 +91,7 @@ dependencies:
   rxjs: 7.8.0
   typeorm: 0.3.11_b4kiuwje4fyhtzguxrfstaisbe
   winston: 3.8.2
-  winston-slack-webhook-transport-ts: 1.1.1
+  winston-slack-webhook-transport-ts: 1.2.7
   zod: 3.20.2
 
 devDependencies:
@@ -5350,8 +5350,8 @@ packages:
       execa: 4.1.0
     dev: true
 
-  /winston-slack-webhook-transport-ts/1.1.1:
-    resolution: {integrity: sha512-HivoRW5Agu9fzwvlfYtHp3ptHnPft57tke4UhWpAQ1RVGRiS2QYUo6iHJyIGp1mPKvXLzGF6mfZDrKHbjDx2qQ==}
+  /winston-slack-webhook-transport-ts/1.2.7:
+    resolution: {integrity: sha512-G55vyTxv8iEri9igW5Fc7cS1OG7+hsn5k3phtFpdO4WbY9ZMKifke7XUjsCG5ti7WWrymAozUObUTBFRNLGfaQ==}
     dependencies:
       axios: 1.2.2
       winston-transport: 4.5.0

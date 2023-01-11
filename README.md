@@ -56,7 +56,8 @@ src
 │   └── index.ts
 ├── database
 │   ├── database.module.ts
-│   └── database.provider.ts
+│   ├── database.provider.ts
+│   └── database.util.ts
 ├── domain
 │   ├── auth
 │   │   ├── auth.controller.ts
@@ -85,7 +86,6 @@ src
 │       └── logger.middlewares.ts
 ├── main.ts
 └── utils
-    ├── base.entity.ts
     ├── decorators
     │   ├── cache.decorator.ts
     │   ├── index.ts
@@ -96,5 +96,5 @@ src
     ├── init.util.ts
     └── sleep.util.ts
 
-16 directories, 39 files
+15 directories, 39 files
 ```
