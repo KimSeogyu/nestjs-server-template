@@ -3,7 +3,7 @@ import { UsersRepository } from './users.repository.js';
 import { UserEntity } from './user.entity.js';
 import { SignUpDto } from '../auth/auth.zod.js';
 import { UpdateUsernameDto } from './user.zod.js';
-import { UseCache } from '../../utils/decorators/index.js';
+import { UseCache } from '../../decorators/index.js';
 
 @Injectable()
 export class UsersService {
