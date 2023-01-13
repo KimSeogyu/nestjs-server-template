@@ -1,7 +1,11 @@
-export type WaitOptions = {
-  minutes?: number;
-  seconds?: number;
-};
+import { z } from 'zod';
+
+export const SleepOptionZ = z.object({
+  minutes: z.number().optional(),
+  seconds: z.number().optional(),
+});
+
+export type WaitOptions = z.infer<typeof SleepOptionZ>;
 
 export async function sleep(options: WaitOptions) {
   let waitTimes = 0;

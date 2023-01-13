@@ -1,4 +1,4 @@
-import { NODE_ENV } from '../constants/index.js';
+import { NODE_ENV } from './constants/index.js';
 import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,
