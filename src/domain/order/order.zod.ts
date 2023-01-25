@@ -20,7 +20,7 @@ export const CreateOrderInputZ = z
   })
   .required();
 
-export type CreateOrder = z.infer<typeof CreateOrderInputZ>;
+export type CreateOrderInput = z.infer<typeof CreateOrderInputZ>;
 
 export class CreateOrderDto extends createZodDto(CreateOrderInputZ) {}
 export const CreateOrderOutputZ = z.object({});

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UsersRepository } from './users.repository.js';
 import { User } from './user.entity.js';
 import { SignUpDto } from '../auth/auth.zod.js';
-import { UpdateUsernameDto } from './user.zod.js';
+import { UpdatePasswordDto, UpdateUsernameDto } from './user.zod.js';
 import { UseCache } from '../../decorators/index.js';
 
 @Injectable()
@@ -26,11 +26,15 @@ export class UsersService {
     return this.usersRepository.findAllUsers();
   }
 
-  async updateUsername(id: number, dto: UpdateUsernameDto) {
-    return this.usersRepository.updateUsernameById(id, dto);
+  async updatePassword(id: number, dto: UpdatePasswordDto) {
+    return { success: await this.usersRepository.updatePasswordById(id, dto) };
   }
 
   async remove(id: number) {
-    return this.usersRepository.deleteById(id);
+    return { success: await this.usersRepository.deleteById(id) };
+  }
+
+  async updateUsername(id: number, dto: UpdateUsernameDto) {
+    return { success: await this.usersRepository.updateUsernameById(id, dto) };
   }
 }

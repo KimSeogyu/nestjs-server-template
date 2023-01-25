@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { User } from './user.entity.js';
 import { SignUpDto } from '../auth/auth.zod.js';
-import { UpdateUsernameDto } from './user.zod.js';
+import { UpdatePasswordDto, UpdateUsernameDto } from './user.zod.js';
 import {
   MysqlDatasourceKey,
   UserRepositoryKey,
@@ -45,7 +45,7 @@ export class UsersRepository {
     return this.usersRepository.find();
   }
 
-  async updateUsernameById(id: number, dto: UpdateUsernameDto) {
+  async updatePasswordById(id: number, dto: UpdatePasswordDto) {
     const updated = await this.usersRepository.update(id, dto);
     return !!updated.affected;
   }
@@ -53,5 +53,10 @@ export class UsersRepository {
   async deleteById(id: number) {
     const deleted = await this.usersRepository.delete(id);
     return !!deleted.affected;
+  }
+
+  async updateUsernameById(id: number, updateUserDto: UpdateUsernameDto) {
+    const updated = await this.usersRepository.update(id, updateUserDto);
+    return !!updated.affected;
   }
 }

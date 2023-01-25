@@ -86,7 +86,7 @@ describe('UsersController', () => {
   it('유저 수정', async () => {
     const { id } = await createUser();
 
-    const result = await controller.update(id, { password: '5678' });
-    expect(result).eq(true);
+    const result = await controller.updatePassword(id, { password: '5678' });
+    expect(result.success).eq(true);
   });
 });
