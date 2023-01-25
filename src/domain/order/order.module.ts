@@ -9,12 +9,14 @@ import {
 } from '../../constants/index.js';
 import { OrderController } from './order.controller.js';
 import { OrderService } from './order.service.js';
+import { OrderRepository } from './order.repository.js';
 
 @Module({
   imports: [DatabaseModule.register()],
   controllers: [OrderController],
   providers: [
     OrderService,
+    OrderRepository,
     ...databaseProviders,
     {
       provide: OrderRepositoryKey,

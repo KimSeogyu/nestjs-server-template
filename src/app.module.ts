@@ -22,6 +22,7 @@ import { NODE_ENV } from './constants/index.js';
 import { AppCacheModule } from './cache/cache.module.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { OrderModule } from './domain/order/order.module.js';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { fileURLToPath } from 'url';
     }),
     UsersModule,
     AuthModule,
+    OrderModule,
     AppCacheModule.forRoot(),
   ],
   controllers: [AppController],
