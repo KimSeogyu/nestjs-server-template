@@ -4,7 +4,7 @@ import { registerAs } from '@nestjs/config';
 export default registerAs(
   '',
   async (): Promise<IConfig> =>
-    ConfigSchema.parse({
+    ConfigSchema.parseAsync({
       AUTH_USERNAME: process.env.AUTH_USERNAME,
       AUTH_PASSWORD: process.env.AUTH_PASSWORD,
       APP_VERSION: process.env.APP_VERSION,
