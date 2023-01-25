@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { UserEntity } from './user.entity.js';
+import { User } from './user.entity.js';
 import { SignUpDto } from '../auth/auth.zod.js';
 import { UpdateUsernameDto } from './user.zod.js';
 import {
@@ -11,7 +11,7 @@ import {
 @Injectable()
 export class UsersRepository {
   constructor(
-    @Inject(UserRepositoryKey) private usersRepository: Repository<UserEntity>,
+    @Inject(UserRepositoryKey) private usersRepository: Repository<User>,
     @Inject(MysqlDatasourceKey) private mysqlProvider: DataSource,
   ) {}
 

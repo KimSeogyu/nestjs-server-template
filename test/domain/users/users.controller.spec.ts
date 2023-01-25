@@ -2,12 +2,21 @@ import { DatabaseModule } from '../../../src/database/database.module.js';
 import { Test, TestingModule } from '@nestjs/testing';
 import { expect } from 'chai';
 import { DataSource } from 'typeorm';
-import { UserEntity } from '../../../src/domain/users/user.entity.js';
+import { User } from '../../../src/domain/users/user.entity.js';
 import { UsersController } from '../../../src/domain/users/users.controller.js';
 import { UsersRepository } from '../../../src/domain/users/users.repository.js';
 import { UsersService } from '../../../src/domain/users/users.service.js';
 import { CreateUserDto } from '../../../src/domain/users/user.zod.js';
 import { sleep } from '../../../src/utils/index.js';
+import { ConfigModule } from '@nestjs/config';
+import DefaultConfig from '../../../src/config/index.js';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import {
+  MysqlDatasourceKey,
+  NODE_ENV,
+  UserRepositoryKey,
+} from '../../../src/constants/index.js';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -15,16 +24,27 @@ describe('UsersController', () => {
 
   beforeEach(async () => {
     module = await Test.createTestingModule({
-      imports: [DatabaseModule.register()],
+      imports: [
+        DatabaseModule.register(),
+        ConfigModule.forRoot({
+          load: [DefaultConfig],
+          envFilePath: [
+            `${dirname(
+              fileURLToPath(import.meta.url),
+            )}/../../../src/config/env/.${NODE_ENV}.env`,
+          ],
+          isGlobal: true,
+        }),
+      ],
       controllers: [UsersController],
       providers: [
         UsersService,
         UsersRepository,
         {
-          provide: 'USER_REPOSITORY',
+          provide: UserRepositoryKey,
           useFactory: (dataSource: DataSource) =>
-            dataSource.getRepository(UserEntity),
-          inject: ['MYSQL_PROVIDER'],
+            dataSource.getRepository(User),
+          inject: [MysqlDatasourceKey],
         },
       ],
     }).compile();
@@ -52,7 +72,7 @@ describe('UsersController', () => {
     await createUser();
     const userEntities = await controller.findAll();
     for (const userEntity of userEntities) {
-      expect(userEntity).instanceOf(UserEntity);
+      expect(userEntity).instanceOf(User);
     }
   });
 

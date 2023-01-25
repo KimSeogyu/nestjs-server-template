@@ -28,10 +28,8 @@ describe('AuthController', function () {
             )}/../../../src/config/env/.${NODE_ENV}.env`,
           ],
           isGlobal: true,
-          cache: true,
         }),
         JwtModule.registerAsync({
-          imports: [ConfigModule],
           inject: [ConfigService],
           useFactory: (configService: ConfigService) => ({
             secret: configService.getOrThrow('JWT_SECRET'),

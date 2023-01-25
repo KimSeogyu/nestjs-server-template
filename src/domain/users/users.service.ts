@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UsersRepository } from './users.repository.js';
-import { UserEntity } from './user.entity.js';
+import { User } from './user.entity.js';
 import { SignUpDto } from '../auth/auth.zod.js';
 import { UpdateUsernameDto } from './user.zod.js';
 import { UseCache } from '../../decorators/index.js';
@@ -9,7 +9,7 @@ import { UseCache } from '../../decorators/index.js';
 export class UsersService {
   constructor(private usersRepository: UsersRepository) {}
 
-  async findOneByUsername(username: string): Promise<UserEntity | null> {
+  async findOneByUsername(username: string): Promise<User | null> {
     return this.usersRepository.findOneByUsername(username);
   }
 

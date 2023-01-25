@@ -8,10 +8,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export const databaseProviders = [
   {
     provide: MysqlDatasourceKey,
+    inject: [ConfigService],
     useFactory: async (configService: ConfigService) => {
       let dbConfig: DataSourceOptions;
-
-      if (NODE_ENV === 'local') {
+      if (NODE_ENV === 'test') {
         dbConfig = {
           type: 'sqlite',
           database: ':memory:',
@@ -19,6 +19,7 @@ export const databaseProviders = [
           logging: false,
           entities: [__dirname + '/../**/*.entity.{ts,js}'],
           synchronize: true,
+          migrationsRun: false,
         };
       } else {
         dbConfig = {
@@ -29,7 +30,9 @@ export const databaseProviders = [
           password: configService.getOrThrow('DATABASE_PASSWORD'),
           database: configService.getOrThrow('DATABASE_SCHEMA'),
           entities: [__dirname + '/../**/*.entity.{ts,js}'],
+          migrations: ['/migrations'],
           synchronize: false,
+          migrationsRun: true,
         };
       }
 

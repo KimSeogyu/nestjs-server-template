@@ -3,7 +3,7 @@ import { UsersService } from './users.service.js';
 import { UsersController } from './users.controller.js';
 import { UsersRepository } from './users.repository.js';
 import { DataSource } from 'typeorm';
-import { UserEntity } from './user.entity.js';
+import { User } from './user.entity.js';
 import { DatabaseModule } from '../../database/database.module.js';
 import { databaseProviders } from '../../database/database.provider.js';
 import {
@@ -20,8 +20,7 @@ import {
     ...databaseProviders,
     {
       provide: UserRepositoryKey,
-      useFactory: (dataSource: DataSource) =>
-        dataSource.getRepository(UserEntity),
+      useFactory: (dataSource: DataSource) => dataSource.getRepository(User),
       inject: [MysqlDatasourceKey],
     },
   ],

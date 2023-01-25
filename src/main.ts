@@ -4,8 +4,8 @@ import helmet from 'helmet';
 
 import { Logger, RequestMethod } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { createCustomLogger, initSwaggerDocs } from './utils/index.js';
 import { NODE_ENV } from './constants/index.js';
+import { createCustomLogger, initSwaggerDocs } from './app.logger.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

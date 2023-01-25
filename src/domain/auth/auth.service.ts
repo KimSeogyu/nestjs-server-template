@@ -42,7 +42,10 @@ export class AuthService {
 
   async signup(userDto: SignUpDto) {
     const user = await this.usersService.findOneByUsername(userDto.username);
-    if (user) throw new BadRequestException('USERNAME IS NOT UNIQUE');
+    if (user)
+      throw new BadRequestException(
+        `USERNAME IS NOT UNIQUE, found ${JSON.stringify(user)}`,
+      );
 
     return this.usersService.create(userDto);
   }

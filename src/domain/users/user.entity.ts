@@ -2,11 +2,19 @@ import * as util from 'util';
 import * as crypto from 'crypto';
 
 import { ApiHideProperty } from '@nestjs/swagger';
-import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
-import { BaseEntity } from '../../database/database.util.js';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  OneToMany,
+  Relation,
+} from 'typeorm';
+import { CoreEntity } from '../../database/database.util.js';
+import { Order } from '../order/order.entity.js';
 
-@Entity()
-export class UserEntity extends BaseEntity {
+@Entity('user')
+export class User extends CoreEntity {
   @Column()
   username!: string;
 
@@ -22,13 +30,14 @@ export class UserEntity extends BaseEntity {
   @ApiHideProperty()
   salt!: string;
 
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Relation<Order>[];
+
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword() {
     if (this.password) {
-      const { password, salt } = (await createHashedPassword(
-        this.password,
-      )) as any;
+      const { password, salt } = await createHashedPassword(this.password);
       this.password = password;
       this.salt = salt;
     }

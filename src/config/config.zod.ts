@@ -10,11 +10,12 @@ export const ConfigSchema = z
     DATABASE_USERNAME: z.string(),
     DATABASE_PASSWORD: z.string(),
     DATABASE_SCHEMA: z.string(),
+    CACHE_HOST: z.string(),
+    CACHE_PORT: z.string(),
+    CACHE_TTL: z.string(),
     JWT_SECRET: z.string(),
     JWT_EXPIRE_TIME: z.string(),
     SLACK_WEBHOOK_URL: z.string(),
-    REDIS_HOST: z.string(),
-    REDIS_TTL: z.number(),
   })
   .strict();
 
