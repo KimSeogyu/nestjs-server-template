@@ -1,9 +1,8 @@
 import { createZodDto } from '@anatine/zod-nestjs';
-import { extendApi } from '@anatine/zod-openapi';
 import { z } from 'zod';
 import { MetadataSchema } from '../../app.zod.js';
 
-export const SignUpInput = z
+export const SignUpInputZ = z
   .object({
     username: z
       .string()
@@ -15,7 +14,7 @@ export const SignUpInput = z
     ),
   })
   .required();
-export const LoginInput = z
+export const LoginInputZ = z
   .object({
     username: z
       .string()
@@ -28,41 +27,32 @@ export const LoginInput = z
   })
   .required();
 
-export const SignUpOutput = z.object({
+export const SignUpOutputZ = z.object({
   username: z
     .string()
     .min(3, 'Username is too short')
     .max(12, 'Username is too long'),
-  id: z.number(),
+  id: z.number().min(1),
   createdAt: z.date(),
   updatedAt: z.date(),
 });
 
-export class SignUpDto extends createZodDto(SignUpInput) {}
+export class SignUpDto extends createZodDto(SignUpInputZ) {}
 
-export const SignupZod = extendApi(SignUpInput, {
-  title: '회원가입',
-  description: '회원가입',
-});
-
-export const SignupResponseZod = z.object({
-  input: SignUpInput,
-  output: SignUpOutput,
+export const SignupResponseZ = z.object({
+  input: SignUpInputZ,
+  output: SignUpOutputZ,
   meta: MetadataSchema,
 });
 
-export class SignupDto extends createZodDto(
-  SignupZod.omit({ password: true }),
-) {}
-
-export const LoginOutput = z.object({
+export const LoginOutputZ = z.object({
   accessToken: z.string(),
 });
-export const LoginResponseZod = z.object({
-  input: LoginInput,
-  output: LoginOutput,
+export const LoginResponseZ = z.object({
+  input: LoginInputZ,
+  output: LoginOutputZ,
   meta: MetadataSchema,
 });
-export class SignupResponse extends createZodDto(SignupResponseZod) {}
+export class SignupResponseDto extends createZodDto(SignupResponseZ) {}
 
-export class LoginResponse extends createZodDto(LoginResponseZod) {}
+export class LoginResponseDto extends createZodDto(LoginResponseZ) {}
