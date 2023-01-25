@@ -1,17 +1,9 @@
-import {
-  createParamDecorator,
-  ExecutionContext,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { isUUID } from 'class-validator';
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { z } from 'zod';
 
 export function requestIdHandler(_data: unknown, context: ExecutionContext) {
   const requestId = context.switchToHttp().getRequest().headers['x-request-id'];
-  if (!requestId || !isUUID(requestId, '4')) {
-    throw new UnauthorizedException('Invalid Uuid');
-  }
-
-  return requestId as string;
+  return z.string().uuid().parse(requestId);
 }
 
 export const RequestId = createParamDecorator(requestIdHandler);
