@@ -34,7 +34,6 @@ export class OrderService {
       skip: query.offset,
       take: query.limit,
     };
-    console.log('query.limit = ' + query.limit);
 
     return await this.orderRepository.findAll(option);
   }
