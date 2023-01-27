@@ -26,7 +26,7 @@ export const numericString = (schema: ZodTypeAny) =>
   }, schema) as z.ZodEffects<z.ZodTypeAny, number, number>;
 
 export const EmptyObjectSchema = z.object({}).required();
-export const QueryOptionZ = z.object({
+export const PagenationOption = z.object({
   offset: numericString(z.number().optional().default(0)),
   limit: numericString(z.number().optional().default(20)),
 });
@@ -34,4 +34,6 @@ export const QueryOptionZ = z.object({
 export type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>;
 };
-export type QueryOption<T> = DeepPartial<T & z.infer<typeof QueryOptionZ>>;
+export type PagenatedQueryOption<T> = DeepPartial<
+  T & z.infer<typeof PagenationOption>
+>;
