@@ -1,8 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
-
-import { ZodValidationPipe } from '@anatine/zod-nestjs';
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 
 import DefaultConfig from './config/index.js';
 
@@ -12,17 +10,18 @@ import { AppService } from './app.service.js';
 import { AuthModule } from './domain/auth/auth.module.js';
 import { UsersModule } from './domain/users/users.module.js';
 
+import { ZodValidationPipe } from '@anatine/zod-nestjs';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { AppCacheModule } from './cache/cache.module.js';
+import { NODE_ENV } from './constants/index.js';
+import { OrderModule } from './domain/order/order.module.js';
 import {
   AllExceptionFilter,
   LifecycleService,
   LoggerMiddleware,
   ResponseTransformerInterceptor,
 } from './infra/index.js';
-import { NODE_ENV } from './constants/index.js';
-import { AppCacheModule } from './cache/cache.module.js';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { OrderModule } from './domain/order/order.module.js';
 
 @Module({
   imports: [

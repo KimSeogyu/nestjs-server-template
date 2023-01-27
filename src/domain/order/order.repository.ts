@@ -3,7 +3,7 @@ import {
   MysqlDatasourceKey,
   OrderRepositoryKey,
 } from '../../constants/index.js';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, FindManyOptions, Repository } from 'typeorm';
 import { Order } from './order.entity.js';
 import { CreateOrderDto } from './order.zod.js';
 
@@ -16,7 +16,7 @@ export class OrderRepository {
   ) {}
 
   async createOrder(dto: CreateOrderDto) {
-    return this.ordersRepository.save({
+    return await this.ordersRepository.save({
       orderType: {
         id: dto.orderTypeId,
       },
@@ -28,5 +28,9 @@ export class OrderRepository {
         id: dto.userId,
       },
     });
+  }
+
+  async findAll(option: FindManyOptions<Order>) {
+    return await this.ordersRepository.find(option);
   }
 }

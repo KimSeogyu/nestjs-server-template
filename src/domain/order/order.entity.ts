@@ -33,7 +33,7 @@ export class OrderStatus extends CoreEntity {
   @Column({ unique: true })
   krName: string;
 
-  @OneToMany((type) => Order, (order) => order.orderStatus)
+  @OneToMany(() => Order, (order) => order.orderStatus)
   orders: Order[];
 }
 
@@ -59,7 +59,7 @@ export class OrderType extends CoreEntity {
   })
   enName: string;
 
-  @OneToMany((type) => Order, (order) => order.orderType)
+  @OneToMany(() => Order, (order) => order.orderType)
   orders: Order[];
 }
 
@@ -74,7 +74,7 @@ export class Order extends CoreEntity {
   })
   orderType: OrderType;
 
-  @ManyToOne((type) => OrderStatus, (orderStatus) => orderStatus.orders, {
+  @ManyToOne(() => OrderStatus, (orderStatus) => orderStatus.orders, {
     cascade: ['insert', 'update'],
   })
   @JoinColumn({

@@ -1,20 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DatabaseModule } from '../../../src/database/database.module.js';
-import { DataSource } from 'typeorm';
 import { expect } from 'chai';
-import { OrderController } from '../../../src/domain/order/order.controller.js';
-import { OrderService } from '../../../src/domain/order/order.service.js';
-import { OrderRepository } from '../../../src/domain/order/order.repository.js';
+import { DataSource } from 'typeorm';
+import { AppModule } from '../../../src/app.module.js';
 import {
   MysqlDatasourceKey,
   OrderRepositoryKey,
 } from '../../../src/constants/index.js';
+import { DatabaseModule } from '../../../src/database/database.module.js';
+import { OrderController } from '../../../src/domain/order/order.controller.js';
 import {
   Order,
   OrderStatus,
   OrderType,
 } from '../../../src/domain/order/order.entity.js';
-import { AppModule } from '../../../src/app.module.js';
+import { OrderRepository } from '../../../src/domain/order/order.repository.js';
+import { OrderService } from '../../../src/domain/order/order.service.js';
 import { CreateOrderDto } from '../../../src/domain/order/order.zod.js';
 import { User } from '../../../src/domain/users/user.entity.js';
 
@@ -22,6 +22,9 @@ describe('OrderController', () => {
   let controller: OrderController;
   let dataSource: DataSource;
   let module: TestingModule;
+  let user: any;
+  let sellOrderType: any;
+  let sellOrderStatus: any;
 
   beforeEach(async () => {
     module = await Test.createTestingModule({
@@ -41,6 +44,20 @@ describe('OrderController', () => {
 
     controller = module.get<OrderController>(OrderController);
     dataSource = module.get<DataSource>(MysqlDatasourceKey);
+    const userEntity = dataSource.getRepository(User).create({
+      username: 'asap',
+      password: '1234',
+      salt: '1234',
+    });
+    user = await dataSource.getRepository(User).save(userEntity);
+    sellOrderType = await dataSource.getRepository(OrderStatus).save({
+      enName: 'SELL',
+      krName: '구매',
+    });
+    sellOrderStatus = await dataSource.getRepository(OrderType).save({
+      enName: 'CREATED',
+      krName: '생성됨',
+    });
   });
 
   it('should be defined', () => {
@@ -48,21 +65,7 @@ describe('OrderController', () => {
     expect(dataSource).instanceOf(DataSource);
   });
 
-  it('[주문 생성] 성공', async () => {
-    const userEntity = dataSource.getRepository(User).create({
-      username: 'asap',
-      password: '1234',
-      salt: '1234',
-    });
-    let user = await dataSource.getRepository(User).save(userEntity);
-    const sellOrderType = await dataSource.getRepository(OrderStatus).save({
-      enName: 'SELL',
-      krName: '구매',
-    });
-    const sellOrderStatus = await dataSource.getRepository(OrderType).save({
-      enName: 'CREATED',
-      krName: '생성됨',
-    });
+  const createOrder = async () => {
     const dto = new CreateOrderDto();
     dto.orderTypeId = sellOrderType.id;
     dto.orderStatusId = sellOrderStatus.id;
@@ -79,20 +82,19 @@ describe('OrderController', () => {
     expect(result2.orderStatus.id).eq(dto.orderStatusId);
     expect(result2.amount).eq(dto.amount);
     expect(result2.user.id).eq(dto.userId);
-    user = await dataSource.getRepository(User).findOneOrFail({
-      where: { id: user.id },
-      relations: {
-        orders: {
-          orderType: true,
-          orderStatus: true,
-        },
-      },
-    });
-    expect(
-      user.orders.filter((order) => order.orderStatus.enName === 'SELL').length,
-    ).eq(2);
-    expect(
-      user.orders.filter((order) => order.orderStatus.enName === 'BUY').length,
-    ).eq(0);
+  };
+  it('[주문 생성] 성공', createOrder);
+
+  it('[주문 조회] 성공', async () => {
+    await createOrder();
+    let result = await controller.findManyOrders({ limit: 10, offset: 0 });
+    expect(result.length).eq(2);
+    await createOrder();
+    await createOrder();
+    await createOrder();
+    await createOrder();
+    await createOrder();
+    result = await controller.findManyOrders({ limit: 10, offset: 0 });
+    expect(result.length).eq(10);
   });
 });

@@ -61,8 +61,8 @@ specifiers:
   zod: ^3.20.2
 
 dependencies:
-  '@anatine/zod-nestjs': 1.8.0_cpu6qqjywon5k36pnzitdnvqnm
-  '@anatine/zod-openapi': 1.11.1_26f3syjlpe3aomwtusmxknd77u
+  '@anatine/zod-nestjs': 1.9.2_2dfrjjldpqguvjlsyycqsxc2pu
+  '@anatine/zod-openapi': 1.12.0_26f3syjlpe3aomwtusmxknd77u
   '@nestjs/common': 9.2.1_gur5swglmallcg77cxouy3yolq
   '@nestjs/config': 2.2.0_b4pxbpa7chblgbyake5iz5rdmu
   '@nestjs/core': 9.2.1_e6la6qvsclaae2becwjnmfvsuq
@@ -132,24 +132,24 @@ packages:
       '@jridgewell/trace-mapping': 0.3.17
     dev: true
 
-  /@anatine/zod-nestjs/1.8.0_cpu6qqjywon5k36pnzitdnvqnm:
-    resolution: {integrity: sha512-+3erKMNJ1w9FoOcl9W1aPCO4hC2A2OBG7ieOEDuvYuCwWw5a/Md7R16Kyp0/cecvne9hRPjhWelLa697ipEUwA==}
+  /@anatine/zod-nestjs/1.9.2_2dfrjjldpqguvjlsyycqsxc2pu:
+    resolution: {integrity: sha512-R8DVdFPJ2TC1oZY5Nrg6+Vsfz9XmlL5mBpnpkiKtT66T7Xj4BU5oCyWEczYdoKJnX1plpzoHRR2mwm/6aNTpmw==}
     peerDependencies:
-      '@nestjs/core': ^7.0.0 || ^8.0.0 || ^9.0.0
+      '@nestjs/common': ^7.0.0 || ^8.0.0 || ^9.0.0
       '@nestjs/swagger': ^6.0.0
       openapi3-ts: ^2.0.0 || ^3.0.0
-      ts-deepmerge: ^4.0.0
-      zod: ^3.17.0 || ^3.18.0
+      ts-deepmerge: 4.0.0
+      zod: ^3.20.0
     dependencies:
-      '@anatine/zod-openapi': 1.11.1_26f3syjlpe3aomwtusmxknd77u
-      '@nestjs/core': 9.2.1_e6la6qvsclaae2becwjnmfvsuq
+      '@anatine/zod-openapi': 1.12.0_26f3syjlpe3aomwtusmxknd77u
+      '@nestjs/common': 9.2.1_gur5swglmallcg77cxouy3yolq
       '@nestjs/swagger': 6.1.4_dntc3uqqknzoduyjojusds5kla
       openapi3-ts: 3.1.2
       zod: 3.20.2
     dev: false
 
-  /@anatine/zod-openapi/1.11.1_26f3syjlpe3aomwtusmxknd77u:
-    resolution: {integrity: sha512-RgsUC5lNYBBRzOcUEIwoxrONslE5TVG7BAYkHAzl04EeZHgxU4i/Oxw8i4rKZv09P03nkjtSn2vdykVSske79Q==}
+  /@anatine/zod-openapi/1.12.0_26f3syjlpe3aomwtusmxknd77u:
+    resolution: {integrity: sha512-ZdkmQFXdc2us0nTBPWiJ3joHxsZoc5G79hKB8QzUuo73zp2A4t4TlBmOjS+hJfMnTBATfJutrlN/wK4DUq6ztg==}
     peerDependencies:
       openapi3-ts: ^2.0.0 || ^3.0.0
       zod: ^3.20.0
