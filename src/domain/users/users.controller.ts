@@ -1,11 +1,12 @@
 import {
-  Body,
-  Delete,
-  Get,
+  Post,
+  HttpCode,
   HttpStatus,
+  Body,
+  Get,
   Param,
   Patch,
-  Post,
+  Delete,
 } from '@nestjs/common';
 import { UsersService } from './users.service.js';
 import { ApiController, JwtAuthGuard } from '../../decorators/index.js';
@@ -25,6 +26,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
@@ -40,6 +42,7 @@ export class UsersController {
   }
 
   @Patch(':id/password')
+  @HttpCode(HttpStatus.OK)
   @ApiResponse({
     type: UpdatePasswordResponseDto,
     status: HttpStatus.OK,
@@ -52,6 +55,7 @@ export class UsersController {
   }
 
   @Patch(':id/username')
+  @HttpCode(HttpStatus.OK)
   @ApiResponse({
     type: UpdateUsernameResponseDto,
     status: HttpStatus.OK,
@@ -64,6 +68,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.OK)
   @ApiResponse({
     type: DeleteUserResponseDto,
     status: HttpStatus.OK,
