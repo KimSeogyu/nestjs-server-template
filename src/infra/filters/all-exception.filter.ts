@@ -9,7 +9,6 @@ import {
 
 import { Response } from 'express';
 
-import moment from 'moment';
 import { IServerResponse } from '../infra.zod.js';
 
 @Catch()
@@ -35,7 +34,7 @@ export class AllExceptionFilter implements ExceptionFilter {
       error: errorResponse,
       meta: {
         isError: true,
-        timestamp: moment().toDate(),
+        timestamp: new Date(),
       },
     };
 

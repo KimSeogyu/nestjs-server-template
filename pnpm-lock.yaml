@@ -37,7 +37,6 @@ specifiers:
   helmet: ^6.0.1
   husky: ^8.0.0
   mocha: ^10.2.0
-  moment: ^2.29.4
   mysql2: ^2.3.3
   nest-winston: ^1.8.0
   nyc: ^15.1.0
@@ -77,7 +76,6 @@ dependencies:
   cache-manager-ioredis: 2.1.0
   chai: 4.3.7
   helmet: 6.0.1
-  moment: 2.29.4
   mysql2: 2.3.3
   nest-winston: 1.8.0_xlxfmi5fzr5alofp25xqzclqqq
   openapi3-ts: 3.1.2
@@ -3825,10 +3823,6 @@ packages:
       yargs-parser: 20.2.4
       yargs-unparser: 2.0.0
     dev: true
-
-  /moment/2.29.4:
-    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
-    dev: false
 
   /ms/2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}

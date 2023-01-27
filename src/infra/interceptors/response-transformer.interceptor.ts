@@ -7,7 +7,6 @@ import {
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import moment from 'moment';
 import { IServerResponse } from '../infra.zod.js';
 
 @Injectable()
@@ -22,7 +21,7 @@ export class ResponseTransformerInterceptor<T>
           output: data,
           meta: {
             isError: false,
-            timestamp: moment().toDate(),
+            timestamp: new Date(),
           },
           error: {},
         }),

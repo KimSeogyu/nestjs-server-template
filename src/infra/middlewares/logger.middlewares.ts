@@ -1,8 +1,5 @@
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
-import moment from 'moment';
-
-moment().format('MMMM-Do-YYYY, h:mm:ss a');
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
