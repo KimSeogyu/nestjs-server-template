@@ -50,7 +50,7 @@ describe('AuthController', function () {
     expect(controller).instanceOf(AuthController);
   });
 
-  it('로그인', async () => {
+  it('[로그인] 성공', async () => {
     const req = {
       user: { username: 'hello', id: 1 },
     };
@@ -59,7 +59,7 @@ describe('AuthController', function () {
     expect(res.accessToken.length).greaterThan(0);
   });
 
-  it('회원가입', async () => {
+  it('[회원가입] 성공', async () => {
     const dto = {
       username: 'user',
       password: '1234',

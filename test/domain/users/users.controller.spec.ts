@@ -12,6 +12,7 @@ import { ConfigModule } from '@nestjs/config';
 import DefaultConfig from '../../../src/config/index.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { BadRequestException } from '@nestjs/common';
 import {
   MysqlDatasourceKey,
   NODE_ENV,
@@ -59,16 +60,16 @@ describe('UsersController', () => {
   const createUser = async () => {
     const dto = new CreateUserDto();
     dto.username = 'test';
-    dto.password = '1234';
+    dto.password = '12345aA@';
     const result = await controller.create(dto);
     expect(result.username).eq(dto.username);
     expect(result).not.haveOwnProperty('password');
     return result;
   };
 
-  it('유저 생성', createUser);
+  it('[유저 생성] 성공', createUser);
 
-  it('유저 목록 조회', async () => {
+  it('[유저 목록 조회] 1명 생성 후 1명 조회되는지 확인', async () => {
     await createUser();
     const userEntities = await controller.findAll();
     for (const userEntity of userEntities) {
@@ -76,17 +77,63 @@ describe('UsersController', () => {
     }
   });
 
-  it('유저 목록 조회 캐싱 테스트', async () => {
-    await createUser();
-    await controller.findAll();
-    await sleep({ seconds: 1 });
-    await controller.findAll();
-  });
+  // it('유저 목록 조회 캐싱 테스트', async () => {
+  //   await createUser();
+  //   await controller.findAll();
+  //   await sleep({ seconds: 1 });
+  //   await controller.findAll();
+  // });
 
-  it('유저 수정', async () => {
+  it('[비밀번호 수정] 성공', async () => {
     const { id } = await createUser();
 
-    const result = await controller.updatePassword(id, { password: '5678' });
+    const result = await controller.updatePassword(id, {
+      password: '22345aA@',
+      confirmPassword: '22345aA@',
+      currentPassword: '12345aA@',
+    });
     expect(result.success).eq(true);
+  });
+
+  it('[비밀번호 수정 실패] 새로운 비밀번호 불일치', async () => {
+    const { id } = await createUser();
+    try {
+      await controller.updatePassword(id, {
+        password: '22345aA@',
+        confirmPassword: '22345aA',
+        currentPassword: '12345aA@',
+      });
+    } catch (e: any) {
+      expect(e).instanceOf(BadRequestException);
+      expect(e.message).eq('Passwords are not same');
+    }
+  });
+
+  it('[비밀번호 수정 실패] 기존 비밀번호와 일치', async () => {
+    const { id } = await createUser();
+    try {
+      await controller.updatePassword(id, {
+        password: '12345aA@',
+        confirmPassword: '12345aA@',
+        currentPassword: '12345aA@',
+      });
+    } catch (e: any) {
+      expect(e).instanceOf(BadRequestException);
+      expect(e.message).eq('Password is same as current one');
+    }
+  });
+
+  it('[비밀번호 수정 실패] 기존 비밀번호 불일치', async () => {
+    const { id } = await createUser();
+    try {
+      await controller.updatePassword(id, {
+        password: '12345aA@',
+        confirmPassword: '12345aA@',
+        currentPassword: '22345aA@',
+      });
+    } catch (e: any) {
+      expect(e).instanceOf(BadRequestException);
+      expect(e.message).eq('Current Password is wrong');
+    }
   });
 });

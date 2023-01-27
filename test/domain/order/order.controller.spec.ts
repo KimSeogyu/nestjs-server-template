@@ -48,7 +48,7 @@ describe('OrderController', () => {
     expect(dataSource).instanceOf(DataSource);
   });
 
-  it('주문 생성', async () => {
+  it('[주문 생성] 성공', async () => {
     const userEntity = dataSource.getRepository(User).create({
       username: 'asap',
       password: '1234',

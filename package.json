@@ -19,6 +19,7 @@
     "mig:up": "typeorm-ts-node-esm migration:run",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "mocha -r ts-node/esm test/**/**/**/*.spec.ts",
+    "test:file": "mocha -r ts-node/esm",
     "test:cov": "nyc mocha -r ts-node/esm test/**/**/**/*.spec.ts",
     "prepare": "husky install"
   },

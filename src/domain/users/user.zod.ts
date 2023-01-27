@@ -4,29 +4,61 @@ import {
   EmptyObjectSchema,
   IsWriteSuccessOutputZ,
   MetadataSchema,
+  PASSWORD_REGEX,
 } from '../../app.zod.js';
 
-export const UserSchema = z
+export const CreateUserZ = z
   .object({
     username: z
       .string()
       .min(3, 'Username is too short')
       .max(12, 'Username is too long'),
-    password: z.string().regex(
-      /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/, // 숫자, 특수문자 제한, 알파벳 대소문자, 여덟 글자 이상
-      'Invalid Password',
-    ),
+    password: z
+      .string()
+      .regex(PASSWORD_REGEX, 'Invalid Password')
+      .min(8)
+      .max(16),
+    confirmPassword: z
+      .string()
+      .regex(PASSWORD_REGEX, 'Invalid Password')
+      .min(8)
+      .max(16),
   })
-  .required();
+  .refine((data) => data.password === data.confirmPassword, {
+    message: `Passwords don't match`,
+    path: ['confirmPassword'],
+  })
+  .innerType();
 
-export class CreateUserDto extends createZodDto(UserSchema) {}
-export const UpdatePasswordInputZ = UserSchema.pick({
-  password: true,
-}).required();
-export class UpdatePasswordDto extends createZodDto(UpdatePasswordInputZ) {}
+export const UpdateUserPasswordInputZ = z
+  .object({
+    currentPassword: z
+      .string()
+      .regex(PASSWORD_REGEX, 'Invalid Password')
+      .min(8)
+      .max(16),
+    password: z
+      .string()
+      .regex(PASSWORD_REGEX, 'Invalid Password')
+      .min(8)
+      .max(16),
+    confirmPassword: z
+      .string()
+      .regex(PASSWORD_REGEX, 'Invalid Password')
+      .min(8)
+      .max(16),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: `Passwords don't match`,
+    path: ['confirmPassword'],
+  });
+
+export class CreateUserDto extends createZodDto(CreateUserZ) {}
+
+export class UpdatePasswordDto extends createZodDto(UpdateUserPasswordInputZ) {}
 export const UpdatePasswordResponseZ = z
   .object({
-    input: UpdatePasswordInputZ,
+    input: UpdateUserPasswordInputZ,
     output: IsWriteSuccessOutputZ,
     meta: MetadataSchema,
   })
@@ -35,9 +67,14 @@ export const UpdatePasswordResponseZ = z
 export class UpdatePasswordResponseDto extends createZodDto(
   UpdatePasswordResponseZ,
 ) {}
-export const UpdateUsernameInputZ = UserSchema.pick({
-  username: true,
-}).required();
+
+export const UpdateUsernameInputZ = z.object({
+  username: z
+    .string()
+    .min(3, 'Username is too short')
+    .max(12, 'Username is too long'),
+});
+
 export class UpdateUsernameDto extends createZodDto(UpdateUsernameInputZ) {}
 export const UpdateUsernameResponseZ = z
   .object({

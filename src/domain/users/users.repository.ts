@@ -11,18 +11,20 @@ import {
 @Injectable()
 export class UsersRepository {
   constructor(
-    @Inject(UserRepositoryKey) private usersRepository: Repository<User>,
-    @Inject(MysqlDatasourceKey) private mysqlProvider: DataSource,
+    @Inject(UserRepositoryKey)
+    private usersRepository: Repository<User>,
+    @Inject(MysqlDatasourceKey)
+    private mysqlProvider: DataSource,
   ) {}
 
   async findOneByUsername(username: string) {
-    return this.usersRepository.findOneBy({
+    return await this.usersRepository.findOneBy({
       username,
     });
   }
 
   async findSecretValuesByUsername(username: string) {
-    return this.usersRepository.findOne({
+    return await this.usersRepository.findOne({
       where: {
         username,
       },
@@ -45,8 +47,10 @@ export class UsersRepository {
     return this.usersRepository.find();
   }
 
-  async updatePasswordById(id: number, dto: UpdatePasswordDto) {
-    const updated = await this.usersRepository.update(id, dto);
+  async updatePasswordById(id: number, password: string) {
+    const updated = await this.usersRepository.update(id, {
+      password,
+    });
     return !!updated.affected;
   }
 
@@ -58,5 +62,16 @@ export class UsersRepository {
   async updateUsernameById(id: number, updateUserDto: UpdateUsernameDto) {
     const updated = await this.usersRepository.update(id, updateUserDto);
     return !!updated.affected;
+  }
+  async findOneUserById(id: number) {
+    return await this.usersRepository.findOne({
+      where: {
+        id,
+      },
+      select: {
+        salt: true,
+        password: true,
+      },
+    });
   }
 }

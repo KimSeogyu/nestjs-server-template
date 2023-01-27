@@ -1,6 +1,6 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
-import { MetadataSchema } from '../../app.zod.js';
+import { MetadataSchema, PASSWORD_REGEX } from '../../app.zod.js';
 
 export const SignUpInputZ = z
   .object({
@@ -8,10 +8,11 @@ export const SignUpInputZ = z
       .string()
       .min(3, 'Username is too short')
       .max(12, 'Username is too long'),
-    password: z.string().regex(
-      /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/, // 숫자, 특수문자 제한, 알파벳 대소문자, 여덟 글자 이상
-      'Invalid Password',
-    ),
+    password: z
+      .string()
+      .regex(PASSWORD_REGEX, 'Invalid Password')
+      .min(8)
+      .max(16),
   })
   .required();
 export const LoginInputZ = z
@@ -20,10 +21,11 @@ export const LoginInputZ = z
       .string()
       .min(3, 'Username is too short')
       .max(12, 'Username is too long'),
-    password: z.string().regex(
-      /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/, // 숫자, 특수문자 제한, 알파벳 대소문자, 여덟 글자 이상
-      'Invalid Password',
-    ),
+    password: z
+      .string()
+      .regex(PASSWORD_REGEX, 'Invalid Password')
+      .min(8)
+      .max(16),
   })
   .required();
 
