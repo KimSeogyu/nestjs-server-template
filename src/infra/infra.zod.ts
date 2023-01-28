@@ -10,7 +10,7 @@ import {
   CreateOrderOutputZ,
 } from 'src/domain/order/order.zod.js';
 import {
-  CreateUserZ,
+  CreateUserInputZ,
   UpdateUsernameInputZ,
   UpdateUserPasswordInputZ,
 } from 'src/domain/users/user.zod.js';
@@ -26,7 +26,7 @@ export const ServerResponseSchema = z
     input: EmptyObjectSchema.or(SignUpInputZ)
       .or(LoginInputZ)
       .or(CreateOrderInputZ)
-      .or(CreateUserZ)
+      .or(CreateUserInputZ)
       .or(UpdateUsernameInputZ)
       .or(UpdateUserPasswordInputZ),
     output: EmptyObjectSchema.or(SignUpOutputZ)

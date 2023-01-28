@@ -64,7 +64,7 @@ export class UsersRepository {
     return !!updated.affected;
   }
   async findOneUserById(id: number) {
-    return await this.usersRepository.findOne({
+    return await this.usersRepository.findOneOrFail({
       where: {
         id,
       },

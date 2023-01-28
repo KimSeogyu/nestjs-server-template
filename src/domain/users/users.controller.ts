@@ -1,24 +1,26 @@
 import {
-  Post,
+  Body,
+  Delete,
+  Get,
   HttpCode,
   HttpStatus,
-  Body,
-  Get,
   Param,
   Patch,
-  Delete,
+  Post,
 } from '@nestjs/common';
-import { UsersService } from './users.service.js';
+import { ApiResponse } from '@nestjs/swagger';
 import { ApiController, JwtAuthGuard } from '../../decorators/index.js';
+
 import {
   CreateUserDto,
+  CreateUserResponseDto,
   DeleteUserResponseDto,
   UpdatePasswordDto,
   UpdatePasswordResponseDto,
   UpdateUsernameDto,
   UpdateUsernameResponseDto,
 } from './user.zod.js';
-import { ApiResponse } from '@nestjs/swagger';
+import { UsersService } from './users.service.js';
 
 @ApiController('users')
 @JwtAuthGuard()
@@ -27,18 +29,22 @@ export class UsersController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @ApiResponse({
+    type: CreateUserResponseDto,
+    status: HttpStatus.CREATED,
+  })
+  async create(@Body() createUserDto: CreateUserDto) {
+    return await this.usersService.create(createUserDto);
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  async findAll() {
+    return await this.usersService.findAll();
   }
 
   @Get(':username')
-  findOne(@Param('username') username: string) {
-    return this.usersService.findOneByUsername(username);
+  async findOne(@Param('username') username: string) {
+    return await this.usersService.findOneByUsername(username);
   }
 
   @Patch(':id/password')
@@ -47,11 +53,11 @@ export class UsersController {
     type: UpdatePasswordResponseDto,
     status: HttpStatus.OK,
   })
-  updatePassword(
+  async updatePassword(
     @Param('id') id: number,
     @Body() passwordDto: UpdatePasswordDto,
   ) {
-    return this.usersService.updatePassword(+id, passwordDto);
+    return await this.usersService.updatePassword(+id, passwordDto);
   }
 
   @Patch(':id/username')
@@ -60,11 +66,11 @@ export class UsersController {
     type: UpdateUsernameResponseDto,
     status: HttpStatus.OK,
   })
-  updateUsername(
+  async updateUsername(
     @Param('id') id: number,
     @Body() usernameDto: UpdateUsernameDto,
   ) {
-    return this.usersService.updateUsername(+id, usernameDto);
+    return await this.usersService.updateUsername(+id, usernameDto);
   }
 
   @Delete(':id')
@@ -73,7 +79,7 @@ export class UsersController {
     type: DeleteUserResponseDto,
     status: HttpStatus.OK,
   })
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.usersService.remove(+id);
   }
 }

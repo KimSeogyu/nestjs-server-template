@@ -20,8 +20,8 @@ export class OrderController {
     type: CreateOrderResponseDto,
     status: HttpStatus.CREATED,
   })
-  createOrder(@Body() dto: CreateOrderDto) {
-    return this.orderService.create(dto);
+  async createOrder(@Body() dto: CreateOrderDto) {
+    return await this.orderService.create(dto);
   }
 
   @Get()
@@ -29,8 +29,8 @@ export class OrderController {
     type: FindManyOrdersResponseDto,
     status: HttpStatus.OK,
   })
-  findManyOrders(@Query() dto: FindManyOrdersDto) {
-    return this.orderService.findAll({
+  async findManyOrders(@Query() dto: FindManyOrdersDto) {
+    return await this.orderService.findAll({
       user: {
         id: dto.userId,
         username: dto.username,

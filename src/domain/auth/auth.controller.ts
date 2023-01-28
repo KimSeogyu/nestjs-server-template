@@ -14,8 +14,8 @@ export class AuthController {
     type: LoginResponseDto,
   })
   @BasicAuthGuard()
-  login(@Request() req: any) {
-    return this.authService.login(req.user);
+  async login(@Request() req: any) {
+    return await this.authService.login(req.user);
   }
 
   @Post('signup')
@@ -23,7 +23,7 @@ export class AuthController {
   @ApiResponse({
     type: SignupResponseDto,
   })
-  signUp(@Body() dto: SignUpDto) {
-    return this.authService.signup(dto);
+  async signUp(@Body() dto: SignUpDto) {
+    return await this.authService.signup(dto);
   }
 }

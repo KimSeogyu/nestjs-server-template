@@ -15,24 +15,26 @@ export class UsersService {
   constructor(private usersRepository: UsersRepository) {}
 
   async findOneByUsername(username: string): Promise<User | null> {
-    return this.usersRepository.findOneByUsername(username);
+    return await this.usersRepository.findOneByUsername(username);
   }
 
   async findSaltAndPasswordByUsername(username: string) {
-    return this.usersRepository.findSecretValuesByUsername(username);
+    return await this.usersRepository.findSecretValuesByUsername(username);
   }
 
   async create(dto: SignUpDto) {
-    return this.usersRepository.saveUser(dto);
+    return await this.usersRepository.saveUser(dto);
   }
 
   @UseCache()
-  findAll() {
-    return this.usersRepository.findAllUsers();
+  async findAll() {
+    return await this.usersRepository.findAllUsers();
   }
 
-  async updatePassword(id: number, dto: UpdatePasswordDto) {
-    const { password, confirmPassword, currentPassword } = dto;
+  async updatePassword(
+    id: number,
+    { password, confirmPassword, currentPassword }: UpdatePasswordDto,
+  ) {
     const user = await this.usersRepository.findOneUserById(id);
 
     const [curHash, newHash] = await Promise.allSettled([
@@ -46,17 +48,13 @@ export class UsersService {
       );
     }
 
-    if (curHash.value.password !== user?.password) {
-      throw new BadRequestException(`Current Password is wrong`);
-    }
-
-    if (newHash.value.password === user?.password) {
-      throw new BadRequestException(`Password is same as current one`);
-    }
-
-    if (confirmPassword !== password) {
-      throw new BadRequestException(`Passwords are not same`);
-    }
+    this.validatePasswordUpdate({
+      curHash,
+      newHash,
+      confirmPassword,
+      password,
+      user,
+    });
 
     return {
       success: await this.usersRepository.updatePasswordById(id, password),
@@ -69,5 +67,31 @@ export class UsersService {
 
   async updateUsername(id: number, dto: UpdateUsernameDto) {
     return { success: await this.usersRepository.updateUsernameById(id, dto) };
+  }
+
+  private validatePasswordUpdate({
+    curHash,
+    newHash,
+    confirmPassword,
+    password,
+    user,
+  }: {
+    curHash: PromiseFulfilledResult<{ password: string; salt: string }>;
+    newHash: PromiseFulfilledResult<{ password: string; salt: string }>;
+    confirmPassword: string;
+    password: string;
+    user: { password: string; salt?: string };
+  }): void {
+    if (curHash.value.password !== user?.password) {
+      throw new BadRequestException(`Current Password is wrong`);
+    }
+
+    if (newHash.value.password === user?.password) {
+      throw new BadRequestException(`Password is same as current one`);
+    }
+
+    if (confirmPassword !== password) {
+      throw new BadRequestException(`Passwords are not same`);
+    }
   }
 }

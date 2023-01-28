@@ -7,7 +7,7 @@ import {
   PASSWORD_REGEX,
 } from '../../app.zod.js';
 
-export const CreateUserZ = z
+export const CreateUserInputZ = z
   .object({
     username: z
       .string()
@@ -52,9 +52,13 @@ export const UpdateUserPasswordInputZ = z
     message: `Passwords don't match`,
     path: ['confirmPassword'],
   });
-
-export class CreateUserDto extends createZodDto(CreateUserZ) {}
-
+export const CreateUserResponseZ = z.object({
+  input: CreateUserInputZ,
+  output: IsWriteSuccessOutputZ,
+  meta: MetadataSchema,
+});
+export class CreateUserDto extends createZodDto(CreateUserInputZ) {}
+export class CreateUserResponseDto extends createZodDto(CreateUserResponseZ) {}
 export class UpdatePasswordDto extends createZodDto(UpdateUserPasswordInputZ) {}
 export const UpdatePasswordResponseZ = z
   .object({
