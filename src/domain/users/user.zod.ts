@@ -5,6 +5,7 @@ import {
   EmptyObjectSchema,
   IsWriteSuccessOutputZ,
   MetadataSchema,
+  numericString,
   PASSWORD_REGEX,
 } from '../../app.zod.js';
 
@@ -66,18 +67,8 @@ export const FindOneUserZ = z.object({
   updatedAt: z.date(),
 });
 
-export const FindOneUserResponseZ = z.object({
-  input: EmptyObjectSchema,
-  output: FindOneUserZ,
-  meta: MetadataSchema,
-});
-export const FindManyUserResponseZ = z.object({
-  input: EmptyObjectSchema,
-  output: z.array(FindOneUserZ),
-  meta: MetadataSchema,
-});
 export class CreateUserDto extends createZodDto(CreateUserInputZ) {}
-export class CreateUserResponseDto extends createZodDto(FindOneUserResponseZ) {}
+
 export class UpdatePasswordDto extends createZodDto(UpdateUserPasswordInputZ) {}
 export const UpdatePasswordResponseZ = z
   .object({
@@ -86,7 +77,22 @@ export const UpdatePasswordResponseZ = z
     meta: MetadataSchema,
   })
   .required();
-
+export const FindOneUserInputZ = z.object({
+  id: numericString(z.number()),
+  username: z.string(),
+});
+export const FindOneUserResponseZ = z.object({
+  input: FindOneUserInputZ,
+  output: FindOneUserZ,
+  meta: MetadataSchema,
+});
+export const FindManyUserResponseZ = z.object({
+  input: EmptyObjectSchema,
+  output: z.array(FindOneUserZ),
+  meta: MetadataSchema,
+});
+export class CreateUserResponseDto extends createZodDto(FindOneUserResponseZ) {}
+export class FindOneUserDto extends createZodDto(FindOneUserInputZ) {}
 export class FindOneUserResponseDto extends createZodDto(
   FindOneUserResponseZ,
 ) {}

@@ -15,17 +15,19 @@ export class ResponseTransformerInterceptor<T>
 {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
-      map(
-        (data): IServerResponse => ({
-          input: context.switchToHttp().getRequest().body,
+      map((data): IServerResponse => {
+        const req = context.switchToHttp().getRequest();
+        const input = req.method === 'GET' ? req.query : req.body;
+        return {
+          input,
           output: data,
           meta: {
             isError: false,
             timestamp: new Date(),
           },
           error: {},
-        }),
-      ),
+        };
+      }),
     );
   }
 }

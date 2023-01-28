@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { ApiController, JwtAuthGuard } from '../../decorators/index.js';
@@ -15,6 +16,7 @@ import {
   CreateUserDto,
   CreateUserResponseDto,
   DeleteUserResponseDto,
+  FindOneUserDto,
   FindManyUserResponseDto,
   FindOneUserResponseDto,
   UpdatePasswordDto,
@@ -55,8 +57,8 @@ export class UsersController {
     type: FindOneUserResponseDto,
     status: HttpStatus.OK,
   })
-  async findOne(@Param('username') username: string) {
-    return await this.usersService.findOneByUsername(username);
+  async findOne(@Query() dto: FindOneUserDto) {
+    return await this.usersService.findOneByUsername(dto.username);
   }
 
   @Patch(':id/password')
