@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { createZodDto } from '@anatine/zod-nestjs';
+import { OrderZ } from '../order/order.zod.js';
 import {
   EmptyObjectSchema,
   IsWriteSuccessOutputZ,
@@ -57,8 +58,26 @@ export const CreateUserResponseZ = z.object({
   output: IsWriteSuccessOutputZ,
   meta: MetadataSchema,
 });
+export const FindOneUserZ = z.object({
+  username: z.string(),
+  orders: z.array(OrderZ).optional(),
+  id: z.number(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+});
+
+export const FindOneUserResponseZ = z.object({
+  input: EmptyObjectSchema,
+  output: FindOneUserZ,
+  meta: MetadataSchema,
+});
+export const FindManyUserResponseZ = z.object({
+  input: EmptyObjectSchema,
+  output: z.array(FindOneUserZ),
+  meta: MetadataSchema,
+});
 export class CreateUserDto extends createZodDto(CreateUserInputZ) {}
-export class CreateUserResponseDto extends createZodDto(CreateUserResponseZ) {}
+export class CreateUserResponseDto extends createZodDto(FindOneUserResponseZ) {}
 export class UpdatePasswordDto extends createZodDto(UpdateUserPasswordInputZ) {}
 export const UpdatePasswordResponseZ = z
   .object({
@@ -68,6 +87,12 @@ export const UpdatePasswordResponseZ = z
   })
   .required();
 
+export class FindOneUserResponseDto extends createZodDto(
+  FindOneUserResponseZ,
+) {}
+export class FindManyUserResponseDto extends createZodDto(
+  FindManyUserResponseZ,
+) {}
 export class UpdatePasswordResponseDto extends createZodDto(
   UpdatePasswordResponseZ,
 ) {}

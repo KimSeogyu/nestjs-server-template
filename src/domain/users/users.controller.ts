@@ -15,6 +15,8 @@ import {
   CreateUserDto,
   CreateUserResponseDto,
   DeleteUserResponseDto,
+  FindManyUserResponseDto,
+  FindOneUserResponseDto,
   UpdatePasswordDto,
   UpdatePasswordResponseDto,
   UpdateUsernameDto,
@@ -38,11 +40,21 @@ export class UsersController {
   }
 
   @Get()
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    type: FindManyUserResponseDto,
+    status: HttpStatus.OK,
+  })
   async findAll() {
     return await this.usersService.findAll();
   }
 
   @Get(':username')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    type: FindOneUserResponseDto,
+    status: HttpStatus.OK,
+  })
   async findOne(@Param('username') username: string) {
     return await this.usersService.findOneByUsername(username);
   }
