@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { createZodDto } from '@anatine/zod-nestjs';
-import { MetadataSchema, PagenationOption } from '../../app.zod.js';
+import { MetadataSchema, GeneralQueryFilterDto } from '../../app.zod.js';
 
 export const OrderStatusZ = z.object({
   id: z.number(),
@@ -60,7 +60,7 @@ export const FindManyOrdersInputZ = z
     orderStatusId: z.number().optional(),
     orderStatusEnName: z.string().optional(),
   })
-  .extend(PagenationOption.shape);
+  .extend(GeneralQueryFilterDto.shape);
 
 export class FindManyOrdersDto extends createZodDto(FindManyOrdersInputZ) {}
 export class FindManyOrdersResponseDto extends createZodDto(z.array(OrderZ)) {}

@@ -3,7 +3,7 @@ import { CreateOrderDto } from './order.zod.js';
 import { OrderRepository } from './order.repository.js';
 import { FindManyOptions } from 'typeorm';
 import { Order } from './order.entity.js';
-import { PagenatedQueryOption } from 'src/app.zod.js';
+import { GeneralQueryFilter } from 'src/app.zod.js';
 
 @Injectable()
 export class OrderService {
@@ -14,7 +14,7 @@ export class OrderService {
   }
 
   async findAll(
-    query: PagenatedQueryOption<
+    query: GeneralQueryFilter<
       Pick<Order, 'user' | 'orderType' | 'orderStatus'>
     >,
   ) {

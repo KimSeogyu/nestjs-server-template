@@ -2,7 +2,10 @@ import { z } from 'zod';
 
 const CacheOptionsSchema = z.object({
   key: z.string().optional(),
-  ttl: z.number().optional(),
+  ttl: z
+    .number()
+    .optional()
+    .default(60 * 1000),
   fields: z.array(z.string()).optional(),
 });
 

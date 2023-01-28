@@ -26,14 +26,31 @@ export const numericString = (schema: ZodTypeAny) =>
   }, schema) as z.ZodEffects<z.ZodTypeAny, number, number>;
 
 export const EmptyObjectSchema = z.object({}).required();
-export const PagenationOption = z.object({
-  offset: numericString(z.number().optional().default(0)),
-  limit: numericString(z.number().optional().default(20)),
-});
+export const GeneralQueryFilterDto = z
+  .object({
+    offset: numericString(z.number().default(0)),
+    limit: numericString(z.number().default(20)),
+    startDt: z.coerce
+      .date()
+      .min(new Date('2000-01-01'), { message: 'Too old' }),
+    endDt: z.coerce.date().max(new Date(), { message: 'Too young!' }),
+  })
+  .deepPartial();
 
-export type DeepPartial<T> = {
-  [P in keyof T]?: DeepPartial<T[P]>;
-};
-export type PagenatedQueryOption<T> = DeepPartial<
-  T & z.infer<typeof PagenationOption>
+export declare type DeepPartial<T> =
+  | T
+  | (T extends Array<infer U>
+      ? DeepPartial<U>[]
+      : T extends Map<infer K, infer V>
+      ? Map<DeepPartial<K>, DeepPartial<V>>
+      : T extends Set<infer M>
+      ? Set<DeepPartial<M>>
+      : T extends object
+      ? {
+          [K in keyof T]?: DeepPartial<T[K]>;
+        }
+      : T);
+
+export type GeneralQueryFilter<T = void> = DeepPartial<
+  T & z.infer<typeof GeneralQueryFilterDto>
 >;

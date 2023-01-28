@@ -7,7 +7,6 @@ import { UsersController } from '../../../src/domain/users/users.controller.js';
 import { UsersRepository } from '../../../src/domain/users/users.repository.js';
 import { UsersService } from '../../../src/domain/users/users.service.js';
 import { CreateUserDto } from '../../../src/domain/users/user.zod.js';
-import { sleep } from '../../../src/utils/index.js';
 import { ConfigModule } from '@nestjs/config';
 import DefaultConfig from '../../../src/config/index.js';
 import { dirname } from 'path';
@@ -71,7 +70,7 @@ describe('UsersController', () => {
 
   it('[유저 목록 조회] 1명 생성 후 1명 조회되는지 확인', async () => {
     await createUser();
-    const userEntities = await controller.findAll();
+    const userEntities = await controller.findAll({});
     for (const userEntity of userEntities) {
       expect(userEntity).instanceOf(User);
     }
@@ -87,22 +86,28 @@ describe('UsersController', () => {
   it('[비밀번호 수정] 성공', async () => {
     const { id } = await createUser();
 
-    const result = await controller.updatePassword(id, {
-      password: '22345aA@',
-      confirmPassword: '22345aA@',
-      currentPassword: '12345aA@',
-    });
+    const result = await controller.updatePassword(
+      { id },
+      {
+        password: '22345aA@',
+        confirmPassword: '22345aA@',
+        currentPassword: '12345aA@',
+      },
+    );
     expect(result.success).eq(true);
   });
 
   it('[비밀번호 수정 실패] 새로운 비밀번호 불일치', async () => {
     const { id } = await createUser();
     try {
-      await controller.updatePassword(id, {
-        password: '22345aA@',
-        confirmPassword: '22345aA',
-        currentPassword: '12345aA@',
-      });
+      await controller.updatePassword(
+        { id },
+        {
+          password: '22345aA@',
+          confirmPassword: '22345aA',
+          currentPassword: '12345aA@',
+        },
+      );
     } catch (e: any) {
       expect(e).instanceOf(BadRequestException);
       expect(e.message).eq('Passwords are not same');
@@ -112,11 +117,14 @@ describe('UsersController', () => {
   it('[비밀번호 수정 실패] 기존 비밀번호와 일치', async () => {
     const { id } = await createUser();
     try {
-      await controller.updatePassword(id, {
-        password: '12345aA@',
-        confirmPassword: '12345aA@',
-        currentPassword: '12345aA@',
-      });
+      await controller.updatePassword(
+        { id },
+        {
+          password: '12345aA@',
+          confirmPassword: '12345aA@',
+          currentPassword: '12345aA@',
+        },
+      );
     } catch (e: any) {
       expect(e).instanceOf(BadRequestException);
       expect(e.message).eq('Password is same as current one');
@@ -126,11 +134,14 @@ describe('UsersController', () => {
   it('[비밀번호 수정 실패] 기존 비밀번호 불일치', async () => {
     const { id } = await createUser();
     try {
-      await controller.updatePassword(id, {
-        password: '12345aA@',
-        confirmPassword: '12345aA@',
-        currentPassword: '22345aA@',
-      });
+      await controller.updatePassword(
+        { id },
+        {
+          password: '12345aA@',
+          confirmPassword: '12345aA@',
+          currentPassword: '22345aA@',
+        },
+      );
     } catch (e: any) {
       expect(e).instanceOf(BadRequestException);
       expect(e.message).eq('Current Password is wrong');

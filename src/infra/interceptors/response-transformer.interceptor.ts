@@ -17,7 +17,10 @@ export class ResponseTransformerInterceptor<T>
     return next.handle().pipe(
       map((data): IServerResponse => {
         const req = context.switchToHttp().getRequest();
-        const input = req.method === 'GET' ? req.query : req.body;
+        const input =
+          req.method === 'GET'
+            ? { query: req.query, param: req.param }
+            : { body: req.body, param: req.param };
         return {
           input,
           output: data,

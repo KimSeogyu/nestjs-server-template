@@ -15,25 +15,24 @@ import {
 import { Cache } from 'cache-manager';
 import { ConfigService } from '@nestjs/config';
 import { APP_CACHE_METADATA, AppCacheOption } from './cache.zod.js';
-import * as redisStore from 'cache-manager-ioredis';
+import { redisStore } from 'cache-manager-ioredis-yet';
 
 @Module({
   imports: [
     DiscoveryModule,
     CacheModule.registerAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
+      useFactory: async (configService: ConfigService) => ({
         host: configService.getOrThrow('CACHE_HOST'),
         port: +configService.getOrThrow('CACHE_PORT'),
         ttl: +configService.getOrThrow('CACHE_TTL'),
-        store: redisStore,
+        store: await redisStore(),
       }),
     }),
   ],
 })
 export class AppCacheModule implements OnModuleInit {
   constructor(
-    private readonly configService: ConfigService,
     private readonly discoveryService: DiscoveryService,
     private readonly metadataScanner: MetadataScanner,
     private readonly reflector: Reflector,
@@ -90,6 +89,7 @@ export class AppCacheModule implements OnModuleInit {
 
         const data = await originalMethod(...args);
         await this.cacheManger.set(cacheKey, data, metadata.ttl);
+
         return data;
       };
     };

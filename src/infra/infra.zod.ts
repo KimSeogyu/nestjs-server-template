@@ -1,39 +1,18 @@
 import { z } from 'zod';
-import {
-  LoginInputZ,
-  LoginOutputZ,
-  SignUpInputZ,
-  SignUpOutputZ,
-} from 'src/domain/auth/auth.zod.js';
-import {
-  CreateOrderInputZ,
-  CreateOrderOutputZ,
-} from 'src/domain/order/order.zod.js';
-import {
-  CreateUserInputZ,
-  UpdateUsernameInputZ,
-  UpdateUserPasswordInputZ,
-} from 'src/domain/users/user.zod.js';
-import {
-  EmptyObjectSchema,
-  IsWriteSuccessOutputZ,
-  MetadataSchema,
-} from '../app.zod.js';
+import { MetadataSchema } from '../app.zod.js';
 
 export const ServerResponseSchema = z
   .object({
     meta: MetadataSchema.required(),
-    input: EmptyObjectSchema.or(SignUpInputZ)
-      .or(LoginInputZ)
-      .or(CreateOrderInputZ)
-      .or(CreateUserInputZ)
-      .or(UpdateUsernameInputZ)
-      .or(UpdateUserPasswordInputZ),
-    output: EmptyObjectSchema.or(SignUpOutputZ)
-      .or(LoginOutputZ)
-      .or(CreateOrderOutputZ)
-      .or(IsWriteSuccessOutputZ),
-    error: z.string().or(EmptyObjectSchema).optional(),
+    input: z
+      .object({
+        query: z.record(z.string(), z.any()),
+        body: z.record(z.string(), z.any()),
+        param: z.record(z.string(), z.any()),
+      })
+      .deepPartial(),
+    output: z.record(z.string(), z.any()),
+    error: z.record(z.string(), z.any()).optional().or(z.string().optional()),
   })
   .required();
 

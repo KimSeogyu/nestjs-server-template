@@ -6,6 +6,7 @@ import { dirname } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 export const databaseProviders = [
+  // TODO: https://talentwilshowitself.tistory.com/entry/NestJS-TypeORM-Migration-%EC%84%A4%EC%A0%95
   {
     provide: MysqlDatasourceKey,
     inject: [ConfigService],
@@ -27,6 +28,7 @@ export const databaseProviders = [
           host: configService.getOrThrow('DATABASE_HOST'),
           port: +configService.getOrThrow('DATABASE_PORT'),
           username: configService.getOrThrow('DATABASE_USERNAME'),
+
           password: configService.getOrThrow('DATABASE_PASSWORD'),
           database: configService.getOrThrow('DATABASE_SCHEMA'),
           entities: [__dirname + '/../**/*.entity.{ts,js}'],

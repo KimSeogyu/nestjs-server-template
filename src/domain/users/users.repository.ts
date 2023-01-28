@@ -1,12 +1,20 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import {
+  Between,
+  DataSource,
+  DeepPartial,
+  FindOperator,
+  FindOptionsWhere,
+  Repository,
+} from 'typeorm';
 import { User } from './user.entity.js';
 import { SignUpDto } from '../auth/auth.zod.js';
-import { UpdatePasswordDto, UpdateUsernameDto } from './user.zod.js';
+import { UpdateUsernameDto } from './user.zod.js';
 import {
   MysqlDatasourceKey,
   UserRepositoryKey,
 } from '../../constants/index.js';
+import { GeneralQueryFilter } from '../../app.zod.js';
 
 @Injectable()
 export class UsersRepository {
@@ -43,8 +51,17 @@ export class UsersRepository {
     return result;
   }
 
-  async findAllUsers() {
-    return this.usersRepository.find();
+  async findAllUsers(q: GeneralQueryFilter) {
+    const where: { createdAt?: any } = {};
+
+    if (q.startDt && q.endDt) {
+      where.createdAt = Between(q.startDt, q.endDt);
+    }
+    return await this.usersRepository.find({
+      where,
+      skip: q.offset,
+      take: q.limit,
+    });
   }
 
   async updatePasswordById(id: number, password: string) {

@@ -14,8 +14,6 @@ specifiers:
   '@nestjs/schematics': ^9.0.0
   '@nestjs/swagger': ^6.1.4
   '@nestjs/testing': ^9.0.0
-  '@types/cache-manager': ^4.0.2
-  '@types/cache-manager-ioredis': ^2.0.3
   '@types/chai': ^4.3.4
   '@types/expect': ^24.3.0
   '@types/express': ^4.17.13
@@ -29,7 +27,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.0.0
   '@typescript-eslint/parser': ^5.0.0
   cache-manager: ^5.1.4
-  cache-manager-ioredis: ^2.1.0
+  cache-manager-ioredis-yet: ^1.1.0
   chai: ^4.3.7
   eslint: ^8.0.1
   eslint-config-prettier: ^8.3.0
@@ -73,7 +71,7 @@ dependencies:
   '@nestjs/swagger': 6.1.4_dntc3uqqknzoduyjojusds5kla
   '@types/chai': 4.3.4
   cache-manager: 5.1.4
-  cache-manager-ioredis: 2.1.0
+  cache-manager-ioredis-yet: 1.1.0
   chai: 4.3.7
   helmet: 6.0.1
   mysql2: 2.3.3
@@ -95,8 +93,6 @@ devDependencies:
   '@nestjs/cli': 9.1.8
   '@nestjs/schematics': 9.0.4_typescript@4.9.4
   '@nestjs/testing': 9.2.1_wdbvfsxfdwzlwdfiyh2gynjl4m
-  '@types/cache-manager': 4.0.2
-  '@types/cache-manager-ioredis': 2.0.3
   '@types/expect': 24.3.0
   '@types/express': 4.17.15
   '@types/mocha': 10.0.1
@@ -485,6 +481,10 @@ packages:
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
+
+  /@ioredis/commands/1.2.0:
+    resolution: {integrity: sha512-Sx1pU8EM64o2BrqNpEO1CNLtKQwyhuXuqyfH7oGKCk+1a33d2r5saW8zNwm3j6BTExtjrv2BxTgzzkMwts6vGg==}
+    dev: false
 
   /@istanbuljs/load-nyc-config/1.1.0:
     resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==}
@@ -909,17 +909,6 @@ packages:
       '@types/node': 16.18.11
     dev: true
 
-  /@types/cache-manager-ioredis/2.0.3:
-    resolution: {integrity: sha512-IIwKdlUSztH0TMk1ikRes2CDr2vV4UrSMKhdZ6fBN1++PdgAl/JsxHKRzaSThGqjDUb0UzcWo7dZF4RPPMInMA==}
-    dependencies:
-      '@types/cache-manager': 4.0.2
-      '@types/ioredis': 4.28.10
-    dev: true
-
-  /@types/cache-manager/4.0.2:
-    resolution: {integrity: sha512-fT5FMdzsiSX0AbgnS5gDvHl2Nco0h5zYyjwDQy4yPC7Ww6DeGMVKPRqIZtg9HOXDV2kkc18SL1B0N8f0BecrCA==}
-    dev: true
-
   /@types/chai/4.3.4:
     resolution: {integrity: sha512-KnRanxnpfpjUTqTCXslZSEdLfXExwgNxYPdiO2WGUj8+HDjFi8R3k5RVKPeSCzLjCcshCAtVO2QBbVuAV4kTnw==}
     dev: false
@@ -974,12 +963,6 @@ packages:
       '@types/express-serve-static-core': 4.17.32
       '@types/qs': 6.9.7
       '@types/serve-static': 1.15.0
-    dev: true
-
-  /@types/ioredis/4.28.10:
-    resolution: {integrity: sha512-69LyhUgrXdgcNDv7ogs1qXZomnfOEnSmrmMFqKgt1XMJxmoOSG/u3wYy13yACIfKuMJ8IhKgHafDO3sx19zVQQ==}
-    dependencies:
-      '@types/node': 16.18.11
     dev: true
 
   /@types/istanbul-lib-coverage/2.0.4:
@@ -1716,11 +1699,12 @@ packages:
       - bluebird
     optional: true
 
-  /cache-manager-ioredis/2.1.0:
-    resolution: {integrity: sha512-TCxbp9ceuFveTKWuNaCX8QjoC41rAlHen4s63u9Yd+iXlw3efYmimc/u935PKPxSdhkXpnMes4mxtK3/yb0L4g==}
-    engines: {node: '>=6.0.0'}
+  /cache-manager-ioredis-yet/1.1.0:
+    resolution: {integrity: sha512-bGBAq8oNzzNkO2dwlYGWBxNXrz4w8FUTpe3nfUydJ6bm1ixKEcSUKYksGokQMaRgqkQjMbIHWFkvb8p+V9ZKqw==}
+    engines: {node: '>= 16.17.0'}
     dependencies:
-      ioredis: 4.28.5
+      cache-manager: 5.1.4
+      ioredis: 5.3.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -2142,11 +2126,6 @@ packages:
 
   /delegates/1.0.0:
     resolution: {integrity: sha512-bd2L678uiWATM6m5Z1VzNCErI3jiGzt6HGY8OVICs40JQq/HALfbyNJmp0UDakEY4pMMaN0Ly5om/B1VI/+xfQ==}
-
-  /denque/1.5.1:
-    resolution: {integrity: sha512-XwE+iZ4D6ZUB7mfYRMb5wByE8L74HCn30FBN7sWnXksWc1LO1bPDl67pBR9o/kC4z/xSNAwkMYcGgqDV3BE3Hw==}
-    engines: {node: '>=0.10'}
-    dev: false
 
   /denque/2.1.0:
     resolution: {integrity: sha512-HVQE3AAb/pxF8fQAoiqpvg9i3evqug3hoiwakOyZAwJm+6vZehbkYXZ0l4JxS+I3QxM97v5aaRNhj8v5oBhekw==}
@@ -3117,18 +3096,16 @@ packages:
     engines: {node: '>= 0.10'}
     dev: true
 
-  /ioredis/4.28.5:
-    resolution: {integrity: sha512-3GYo0GJtLqgNXj4YhrisLaNNvWSNwSS2wS4OELGfGxH8I69+XfNdnmV1AyN+ZqMh0i7eX+SWjrwFKDBDgfBC1A==}
-    engines: {node: '>=6'}
+  /ioredis/5.3.0:
+    resolution: {integrity: sha512-Id9jKHhsILuIZpHc61QkagfVdUj2Rag5GzG1TGEvRNeM7dtTOjICgjC+tvqYxi//PuX2wjQ+Xjva2ONBuf92Pw==}
+    engines: {node: '>=12.22.0'}
     dependencies:
+      '@ioredis/commands': 1.2.0
       cluster-key-slot: 1.1.2
       debug: 4.3.4
-      denque: 1.5.1
+      denque: 2.1.0
       lodash.defaults: 4.2.0
-      lodash.flatten: 4.4.0
       lodash.isarguments: 3.1.0
-      p-map: 2.1.0
-      redis-commands: 1.7.0
       redis-errors: 1.2.0
       redis-parser: 3.0.0
       standard-as-callback: 2.1.0
@@ -3505,10 +3482,6 @@ packages:
 
   /lodash.defaults/4.2.0:
     resolution: {integrity: sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==}
-    dev: false
-
-  /lodash.flatten/4.4.0:
-    resolution: {integrity: sha512-C5N2Z3DgnnKr0LOpv/hKCgKdb7ZZwafIrsesve6lmzvZIRZRGaZ/l6Q8+2W7NaT+ZwO3fFlSCzCzrDCFdJfZ4g==}
     dev: false
 
   /lodash.flattendeep/4.4.0:
@@ -4149,11 +4122,6 @@ packages:
       p-limit: 3.1.0
     dev: true
 
-  /p-map/2.1.0:
-    resolution: {integrity: sha512-y3b8Kpd8OAN444hxfBbFfj1FY/RjtTd8tzYwhUqNYXx0fXx2iX4maP4Qr6qhIKbQXI02wTLAda4fYUbDagTUFw==}
-    engines: {node: '>=6'}
-    dev: false
-
   /p-map/3.0.0:
     resolution: {integrity: sha512-d3qXVTF/s+W+CdJ5A29wywV2n8CQQYahlgz2bFiA+4eVNJbHJodPZ+/gXwPGh0bOqA+j8S+6+ckmvLGPk1QpxQ==}
     engines: {node: '>=8'}
@@ -4458,10 +4426,6 @@ packages:
     dependencies:
       resolve: 1.22.1
     dev: true
-
-  /redis-commands/1.7.0:
-    resolution: {integrity: sha512-nJWqw3bTFy21hX/CPKHth6sfhZbdiHP6bTawSgQBlKOVRG7EZkfHbbHwQJnrE4vsQf0CMNE+3gJ4Fmm16vdVlQ==}
-    dev: false
 
   /redis-errors/1.2.0:
     resolution: {integrity: sha512-1qny3OExCf0UvUV/5wpYKf2YwPcOqXzkwKKSmKHiE6ZMQs5heeE/c8eXK+PNllPvmjgAbfnsbpkGZWy8cBpn9w==}

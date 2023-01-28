@@ -9,7 +9,7 @@ import {
 import { CoreEntity } from '../../database/database.util.js';
 import { User } from '../users/user.entity.js';
 
-@Entity('order_statuses')
+@Entity('order_status')
 export class OrderStatus extends CoreEntity {
   /**
    * 생성됨

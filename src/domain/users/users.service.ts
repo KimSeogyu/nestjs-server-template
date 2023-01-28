@@ -9,6 +9,7 @@ import { SignUpDto } from '../auth/auth.zod.js';
 import { UpdatePasswordDto, UpdateUsernameDto } from './user.zod.js';
 import { UseCache } from '../../decorators/index.js';
 import { createHashedPassword } from './user.entity.js';
+import { GeneralQueryFilter } from '../../app.zod.js';
 
 @Injectable()
 export class UsersService {
@@ -27,8 +28,8 @@ export class UsersService {
   }
 
   @UseCache()
-  async findAll() {
-    return await this.usersRepository.findAllUsers();
+  async findAll(query: GeneralQueryFilter<User>) {
+    return await this.usersRepository.findAllUsers(query);
   }
 
   async updatePassword(

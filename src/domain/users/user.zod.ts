@@ -1,8 +1,8 @@
-import { z } from 'zod';
 import { createZodDto } from '@anatine/zod-nestjs';
-import { OrderZ } from '../order/order.zod.js';
+import { z } from 'zod';
+
 import {
-  EmptyObjectSchema,
+  GeneralQueryFilterDto,
   IsWriteSuccessOutputZ,
   MetadataSchema,
   numericString,
@@ -54,53 +54,62 @@ export const UpdateUserPasswordInputZ = z
     message: `Passwords don't match`,
     path: ['confirmPassword'],
   });
-export const CreateUserResponseZ = z.object({
-  input: CreateUserInputZ,
-  output: IsWriteSuccessOutputZ,
-  meta: MetadataSchema,
-});
+
 export const FindOneUserZ = z.object({
   username: z.string(),
-  orders: z.array(OrderZ).optional(),
-  id: z.number(),
+  id: numericString(z.number()),
   createdAt: z.date(),
   updatedAt: z.date(),
 });
-
+export const UserIdParamZ = FindOneUserZ.pick({ id: true }).required();
 export class CreateUserDto extends createZodDto(CreateUserInputZ) {}
 
 export class UpdatePasswordDto extends createZodDto(UpdateUserPasswordInputZ) {}
-export const UpdatePasswordResponseZ = z
-  .object({
-    input: UpdateUserPasswordInputZ,
-    output: IsWriteSuccessOutputZ,
+
+export class CreateUserResponseDto extends createZodDto(
+  z.object({
+    input: z.object({
+      body: CreateUserInputZ,
+    }),
+    output: FindOneUserZ,
     meta: MetadataSchema,
-  })
-  .required();
-export const FindOneUserInputZ = z.object({
-  id: numericString(z.number()),
-  username: z.string(),
-});
-export const FindOneUserResponseZ = z.object({
-  input: FindOneUserInputZ,
-  output: FindOneUserZ,
-  meta: MetadataSchema,
-});
-export const FindManyUserResponseZ = z.object({
-  input: EmptyObjectSchema,
-  output: z.array(FindOneUserZ),
-  meta: MetadataSchema,
-});
-export class CreateUserResponseDto extends createZodDto(FindOneUserResponseZ) {}
-export class FindOneUserDto extends createZodDto(FindOneUserInputZ) {}
-export class FindOneUserResponseDto extends createZodDto(
-  FindOneUserResponseZ,
+  }),
 ) {}
+
+export class FindOneUserByUsernameDto extends createZodDto(
+  FindOneUserZ.pick({ username: true }).required(),
+) {}
+export class FindOneyUsernameResponseDto extends createZodDto(
+  z.object({
+    input: z.object({
+      param: FindOneUserZ.pick({ username: true }).required(),
+    }),
+    output: FindOneUserZ,
+    meta: MetadataSchema,
+  }),
+) {}
+export class FindManyUsersDto extends createZodDto(GeneralQueryFilterDto) {}
 export class FindManyUserResponseDto extends createZodDto(
-  FindManyUserResponseZ,
+  z.object({
+    input: z.object({
+      query: GeneralQueryFilterDto,
+    }),
+    output: z.array(FindOneUserZ),
+    meta: MetadataSchema,
+  }),
 ) {}
+
 export class UpdatePasswordResponseDto extends createZodDto(
-  UpdatePasswordResponseZ,
+  z
+    .object({
+      input: z.object({
+        param: UserIdParamZ,
+        body: UpdateUserPasswordInputZ,
+      }),
+      output: IsWriteSuccessOutputZ,
+      meta: MetadataSchema,
+    })
+    .required(),
 ) {}
 
 export const UpdateUsernameInputZ = z.object({
@@ -111,22 +120,27 @@ export const UpdateUsernameInputZ = z.object({
 });
 
 export class UpdateUsernameDto extends createZodDto(UpdateUsernameInputZ) {}
-export const UpdateUsernameResponseZ = z
-  .object({
-    input: UpdateUsernameInputZ,
-    output: IsWriteSuccessOutputZ,
-    meta: MetadataSchema,
-  })
-  .required();
-
 export class UpdateUsernameResponseDto extends createZodDto(
-  UpdateUsernameResponseZ,
+  z
+    .object({
+      input: z.object({
+        param: UserIdParamZ,
+        body: UpdateUsernameInputZ,
+      }),
+      output: IsWriteSuccessOutputZ,
+      meta: MetadataSchema,
+    })
+    .required(),
 ) {}
-
-const DeleteUserResponseZ = z.object({
-  input: EmptyObjectSchema,
-  output: IsWriteSuccessOutputZ,
-  meta: MetadataSchema,
-});
-
-export class DeleteUserResponseDto extends createZodDto(DeleteUserResponseZ) {}
+export class QueryByUserIdDto extends createZodDto(UserIdParamZ) {}
+export class DeleteUserResponseDto extends createZodDto(
+  z
+    .object({
+      input: z.object({
+        param: UserIdParamZ,
+      }),
+      output: IsWriteSuccessOutputZ,
+      meta: MetadataSchema,
+    })
+    .required(),
+) {}

@@ -16,18 +16,20 @@ import {
   CreateUserDto,
   CreateUserResponseDto,
   DeleteUserResponseDto,
-  FindOneUserDto,
+  FindOneUserByUsernameDto,
   FindManyUserResponseDto,
-  FindOneUserResponseDto,
+  FindOneyUsernameResponseDto,
   UpdatePasswordDto,
   UpdatePasswordResponseDto,
   UpdateUsernameDto,
   UpdateUsernameResponseDto,
+  QueryByUserIdDto,
+  FindManyUsersDto,
 } from './user.zod.js';
 import { UsersService } from './users.service.js';
 
 @ApiController('users')
-@JwtAuthGuard()
+// @JwtAuthGuard()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -47,17 +49,17 @@ export class UsersController {
     type: FindManyUserResponseDto,
     status: HttpStatus.OK,
   })
-  async findAll() {
-    return await this.usersService.findAll();
+  async findAll(@Query() dto: FindManyUsersDto) {
+    return await this.usersService.findAll(dto);
   }
 
   @Get(':username')
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
-    type: FindOneUserResponseDto,
+    type: FindOneyUsernameResponseDto,
     status: HttpStatus.OK,
   })
-  async findOne(@Query() dto: FindOneUserDto) {
+  async findOne(@Query() dto: FindOneUserByUsernameDto) {
     return await this.usersService.findOneByUsername(dto.username);
   }
 
@@ -68,10 +70,10 @@ export class UsersController {
     status: HttpStatus.OK,
   })
   async updatePassword(
-    @Param('id') id: number,
+    @Param() dto: QueryByUserIdDto,
     @Body() passwordDto: UpdatePasswordDto,
   ) {
-    return await this.usersService.updatePassword(+id, passwordDto);
+    return await this.usersService.updatePassword(dto.id, passwordDto);
   }
 
   @Patch(':id/username')
@@ -81,10 +83,10 @@ export class UsersController {
     status: HttpStatus.OK,
   })
   async updateUsername(
-    @Param('id') id: number,
+    @Param() dto: QueryByUserIdDto,
     @Body() usernameDto: UpdateUsernameDto,
   ) {
-    return await this.usersService.updateUsername(+id, usernameDto);
+    return await this.usersService.updateUsername(dto.id, usernameDto);
   }
 
   @Delete(':id')
@@ -93,7 +95,7 @@ export class UsersController {
     type: DeleteUserResponseDto,
     status: HttpStatus.OK,
   })
-  async remove(@Param('id') id: string) {
-    return await this.usersService.remove(+id);
+  async remove(@Param() dto: QueryByUserIdDto) {
+    return await this.usersService.remove(dto.id);
   }
 }
