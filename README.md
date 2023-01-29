@@ -3,7 +3,6 @@
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
 # Nestjs Server Template
@@ -16,9 +15,9 @@
 </p>
 
 <p align='center'>
-    <img src="https://img.shields.io/badge/Node-v18.12.1-2C8EBB?style=for-the-badge&logo=node.js&logoColor=green"/>
+    <img src="https://img.shields.io/badge/Node-v18.13.0-2C8EBB?style=for-the-badge&logo=node.js&logoColor=green"/>
     <img src="https://img.shields.io/badge/Typescript-v4.9.4-2C8EBB?style=for-the-badge&logoColor=blue&logo=typescript"/>
-    <img src="https://img.shields.io/badge/pnpm-v7.18.2-2C8EBB?style=for-the-badge&logo=pnpm&logoColor=blue"/>
+    <img src="https://img.shields.io/badge/pnpm-v7.26.1-2C8EBB?style=for-the-badge&logo=pnpm&logoColor=blue"/>
     <img src="https://img.shields.io/badge/nestjs-v9.1.6-2C8EBB?style=for-the-badge&logoColor=red&logo=nestjs"/>
     <img src="https://img.shields.io/badge/mocha-v10.2.0-2C8EBB?style=for-the-badge&logoColor=red&logo=mocha"/>
     <img src="https://img.shields.io/badge/chai-v4.3.7-2C8EBB?style=for-the-badge&logoColor=red&logo=chai"/>
@@ -39,62 +38,71 @@
 
 ## Project structure
 
-```
+```bash
 src
 ├── app.controller.ts
+├── app.logger.ts
 ├── app.module.ts
 ├── app.service.ts
 ├── app.zod.ts
 ├── cache
-│   ├── cache.module.ts
-│   └── cache.zod.ts
+│   ├── cache.module.ts
+│   └── cache.zod.ts
 ├── config
-│   ├── config.zod.ts
-│   ├── env
-│   └── index.ts
+│   ├── cache.config.ts
+│   ├── config.zod.ts
+│   ├── db.config.ts
+│   ├── env
+│   └── index.ts
 ├── constants
-│   └── index.ts
+│   └── index.ts
 ├── database
-│   ├── database.module.ts
-│   ├── database.provider.ts
-│   └── database.util.ts
+│   ├── database.module.ts
+│   ├── database.provider.ts
+│   └── database.util.ts
+├── decorators
+│   ├── cache.decorator.ts
+│   ├── index.ts
+│   ├── request-id.decorator.ts
+│   ├── swagger.decorator.ts
+│   └── user-id.decorator.ts
 ├── domain
-│   ├── auth
-│   │   ├── auth.controller.ts
-│   │   ├── auth.module.ts
-│   │   ├── auth.service.ts
-│   │   ├── auth.zod.ts
-│   │   ├── basic-auth.strategy.ts
-│   │   └── jwt-auth.strategy.ts
-│   └── users
-│       ├── user.entity.ts
-│       ├── user.zod.ts
-│       ├── users.controller.ts
-│       ├── users.module.ts
-│       ├── users.repository.ts
-│       └── users.service.ts
+│   ├── auth
+│   │   ├── auth.controller.ts
+│   │   ├── auth.module.ts
+│   │   ├── auth.service.ts
+│   │   ├── auth.zod.ts
+│   │   ├── basic-auth.strategy.ts
+│   │   └── jwt-auth.strategy.ts
+│   ├── order
+│   │   ├── order.controller.ts
+│   │   ├── order.entity.ts
+│   │   ├── order.module.ts
+│   │   ├── order.repository.ts
+│   │   ├── order.service.ts
+│   │   └── order.zod.ts
+│   └── users
+│       ├── user.entity.ts
+│       ├── user.zod.ts
+│       ├── users.controller.ts
+│       ├── users.module.ts
+│       ├── users.repository.ts
+│       └── users.service.ts
 ├── infra
-│   ├── filters
-│   │   └── all-exception.filter.ts
-│   ├── index.ts
-│   ├── infra.zod.ts
-│   ├── interceptors
-│   │   └── response-transformer.interceptor.ts
-│   ├── lifecycle
-│   │   └── lifecycle.service.ts
-│   └── middlewares
-│       └── logger.middlewares.ts
+│   ├── filters
+│   │   └── all-exception.filter.ts
+│   ├── index.ts
+│   ├── infra.zod.ts
+│   ├── interceptors
+│   │   └── response-transformer.interceptor.ts
+│   ├── lifecycle
+│   │   └── lifecycle.service.ts
+│   └── middlewares
+│       └── logger.middlewares.ts
 ├── main.ts
 └── utils
-    ├── decorators
-    │   ├── cache.decorator.ts
-    │   ├── index.ts
-    │   ├── request-id.decorator.ts
-    │   ├── swagger.decorator.ts
-    │   └── user-id.decorator.ts
     ├── index.ts
-    ├── app.logger.ts
     └── sleep.util.ts
 
-15 directories, 39 files
+17 directories, 47 files
 ```
