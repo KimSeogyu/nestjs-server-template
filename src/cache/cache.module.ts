@@ -99,7 +99,8 @@ export class AppCacheModule implements OnModuleInit {
           return cachedData;
         }
         const data = await originalMethod(...args);
-        await this.cacheManger.set(cacheKey, data, +metadata.ttl);
+        this.cacheManger.set(cacheKey, data, +metadata.ttl).then();
+
         return data;
       };
     };
