@@ -29,7 +29,7 @@ import {
 import { UsersService } from './users.service.js';
 
 @ApiController('users')
-// @JwtAuthGuard()
+@JwtAuthGuard()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

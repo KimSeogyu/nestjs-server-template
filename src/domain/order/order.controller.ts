@@ -25,6 +25,7 @@ export class OrderController {
   }
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   @ApiResponse({
     type: FindManyOrdersResponseDto,
     status: HttpStatus.OK,

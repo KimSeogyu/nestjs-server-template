@@ -19,7 +19,7 @@ export class AuthController {
   }
 
   @Post('signup')
-  @HttpCode(HttpStatus.CREATED)
+  @HttpCode(HttpStatus.OK)
   @ApiResponse({
     type: SignupResponseDto,
   })
