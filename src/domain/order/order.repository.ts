@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import {
-  MysqlDatasourceKey,
-  OrderRepositoryKey,
+  MYSQL_DATASOURCE_KEY,
+  ORDER_REPOSITORY_KEY,
 } from '../../constants/index.js';
 import { DataSource, FindManyOptions, Repository } from 'typeorm';
 import { Order } from './order.entity.js';
@@ -10,9 +10,9 @@ import { CreateOrderDto } from './order.zod.js';
 @Injectable()
 export class OrderRepository {
   constructor(
-    @Inject(OrderRepositoryKey)
+    @Inject(ORDER_REPOSITORY_KEY)
     private ordersRepository: Repository<Order>,
-    @Inject(MysqlDatasourceKey) private mysqlProvider: DataSource,
+    @Inject(MYSQL_DATASOURCE_KEY) private mysqlProvider: DataSource,
   ) {}
 
   async createOrder(dto: CreateOrderDto) {

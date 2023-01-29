@@ -2,7 +2,7 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 
-import DefaultConfig from './config/index.js';
+import { commonConfig } from './config/index.js';
 
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
@@ -22,11 +22,13 @@ import {
   LoggerMiddleware,
   ResponseTransformerInterceptor,
 } from './infra/index.js';
+import { dbConfig } from './config/db.config.js';
+import { cacheConfig } from './config/cache.config.js';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [DefaultConfig],
+      load: [commonConfig, dbConfig, cacheConfig],
       envFilePath: [
         `${dirname(
           fileURLToPath(import.meta.url),

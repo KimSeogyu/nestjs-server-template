@@ -1,27 +1,20 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
-  Between,
-  DataSource,
-  DeepPartial,
-  FindOperator,
-  FindOptionsWhere,
-  Repository,
-} from 'typeorm';
+import { Between, DataSource, Repository } from 'typeorm';
 import { User } from './user.entity.js';
 import { SignUpDto } from '../auth/auth.zod.js';
 import { UpdateUsernameDto } from './user.zod.js';
 import {
-  MysqlDatasourceKey,
-  UserRepositoryKey,
+  MYSQL_DATASOURCE_KEY,
+  USER_REPOSITORY_KEY,
 } from '../../constants/index.js';
 import { GeneralQueryFilter } from '../../app.zod.js';
 
 @Injectable()
 export class UsersRepository {
   constructor(
-    @Inject(UserRepositoryKey)
+    @Inject(USER_REPOSITORY_KEY)
     private usersRepository: Repository<User>,
-    @Inject(MysqlDatasourceKey)
+    @Inject(MYSQL_DATASOURCE_KEY)
     private mysqlProvider: DataSource,
   ) {}
 

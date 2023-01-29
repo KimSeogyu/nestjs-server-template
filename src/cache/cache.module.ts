@@ -1,6 +1,5 @@
 import {
   CACHE_MANAGER,
-  CacheModule,
   DynamicModule,
   Inject,
   Module,
@@ -12,23 +11,20 @@ import {
   MetadataScanner,
   Reflector,
 } from '@nestjs/core';
-import { Cache } from 'cache-manager';
-import { ConfigService } from '@nestjs/config';
+import { Cache, caching } from 'cache-manager';
+import { ConfigType } from '@nestjs/config';
 import { APP_CACHE_METADATA, AppCacheOption } from './cache.zod.js';
-import { redisStore } from 'cache-manager-ioredis-yet';
+import { cacheConfig } from '../config/cache.config.js';
 
 @Module({
-  imports: [
-    DiscoveryModule,
-    CacheModule.registerAsync({
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        host: configService.getOrThrow('CACHE_HOST'),
-        port: +configService.getOrThrow('CACHE_PORT'),
-        ttl: +configService.getOrThrow('CACHE_TTL'),
-        store: await redisStore(),
-      }),
-    }),
+  imports: [DiscoveryModule],
+  providers: [
+    {
+      provide: CACHE_MANAGER,
+      inject: [cacheConfig.KEY],
+      useFactory: ({ store, ...config }: ConfigType<typeof cacheConfig>) =>
+        caching(store, config),
+    },
   ],
 })
 export class AppCacheModule implements OnModuleInit {
@@ -36,7 +32,8 @@ export class AppCacheModule implements OnModuleInit {
     private readonly discoveryService: DiscoveryService,
     private readonly metadataScanner: MetadataScanner,
     private readonly reflector: Reflector,
-    @Inject(CACHE_MANAGER) private readonly cacheManger: Cache,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManger: Cache,
   ) {}
 
   static forRoot(): DynamicModule {
@@ -73,24 +70,36 @@ export class AppCacheModule implements OnModuleInit {
         methodRef.call(instance, ...args);
 
       instance[methodName] = async (...args: unknown[]) => {
-        let cacheKey: string;
+        let cacheKey: string = cacheKeyPrefix;
         if (metadata.key) {
-          cacheKey = cacheKeyPrefix + metadata.key;
-        } else if (metadata.fields?.length) {
-          cacheKey = cacheKeyPrefix + '.' + metadata.fields.join('.');
-        } else {
-          const cacheKeySuffix = args.length ? args.join('.') : '';
-          cacheKey = cacheKeyPrefix + cacheKeySuffix;
+          cacheKey += metadata.key;
         }
+        if (metadata.fields?.length) {
+          cacheKey += '.' + metadata.fields.join('.');
+        }
+        if (args.length > 0) {
+          const cacheKeySuffix = args
+            .map((arg) => {
+              if (
+                typeof arg === 'string' ||
+                typeof arg === 'number' ||
+                typeof arg === 'bigint'
+              ) {
+                return arg.toString();
+              } else if (typeof arg === 'object' && arg !== null) {
+                return Object.keys(arg).join('.');
+              } else '';
+            })
+            .join('.');
+          cacheKey += '.' + cacheKeySuffix;
+        }
+
         const cachedData = await this.cacheManger.get(cacheKey);
         if (!!cachedData) {
           return cachedData;
         }
-
         const data = await originalMethod(...args);
-        await this.cacheManger.set(cacheKey, data, metadata.ttl);
-
-        return data;
+        await this.cacheManger.set(cacheKey, data, +metadata.ttl);
       };
     };
   }

@@ -7,12 +7,13 @@ import { UsersController } from '../../../src/domain/users/users.controller.js';
 import { UsersRepository } from '../../../src/domain/users/users.repository.js';
 import { UsersService } from '../../../src/domain/users/users.service.js';
 import {
-  MysqlDatasourceKey,
+  MYSQL_DATASOURCE_KEY,
   NODE_ENV,
-  UserRepositoryKey,
+  USER_REPOSITORY_KEY,
 } from '../../../src/constants/index.js';
 import { ConfigModule } from '@nestjs/config';
-import DefaultConfig from '../../../src/config/index.js';
+import { commonConfig } from '../../../src/config/index.js';
+import { dbConfig } from '../../../src/config/db.config.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -24,7 +25,7 @@ describe('UsersService', () => {
       imports: [
         DatabaseModule.register(),
         ConfigModule.forRoot({
-          load: [DefaultConfig],
+          load: [commonConfig, dbConfig],
           envFilePath: [
             `${dirname(
               fileURLToPath(import.meta.url),
@@ -38,10 +39,10 @@ describe('UsersService', () => {
         UsersService,
         UsersRepository,
         {
-          provide: UserRepositoryKey,
+          inject: [MYSQL_DATASOURCE_KEY],
+          provide: USER_REPOSITORY_KEY,
           useFactory: (dataSource: DataSource) =>
             dataSource.getRepository(User),
-          inject: [MysqlDatasourceKey],
         },
       ],
     }).compile();

@@ -1,46 +1,14 @@
-import { ConfigService } from '@nestjs/config';
-import { DataSource, type DataSourceOptions } from 'typeorm';
-import { MysqlDatasourceKey, NODE_ENV } from '../constants/index.js';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { DataSource } from 'typeorm';
+import { MYSQL_DATASOURCE_KEY } from '../constants/index.js';
+import { ConfigType } from '@nestjs/config';
+import { dbConfig } from '../config/db.config.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
 export const databaseProviders = [
-  // TODO: https://talentwilshowitself.tistory.com/entry/NestJS-TypeORM-Migration-%EC%84%A4%EC%A0%95
   {
-    provide: MysqlDatasourceKey,
-    inject: [ConfigService],
-    useFactory: async (configService: ConfigService) => {
-      let dbConfig: DataSourceOptions;
-      if (NODE_ENV === 'test') {
-        dbConfig = {
-          type: 'sqlite',
-          database: ':memory:',
-          dropSchema: true,
-          logging: false,
-          entities: [__dirname + '/../**/*.entity.{ts,js}'],
-          synchronize: true,
-          migrationsRun: false,
-        };
-      } else {
-        dbConfig = {
-          type: 'mysql',
-          host: configService.getOrThrow('DATABASE_HOST'),
-          port: +configService.getOrThrow('DATABASE_PORT'),
-          username: configService.getOrThrow('DATABASE_USERNAME'),
-
-          password: configService.getOrThrow('DATABASE_PASSWORD'),
-          database: configService.getOrThrow('DATABASE_SCHEMA'),
-          entities: [__dirname + '/../**/*.entity.{ts,js}'],
-          migrations: ['/migrations'],
-          synchronize: false,
-          migrationsRun: true,
-        };
-      }
-
-      const dataSource = new DataSource(dbConfig);
-
-      return dataSource.initialize();
+    provide: MYSQL_DATASOURCE_KEY,
+    inject: [dbConfig.KEY],
+    useFactory: (config: ConfigType<typeof dbConfig>) => {
+      return new DataSource(config).initialize();
     },
   },
 ];

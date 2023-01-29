@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import { DataSource } from 'typeorm';
 import { AppModule } from '../../../src/app.module.js';
 import {
-  MysqlDatasourceKey,
-  OrderRepositoryKey,
+  MYSQL_DATASOURCE_KEY,
+  ORDER_REPOSITORY_KEY,
 } from '../../../src/constants/index.js';
 import { DatabaseModule } from '../../../src/database/database.module.js';
 import { OrderController } from '../../../src/domain/order/order.controller.js';
@@ -34,16 +34,16 @@ describe('OrderController', () => {
         OrderService,
         OrderRepository,
         {
-          provide: OrderRepositoryKey,
+          inject: [MYSQL_DATASOURCE_KEY],
+          provide: ORDER_REPOSITORY_KEY,
           useFactory: (dataSource: DataSource) =>
             dataSource.getRepository(Order),
-          inject: [MysqlDatasourceKey],
         },
       ],
     }).compile();
 
     controller = module.get<OrderController>(OrderController);
-    dataSource = module.get<DataSource>(MysqlDatasourceKey);
+    dataSource = module.get<DataSource>(MYSQL_DATASOURCE_KEY);
     const userEntity = dataSource.getRepository(User).create({
       username: 'asap',
       password: '1234',

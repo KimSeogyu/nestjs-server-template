@@ -8,8 +8,9 @@ import { AuthService } from '../../../src/domain/auth/auth.service.js';
 import { BasicAuthStrategy } from '../../../src/domain/auth/basic-auth.strategy.js';
 import { JwtAuthStrategy } from '../../../src/domain/auth/jwt-auth.strategy.js';
 import { expect } from 'chai';
-import DefaultConfig from '../../../src/config/index.js';
+import { commonConfig } from '../../../src/config/index.js';
 import { NODE_ENV } from '../../../src/constants/index.js';
+import { dbConfig } from '../../../src/config/db.config.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -21,7 +22,7 @@ describe('AuthController', function () {
         PassportModule,
         UsersModule,
         ConfigModule.forRoot({
-          load: [DefaultConfig],
+          load: [commonConfig, dbConfig],
           envFilePath: [
             `${dirname(
               fileURLToPath(import.meta.url),

@@ -7,6 +7,7 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  Index,
   OneToMany,
   Relation,
 } from 'typeorm';
@@ -16,6 +17,7 @@ import { Order } from '../order/order.entity.js';
 @Entity('user')
 export class User extends CoreEntity {
   @Column()
+  @Index('ux_user_username', { unique: true })
   username!: string;
 
   @Column({

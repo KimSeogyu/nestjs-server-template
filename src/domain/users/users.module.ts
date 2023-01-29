@@ -7,8 +7,8 @@ import { User } from './user.entity.js';
 import { DatabaseModule } from '../../database/database.module.js';
 import { databaseProviders } from '../../database/database.provider.js';
 import {
-  MysqlDatasourceKey,
-  UserRepositoryKey,
+  MYSQL_DATASOURCE_KEY,
+  USER_REPOSITORY_KEY,
 } from '../../constants/index.js';
 
 @Module({
@@ -19,9 +19,9 @@ import {
     UsersRepository,
     ...databaseProviders,
     {
-      provide: UserRepositoryKey,
+      inject: [MYSQL_DATASOURCE_KEY],
+      provide: USER_REPOSITORY_KEY,
       useFactory: (dataSource: DataSource) => dataSource.getRepository(User),
-      inject: [MysqlDatasourceKey],
     },
   ],
   exports: [UsersService],

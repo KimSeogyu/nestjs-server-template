@@ -4,8 +4,8 @@ import { DataSource } from 'typeorm';
 import { databaseProviders } from '../../database/database.provider.js';
 import { Order } from './order.entity.js';
 import {
-  MysqlDatasourceKey,
-  OrderRepositoryKey,
+  MYSQL_DATASOURCE_KEY,
+  ORDER_REPOSITORY_KEY,
 } from '../../constants/index.js';
 import { OrderController } from './order.controller.js';
 import { OrderService } from './order.service.js';
@@ -19,8 +19,8 @@ import { OrderRepository } from './order.repository.js';
     OrderRepository,
     ...databaseProviders,
     {
-      provide: OrderRepositoryKey,
-      inject: [MysqlDatasourceKey],
+      provide: ORDER_REPOSITORY_KEY,
+      inject: [MYSQL_DATASOURCE_KEY],
       useFactory: (dataSource: DataSource) => dataSource.getRepository(Order),
     },
   ],
