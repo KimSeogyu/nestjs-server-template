@@ -95,11 +95,12 @@ export class AppCacheModule implements OnModuleInit {
         }
 
         const cachedData = await this.cacheManger.get(cacheKey);
-        if (!!cachedData) {
+        if (cachedData) {
           return cachedData;
         }
         const data = await originalMethod(...args);
         await this.cacheManger.set(cacheKey, data, +metadata.ttl);
+        return data;
       };
     };
   }
