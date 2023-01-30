@@ -42,24 +42,6 @@
       "**/*zod*"
     ]
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -c .commitlintrc.json -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run test"
-    }
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "lint-staged": {
-    "*.ts": [
-      "npm run format",
-      "git add"
-    ]
-  },
   "dependencies": {
     "@anatine/zod-nestjs": "^1.8.0",
     "@anatine/zod-openapi": "^1.11.0",
@@ -92,6 +74,8 @@
     "zod": "^3.20.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
