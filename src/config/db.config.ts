@@ -20,7 +20,6 @@ export const dbConfig = registerAs(
 
     let dbConfig: DataSourceOptions;
     if (AppMode === EnvMode.Test) {
-      console.log('NODE_ENV === NodeEnvMap.Test');
       dbConfig = {
         type: 'sqlite',
         database: ':memory:',
