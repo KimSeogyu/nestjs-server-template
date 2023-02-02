@@ -1,0 +1,7 @@
+node_modules
+.eslintrc.cjs
+.prettierrc
+README.md
+commitlint.config.cjs
+.mocharc.json
+.gitignore
