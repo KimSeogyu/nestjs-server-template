@@ -8,7 +8,7 @@ import { UsersRepository } from '../../../src/domain/users/users.repository.js';
 import { UsersService } from '../../../src/domain/users/users.service.js';
 import {
   MYSQL_DATASOURCE_KEY,
-  NODE_ENV,
+  AppMode,
   USER_REPOSITORY_KEY,
 } from '../../../src/constants/index.js';
 import { ConfigModule } from '@nestjs/config';
@@ -29,7 +29,7 @@ describe('UsersService', () => {
           envFilePath: [
             `${dirname(
               fileURLToPath(import.meta.url),
-            )}/../../../src/config/env/.${NODE_ENV}.env`,
+            )}/../../../src/config/env/.${AppMode}.env`,
           ],
           isGlobal: true,
         }),

@@ -1,4 +1,4 @@
-import { NODE_ENV } from './constants/index.js';
+import { AppMode } from './constants/index.js';
 import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,
@@ -39,7 +39,7 @@ export const createCustomLogger = (ENV_MODE: string, WEBHOOK_URL: string) => {
                   type: 'mrkdwn',
                   text:
                     '```' +
-                    `[${NODE_ENV.toUpperCase()}][${data.level.toUpperCase()}] ${
+                    `[${AppMode.toUpperCase()}][${data.level.toUpperCase()}] ${
                       data.message
                     }` +
                     '```',

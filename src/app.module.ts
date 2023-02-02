@@ -14,7 +14,7 @@ import { ZodValidationPipe } from '@anatine/zod-nestjs';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { AppCacheModule } from './cache/cache.module.js';
-import { NODE_ENV } from './constants/index.js';
+import { AppMode } from './constants/index.js';
 import { OrderModule } from './domain/order/order.module.js';
 import {
   AllExceptionFilter,
@@ -30,9 +30,7 @@ import { cacheConfig } from './config/cache.config.js';
     ConfigModule.forRoot({
       load: [commonConfig, dbConfig, cacheConfig],
       envFilePath: [
-        `${dirname(
-          fileURLToPath(import.meta.url),
-        )}/config/env/.${NODE_ENV}.env`,
+        `${dirname(fileURLToPath(import.meta.url))}/config/env/.${AppMode}.env`,
       ],
       isGlobal: true,
       cache: true,

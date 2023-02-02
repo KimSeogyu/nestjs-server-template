@@ -15,7 +15,7 @@ import { fileURLToPath } from 'url';
 import { BadRequestException } from '@nestjs/common';
 import {
   MYSQL_DATASOURCE_KEY,
-  NODE_ENV,
+  AppMode,
   USER_REPOSITORY_KEY,
 } from '../../../src/constants/index.js';
 
@@ -32,7 +32,7 @@ describe('UsersController', () => {
           envFilePath: [
             `${dirname(
               fileURLToPath(import.meta.url),
-            )}/../../../src/config/env/.${NODE_ENV}.env`,
+            )}/../../../src/config/env/.${AppMode}.env`,
           ],
           isGlobal: true,
         }),

@@ -4,25 +4,23 @@ export const MYSQL_DATASOURCE_KEY = 'datasource.mysql';
 export const DB_CONFIG_KEY = 'config.database';
 export const CACHE_CONFIG_KEY = 'config.cache';
 
-export const NodeEnvMap = {
-  Local: 'local',
-  Dev: 'dev',
-  Prod: 'prod',
-  Test: 'test',
-} as const;
+export enum EnvMode {
+  Local = 'local',
+  Dev = 'dev',
+  Prod = 'prod',
+  Test = 'test',
+}
 
-export type NodeEnvMapType = typeof NodeEnvMap[keyof typeof NodeEnvMap];
-
-export const NODE_ENV = (() => {
+export const AppMode = (() => {
   switch (process.env.NODE_ENV?.toLowerCase()) {
-    case NodeEnvMap.Local:
-      return NodeEnvMap.Local;
-    case NodeEnvMap.Prod:
-      return NodeEnvMap.Prod;
-    case NodeEnvMap.Dev:
-      return NodeEnvMap.Dev;
+    case EnvMode.Local:
+      return EnvMode.Local;
+    case EnvMode.Prod:
+      return EnvMode.Prod;
+    case EnvMode.Dev:
+      return EnvMode.Dev;
     default:
-      return NodeEnvMap.Test;
+      return EnvMode.Test;
   }
 })();
 
@@ -31,4 +29,4 @@ export const DEFAULT_ISOLATION_LEVEL:
   | 'READ COMMITTED'
   | 'REPEATABLE READ'
   | 'SERIALIZABLE' =
-  NODE_ENV == NodeEnvMap.Local ? 'SERIALIZABLE' : 'REPEATABLE READ';
+  AppMode == EnvMode.Local ? 'SERIALIZABLE' : 'REPEATABLE READ';
