@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { DB_CONFIG_KEY, NODE_ENV } from '../constants/index.js';
+import { DB_CONFIG_KEY, NodeEnvMap, NODE_ENV } from '../constants/index.js';
 import { DataSourceOptions } from 'typeorm';
 import { DbConfigSchema } from './config.zod.js';
 import { dirname } from 'path';
@@ -19,14 +19,15 @@ export const dbConfig = registerAs(
     });
 
     let dbConfig: DataSourceOptions;
-    if (NODE_ENV === 'test') {
+    if (NODE_ENV === NodeEnvMap.Test) {
+      console.log('NODE_ENV === NodeEnvMap.Test');
       dbConfig = {
         type: 'sqlite',
         database: ':memory:',
-        dropSchema: true,
         logging: true,
         entities: [__dirname + '/../**/*.entity.{ts,js}'],
         synchronize: true,
+        dropSchema: true,
         namingStrategy: new SnakeNamingStrategy(),
       };
     } else {
