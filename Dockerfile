@@ -16,7 +16,7 @@ COPY --from=deps /app/node_modules ./node_modules
 RUN pnpm build
 RUN pnpm prune --prod --config.ignore-scripts=true
 
-FROM base as release
+FROM node:18-alpine as release
 
 WORKDIR /app
 EXPOSE 8080
