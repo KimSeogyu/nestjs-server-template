@@ -1,9 +1,9 @@
 import { registerAs } from '@nestjs/config';
-import { GlobalConfigSchema } from './config.zod.js';
+import { GlobalConfigSchema, GlobalConfigSchemaType } from './config.zod.js';
 
 export const commonConfig = registerAs(
   '',
-  (): Promise<GlobalConfigSchema> =>
+  (): Promise<GlobalConfigSchemaType> =>
     GlobalConfigSchema.parseAsync({
       AUTH_USERNAME: process.env.AUTH_USERNAME,
       AUTH_PASSWORD: process.env.AUTH_PASSWORD,

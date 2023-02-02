@@ -11,7 +11,7 @@ export const GlobalConfigSchema = z
   })
   .required();
 
-export type GlobalConfigSchema = z.infer<typeof GlobalConfigSchema>;
+export type GlobalConfigSchemaType = z.infer<typeof GlobalConfigSchema>;
 
 export const DbConfigSchema = z
   .object({
@@ -22,7 +22,7 @@ export const DbConfigSchema = z
     DATABASE_SCHEMA: z.string(),
   })
   .required();
-export type DbConfigSchema = z.infer<typeof DbConfigSchema>;
+export type DbConfigSchemaType = z.infer<typeof DbConfigSchema>;
 export const CacheConfigSchema = z
   .object({
     host: z.string(),
@@ -31,4 +31,4 @@ export const CacheConfigSchema = z
     store: z.any(),
   })
   .required();
-export type CacheConfigSchema = z.infer<typeof CacheConfigSchema>;
+export type CacheConfigSchemaType = z.infer<typeof CacheConfigSchema>;
