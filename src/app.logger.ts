@@ -12,20 +12,20 @@ import {
   TransformableInfo,
 } from 'winston-slack-webhook-transport-ts';
 
-export const createCustomLogger = (ENV_MODE: string, WEBHOOK_URL: string) => {
+export const createCustomLogger = (WEBHOOK_URL: string) => {
   const transports: any[] = [
     new winston.transports.Console({
-      level: 'silly',
+      level: 'info',
       format: winston.format.combine(
         winston.format.timestamp(),
         nestWinstonModuleUtilities.format.nestLike('Server', {
-          prettyPrint: ENV_MODE !== 'prod',
-          colors: ENV_MODE !== 'prod',
+          prettyPrint: AppMode !== 'prod',
+          colors: AppMode !== 'prod',
         }),
       ),
     }),
   ];
-  if (ENV_MODE === 'prod') {
+  if (AppMode === 'prod') {
     transports.push(
       new SlackTransport({
         level: 'error',

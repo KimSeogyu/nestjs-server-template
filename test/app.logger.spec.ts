@@ -6,7 +6,7 @@ import { createCustomLogger, initSwaggerDocs } from '../src/app.logger.js';
 
 describe('INIT UTILS', function () {
   it('should instanceof WinstonLogger', function () {
-    const loggerService = createCustomLogger('prod', '');
+    const loggerService = createCustomLogger('');
     expect(loggerService).instanceOf(WinstonLogger);
   });
 

@@ -80,15 +80,11 @@ export class AppCacheModule implements OnModuleInit {
         if (args.length > 0) {
           const cacheKeySuffix = args
             .map((arg) => {
-              if (
-                typeof arg === 'string' ||
-                typeof arg === 'number' ||
-                typeof arg === 'bigint'
-              ) {
-                return arg.toString();
-              } else if (typeof arg === 'object' && arg !== null) {
-                return Object.keys(arg).join('.');
-              } else '';
+              if (this.isStringifyArg(arg)) {
+                return arg?.toString();
+              } else if (this.isNotNullObject(arg)) {
+                return Object.keys(arg as object).join('.');
+              } else return '';
             })
             .join('.');
           cacheKey += '.' + cacheKeySuffix;
@@ -104,5 +100,17 @@ export class AppCacheModule implements OnModuleInit {
         return data;
       };
     };
+  }
+
+  private isNotNullObject(arg: unknown) {
+    return typeof arg === 'object' && arg !== null;
+  }
+
+  private isStringifyArg(arg: unknown) {
+    return (
+      typeof arg === 'string' ||
+      typeof arg === 'number' ||
+      typeof arg === 'bigint'
+    );
   }
 }
