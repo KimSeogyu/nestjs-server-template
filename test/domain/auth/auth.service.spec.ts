@@ -14,6 +14,7 @@ import { AppMode } from '../../../src/constants/index.js';
 import { UsersService } from '../../../src/domain/users/users.service.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { UnauthorizedException } from '@nestjs/common';
 
 describe('AuthService', function () {
   let service: AuthService;
@@ -54,21 +55,20 @@ describe('AuthService', function () {
   });
 
   it('유저 검사 (BasicAuth) 유저이름이 다른 경우', async () => {
-    try {
-      await service.validateUser('hello', '1234');
-    } catch (e: any) {
+    await service.validateUser('hello', '1234').catch((e) => {
       expect(e.message).eq(`INVALID USERNAME, username=hello`);
-    }
+    });
   });
 
   it('유저검사 (BasicAuth) 비밀번호가 다른 경우', async () => {
     const dto = { username: 'hello', password: '1234' };
     await usersService.create(dto);
-    try {
-      await service.validateUser(dto.username, '1235');
-    } catch (e: any) {
-      expect(e.message).eq('PASSWORD DOES NOT MATCHED');
-    }
+    await service.validateUser(dto.username, '1235').catch((err: unknown) => {
+      expect(err).instanceOf(UnauthorizedException);
+      expect((err as UnauthorizedException).message).eq(
+        'PASSWORD DOES NOT MATCHED',
+      );
+    });
   });
 
   it('유저검사 (BasicAuth) 통과 케이스', async () => {

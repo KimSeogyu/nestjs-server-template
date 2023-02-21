@@ -100,52 +100,55 @@ describe('UsersController', () => {
 
   it('[비밀번호 수정 실패] 새로운 비밀번호 불일치', async () => {
     const { id } = await createUser();
-    try {
-      await controller.updatePassword(
+
+    await controller
+      .updatePassword(
         { id },
         {
           password: '22345aA@',
           confirmPassword: '22345aA',
           currentPassword: '12345aA@',
         },
-      );
-    } catch (e: any) {
-      expect(e).instanceOf(BadRequestException);
-      expect(e.message).eq('Passwords are not same');
-    }
+      )
+      .catch((e) => {
+        expect(e).instanceOf(BadRequestException);
+        expect(e.message).eq('Passwords are not same');
+      });
   });
 
   it('[비밀번호 수정 실패] 기존 비밀번호와 일치', async () => {
     const { id } = await createUser();
-    try {
-      await controller.updatePassword(
+
+    await controller
+      .updatePassword(
         { id },
         {
           password: '12345aA@',
           confirmPassword: '12345aA@',
           currentPassword: '12345aA@',
         },
-      );
-    } catch (e: any) {
-      expect(e).instanceOf(BadRequestException);
-      expect(e.message).eq('Password is same as current one');
-    }
+      )
+      .catch((e) => {
+        expect(e).instanceOf(BadRequestException);
+        expect(e.message).eq('Password is same as current one');
+      });
   });
 
   it('[비밀번호 수정 실패] 기존 비밀번호 불일치', async () => {
     const { id } = await createUser();
-    try {
-      await controller.updatePassword(
+
+    await controller
+      .updatePassword(
         { id },
         {
           password: '12345aA@',
           confirmPassword: '12345aA@',
           currentPassword: '22345aA@',
         },
-      );
-    } catch (e: any) {
-      expect(e).instanceOf(BadRequestException);
-      expect(e.message).eq('Current Password is wrong');
-    }
+      )
+      .catch((e) => {
+        expect(e).instanceOf(BadRequestException);
+        expect(e.message).eq('Current Password is wrong');
+      });
   });
 });
