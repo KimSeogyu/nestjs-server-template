@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import {
   MYSQL_DATASOURCE_KEY,
   ORDER_REPOSITORY_KEY,
-} from '../../constants/index.js';
+} from '../../common/constants.js';
 import { DataSource, FindManyOptions, Repository } from 'typeorm';
 import { Order } from './order.entity.js';
 import { CreateOrderDto } from './order.zod.js';

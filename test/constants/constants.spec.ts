@@ -1,4 +1,4 @@
-import { AppMode } from '../../src/constants/index.js';
+import { AppMode } from '../../src/common/constants.js';
 import { expect } from 'chai';
 
 describe('CONSTANTS TEST', function () {

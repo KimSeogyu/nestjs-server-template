@@ -10,7 +10,7 @@ import { JwtAuthStrategy } from '../../../src/domain/auth/jwt-auth.strategy.js';
 import { expect } from 'chai';
 import { commonConfig } from '../../../src/config/index.js';
 import { dbConfig } from '../../../src/config/db.config.js';
-import { AppMode } from '../../../src/constants/index.js';
+import { AppMode } from '../../../src/common/constants.js';
 import { UsersService } from '../../../src/domain/users/users.service.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';

@@ -11,7 +11,7 @@ import { ZodValidationPipe } from '@anatine/zod-nestjs';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { AppCacheModule } from '../../infra/cache/cache.module.js';
-import { AppMode } from '../../constants/index.js';
+import { AppMode } from '../../common/constants.js';
 import { OrderModule } from '../../domain/order/order.module.js';
 import { dbConfig } from '../../config/db.config.js';
 import { cacheConfig } from '../../config/cache.config.js';

@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { AppMode, CACHE_CONFIG_KEY, EnvMode } from '../constants/index.js';
+import { AppMode, CACHE_CONFIG_KEY, EnvMode } from '../common/constants.js';
 import { redisStore } from 'cache-manager-redis-store';
 import { CacheConfigSchema, CacheConfigSchemaType } from './config.zod.js';
 

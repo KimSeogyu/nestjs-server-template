@@ -6,7 +6,7 @@ import { UpdateUsernameDto } from './user.zod.js';
 import {
   MYSQL_DATASOURCE_KEY,
   USER_REPOSITORY_KEY,
-} from '../../constants/index.js';
+} from '../../common/constants.js';
 import { GeneralQueryFilter } from '../../applications/api/api.zod.js';
 
 @Injectable()

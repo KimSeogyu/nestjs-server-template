@@ -5,7 +5,7 @@ import { ApiModule } from '../../../src/applications/api/api.module.js';
 import {
   MYSQL_DATASOURCE_KEY,
   ORDER_REPOSITORY_KEY,
-} from '../../../src/constants/index.js';
+} from '../../../src/common/constants.js';
 import { DatabaseModule } from '../../../src/infra/database/database.module.js';
 import { OrderController } from '../../../src/domain/order/order.controller.js';
 import {

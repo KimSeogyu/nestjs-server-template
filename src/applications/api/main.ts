@@ -6,7 +6,7 @@ import { Logger, RequestMethod } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { createCustomLogger, initSwaggerDocs } from '../../utils/init.utils.js';
-import { AppMode } from '../../constants/index.js';
+import { AppMode } from '../../common/constants.js';
 
 export async function bootstrap() {
   const app = await NestFactory.create(ApiModule);

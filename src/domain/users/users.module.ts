@@ -9,7 +9,7 @@ import { databaseProviders } from '../../infra/database/database.provider.js';
 import {
   MYSQL_DATASOURCE_KEY,
   USER_REPOSITORY_KEY,
-} from '../../constants/index.js';
+} from '../../common/constants.js';
 
 @Module({
   imports: [DatabaseModule.register()],

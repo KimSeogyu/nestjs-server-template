@@ -17,7 +17,7 @@ import {
   MYSQL_DATASOURCE_KEY,
   AppMode,
   USER_REPOSITORY_KEY,
-} from '../../../src/constants/index.js';
+} from '../../../src/common/constants.js';
 
 describe('UsersController', () => {
   let controller: UsersController;

@@ -1,4 +1,4 @@
-import { AppMode } from '../constants/index.js';
+import { AppMode } from '../common/constants.js';
 import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,

@@ -10,7 +10,7 @@ import {
   MYSQL_DATASOURCE_KEY,
   AppMode,
   USER_REPOSITORY_KEY,
-} from '../../../src/constants/index.js';
+} from '../../../src/common/constants.js';
 import { ConfigModule } from '@nestjs/config';
 import { commonConfig } from '../../../src/config/index.js';
 import { dbConfig } from '../../../src/config/db.config.js';
