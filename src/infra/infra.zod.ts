@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { MetadataSchema } from '../app.zod.js';
+import { MetadataSchema } from '../applications/api/api.zod.js';
 
 export const ServerResponseSchema = z
   .object({

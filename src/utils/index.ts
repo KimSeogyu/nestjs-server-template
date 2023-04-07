@@ -1,6 +1,6 @@
 import { InternalServerErrorException } from '@nestjs/common';
 
-export * from './sleep.util.js';
+export * from './sleep.utils.js';
 export function handleError<T>(...promiseResults: PromiseSettledResult<T>[]) {
   for (const result of promiseResults) {
     if (result.status === 'rejected') {

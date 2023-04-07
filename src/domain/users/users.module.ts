@@ -4,8 +4,8 @@ import { UsersController } from './users.controller.js';
 import { UsersRepository } from './users.repository.js';
 import { DataSource } from 'typeorm';
 import { User } from './user.entity.js';
-import { DatabaseModule } from '../../database/database.module.js';
-import { databaseProviders } from '../../database/database.provider.js';
+import { DatabaseModule } from '../../infra/database/database.module.js';
+import { databaseProviders } from '../../infra/database/database.provider.js';
 import {
   MYSQL_DATASOURCE_KEY,
   USER_REPOSITORY_KEY,

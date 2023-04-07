@@ -1,6 +1,9 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
-import { MetadataSchema, PASSWORD_REGEX } from '../../app.zod.js';
+import {
+  MetadataSchema,
+  PASSWORD_REGEX,
+} from '../../applications/api/api.zod.js';
 
 export const SignUpInputZ = z
   .object({

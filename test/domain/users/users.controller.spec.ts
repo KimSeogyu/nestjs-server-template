@@ -1,4 +1,4 @@
-import { DatabaseModule } from '../../../src/database/database.module.js';
+import { DatabaseModule } from '../../../src/infra/database/database.module.js';
 import { Test, TestingModule } from '@nestjs/testing';
 import { expect } from 'chai';
 import { DataSource } from 'typeorm';

@@ -14,7 +14,7 @@ import {
 import { Cache, caching } from 'cache-manager';
 import { ConfigType } from '@nestjs/config';
 import { APP_CACHE_METADATA, AppCacheOption } from './cache.zod.js';
-import { cacheConfig } from '../config/cache.config.js';
+import { cacheConfig } from '../../config/cache.config.js';
 
 @Module({
   imports: [DiscoveryModule],

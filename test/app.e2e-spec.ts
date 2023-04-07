@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { AppModule } from '../src/app.module.js';
+import { ApiModule } from '../src/applications/api/api.module.js';
 import { UsersService } from '../src/domain/users/users.service.js';
 import { CreateUserDto } from '../src/domain/users/user.zod.js';
 import { AuthService } from '../src/domain/auth/auth.service.js';
 
-describe('AppController (e2e)', () => {
+describe('HealthController (e2e)', () => {
   let app: INestApplication;
   let usersService: UsersService;
   let authService: AuthService;
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [ApiModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();

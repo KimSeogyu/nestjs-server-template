@@ -3,7 +3,7 @@ import { CreateOrderDto } from './order.zod.js';
 import { OrderRepository } from './order.repository.js';
 import { FindManyOptions } from 'typeorm';
 import { Order } from './order.entity.js';
-import { GeneralQueryFilter } from 'src/app.zod.js';
+import { GeneralQueryFilter } from 'src/applications/api/api.zod.js';
 
 @Injectable()
 export class OrderService {

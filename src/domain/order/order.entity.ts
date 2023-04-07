@@ -6,7 +6,7 @@ import {
   OneToMany,
   Relation,
 } from 'typeorm';
-import { CoreEntity } from '../../database/database.util.js';
+import { CoreEntity } from '../../infra/database/database.util.js';
 import { User } from '../users/user.entity.js';
 
 @Entity('order_status')

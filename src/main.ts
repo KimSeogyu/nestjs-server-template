@@ -1,15 +1,15 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module.js';
+import { ApiModule } from './applications/api/api.module.js';
 import helmet from 'helmet';
 
 import { Logger, RequestMethod } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-import { createCustomLogger, initSwaggerDocs } from './app.logger.js';
+import { createCustomLogger, initSwaggerDocs } from './utils/init.utils.js';
 import { AppMode } from './constants/index.js';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(ApiModule);
   const configService = app.get<ConfigService>(ConfigService);
   app.useLogger(
     createCustomLogger(configService.getOrThrow('SLACK_WEBHOOK_URL')),

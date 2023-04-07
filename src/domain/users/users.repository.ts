@@ -7,7 +7,7 @@ import {
   MYSQL_DATASOURCE_KEY,
   USER_REPOSITORY_KEY,
 } from '../../constants/index.js';
-import { GeneralQueryFilter } from '../../app.zod.js';
+import { GeneralQueryFilter } from '../../applications/api/api.zod.js';
 
 @Injectable()
 export class UsersRepository {

@@ -25,10 +25,10 @@ export const DbConfigSchema = z
 export type DbConfigSchemaType = z.infer<typeof DbConfigSchema>;
 export const CacheConfigSchema = z
   .object({
-    host: z.string(),
-    port: z.number(),
-    ttl: z.number(),
+    host: z.string().optional(),
+    port: z.number().optional(),
+    ttl: z.number().optional(),
     store: z.any(),
   })
-  .required();
+  .required({ store: true });
 export type CacheConfigSchemaType = z.infer<typeof CacheConfigSchema>;

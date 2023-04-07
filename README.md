@@ -40,11 +40,11 @@
 
 ```bash
 src
-├── app.controller.ts
-├── app.logger.ts
-├── app.module.ts
-├── app.service.ts
-├── app.zod.ts
+├── health.controller.ts
+├── init.utils.ts
+├── api.module.ts
+├── health.service.ts
+├── api.zod.ts
 ├── cache
 │   ├── cache.module.ts
 │   └── cache.zod.ts
@@ -102,7 +102,7 @@ src
 ├── main.ts
 └── utils
     ├── index.ts
-    └── sleep.util.ts
+    └── sleep.utils.ts
 
 17 directories, 47 files
 ```

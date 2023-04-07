@@ -10,7 +10,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
-import { ApiController, JwtAuthGuard } from '../../decorators/index.js';
+import { ApiController, JwtAuthGuard } from '../../utils/decorators/index.js';
 
 import {
   CreateUserDto,

@@ -1,6 +1,9 @@
 import { ExecutionContext } from '@nestjs/common';
 import { expect } from 'chai';
-import { requestIdHandler, userIdHandler } from '../src/decorators/index.js';
+import {
+  requestIdHandler,
+  userIdHandler,
+} from '../src/utils/decorators/index.js';
 import { randomUUID } from 'crypto';
 
 describe('ALL DECORATORS', function () {

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from '../../database/database.module.js';
+import { DatabaseModule } from '../../infra/database/database.module.js';
 import { DataSource } from 'typeorm';
-import { databaseProviders } from '../../database/database.provider.js';
+import { databaseProviders } from '../../infra/database/database.provider.js';
 import { Order } from './order.entity.js';
 import {
   MYSQL_DATASOURCE_KEY,

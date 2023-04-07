@@ -11,18 +11,27 @@ export enum EnvMode {
   Test = 'test',
 }
 
-export const AppMode = (() => {
-  switch (process.env.NODE_ENV?.toLowerCase()) {
-    case EnvMode.Local:
-      return EnvMode.Local;
-    case EnvMode.Prod:
-      return EnvMode.Prod;
-    case EnvMode.Dev:
-      return EnvMode.Dev;
-    default:
-      return EnvMode.Test;
-  }
-})();
+let _AppMode = process.env.NODE_ENV?.toLowerCase();
+
+if (_AppMode === 'local') {
+  _AppMode = EnvMode.Local;
+} else if (
+  _AppMode === 'dev' ||
+  _AppMode === 'develop' ||
+  _AppMode === 'development'
+) {
+  _AppMode = EnvMode.Dev;
+} else if (
+  _AppMode === 'prd' ||
+  _AppMode === 'prod' ||
+  _AppMode === 'production'
+) {
+  _AppMode = EnvMode.Prod;
+} else {
+  _AppMode = EnvMode.Test;
+}
+
+export const AppMode = _AppMode as EnvMode;
 
 export const DEFAULT_ISOLATION_LEVEL:
   | 'READ UNCOMMITTED'

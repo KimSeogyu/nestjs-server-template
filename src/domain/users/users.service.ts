@@ -7,9 +7,9 @@ import { UsersRepository } from './users.repository.js';
 import { User } from './user.entity.js';
 import { SignUpDto } from '../auth/auth.zod.js';
 import { UpdatePasswordDto, UpdateUsernameDto } from './user.zod.js';
-import { UseCache } from '../../decorators/index.js';
+import { UseCache } from '../../utils/decorators/index.js';
 import { createHashedPassword } from './user.entity.js';
-import { GeneralQueryFilter } from '../../app.zod.js';
+import { GeneralQueryFilter } from '../../applications/api/api.zod.js';
 
 @Injectable()
 export class UsersService {

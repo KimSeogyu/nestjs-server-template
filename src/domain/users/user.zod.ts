@@ -7,7 +7,7 @@ import {
   MetadataSchema,
   numericString,
   PASSWORD_REGEX,
-} from '../../app.zod.js';
+} from '../../applications/api/api.zod.js';
 
 export const CreateUserInputZ = z
   .object({

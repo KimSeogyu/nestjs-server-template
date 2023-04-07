@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "type": "module",
   "main": "dist/main.js",
-  "packageManager": "pnpm@7.26.1",
+  "packageManager": "pnpm@8.1.1",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -26,7 +26,7 @@
   "engines": {
     "node": ">=18 < 19",
     "npm": ">=8 <9",
-    "pnpm": ">=7 <8"
+    "pnpm": ">=8 <9"
   },
   "nyc": {
     "branches": "&gt;80",

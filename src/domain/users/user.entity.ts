@@ -11,7 +11,7 @@ import {
   OneToMany,
   Relation,
 } from 'typeorm';
-import { CoreEntity } from '../../database/database.util.js';
+import { CoreEntity } from '../../infra/database/database.util.js';
 import { Order } from '../order/order.entity.js';
 
 @Entity('user')

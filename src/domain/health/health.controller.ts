@@ -1,11 +1,11 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AppService } from './app.service.js';
+import { HealthService } from './health.service.js';
 
 @Controller('')
 @ApiTags('APP')
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+export class HealthController {
+  constructor(private readonly appService: HealthService) {}
 
   @Get(['', 'health'])
   getHello(): string {

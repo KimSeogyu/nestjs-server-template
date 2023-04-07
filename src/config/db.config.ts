@@ -10,15 +10,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export const dbConfig = registerAs(
   DB_CONFIG_KEY,
   async (): Promise<DataSourceOptions> => {
-    const env = await DbConfigSchema.parseAsync({
-      DATABASE_HOST: process.env.DATABASE_HOST,
-      DATABASE_PORT: Number(process.env.DATABASE_PORT),
-      DATABASE_USERNAME: process.env.DATABASE_USERNAME,
-      DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
-      DATABASE_SCHEMA: process.env.DATABASE_SCHEMA,
-    });
-
     let dbConfig: DataSourceOptions;
+
     if (AppMode === EnvMode.Test) {
       dbConfig = {
         type: 'sqlite',
@@ -30,6 +23,13 @@ export const dbConfig = registerAs(
         namingStrategy: new SnakeNamingStrategy(),
       };
     } else {
+      const env = await DbConfigSchema.parseAsync({
+        DATABASE_HOST: process.env.DATABASE_HOST,
+        DATABASE_PORT: Number(process.env.DATABASE_PORT),
+        DATABASE_USERNAME: process.env.DATABASE_USERNAME,
+        DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
+        DATABASE_SCHEMA: process.env.DATABASE_SCHEMA,
+      });
       dbConfig = {
         type: 'mysql',
         host: env['DATABASE_HOST'],
