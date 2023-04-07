@@ -4,9 +4,6 @@ import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 
 import { commonConfig } from '../../config/index.js';
 
-import { HealthController } from '../../domain/health/health.controller.js';
-import { HealthService } from '../../domain/health/health.service.js';
-
 import { AuthModule } from '../../domain/auth/auth.module.js';
 import { UsersModule } from '../../domain/users/users.module.js';
 
@@ -16,15 +13,13 @@ import { fileURLToPath } from 'url';
 import { AppCacheModule } from '../../infra/cache/cache.module.js';
 import { AppMode } from '../../constants/index.js';
 import { OrderModule } from '../../domain/order/order.module.js';
-import {
-  AllExceptionFilter,
-  LifecycleService,
-  LoggerMiddleware,
-  ResponseTransformerInterceptor,
-} from '../../infra/index.js';
 import { dbConfig } from '../../config/db.config.js';
 import { cacheConfig } from '../../config/cache.config.js';
 import { HealthModule } from '../../domain/health/health.module.js';
+import { LoggerMiddleware } from '../../common/middlewares/logger.middlewares.js';
+import { ResponseTransformerInterceptor } from '../../common/interceptors/response-transformer.interceptor.js';
+import { AllExceptionFilter } from '../../common/filters/all-exception.filter.js';
+import { LifecycleService } from '../../common/lifecycle/lifecycle.service.js';
 
 @Module({
   imports: [

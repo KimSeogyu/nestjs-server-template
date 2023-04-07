@@ -7,7 +7,7 @@ import {
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IServerResponse } from '../infra.zod.js';
+import { IServerResponse } from '../common.zod.js';
 
 @Injectable()
 export class ResponseTransformerInterceptor<T>

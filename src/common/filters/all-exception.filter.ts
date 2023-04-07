@@ -9,7 +9,7 @@ import {
 
 import { Response } from 'express';
 
-import { IServerResponse } from '../infra.zod.js';
+import { IServerResponse } from '../common.zod.js';
 
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {

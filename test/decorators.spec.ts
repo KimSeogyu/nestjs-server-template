@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import {
   requestIdHandler,
   userIdHandler,
-} from '../src/utils/decorators/index.js';
+} from '../src/common/decorators/index.js';
 import { randomUUID } from 'crypto';
 
 describe('ALL DECORATORS', function () {

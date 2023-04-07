@@ -92,7 +92,7 @@ src
 │   ├── filters
 │   │   └── all-exception.filter.ts
 │   ├── index.ts
-│   ├── infra.zod.ts
+│   ├── common.zod.ts
 │   ├── interceptors
 │   │   └── response-transformer.interceptor.ts
 │   ├── lifecycle
