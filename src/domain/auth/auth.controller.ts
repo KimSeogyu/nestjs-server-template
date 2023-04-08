@@ -19,7 +19,6 @@ import {
   SignupResponseDto,
 } from './auth.zod.js';
 import { ApiResponse } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
 import { GoogleAuthGuard } from './guards/google-auth.guard.js';
 
 @ApiController('auth')
@@ -34,6 +33,13 @@ export class AuthController {
   @BasicAuthGuard()
   async login(@Req() req: any) {
     return await this.authService.login(req.user);
+  }
+
+  @Get('logout')
+  @HttpCode(HttpStatus.OK)
+  async logout(@Req() req: any) {
+    req.session.destroy();
+    return 'ok';
   }
 
   @Post('signup')
