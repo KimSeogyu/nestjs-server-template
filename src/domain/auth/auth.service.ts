@@ -102,8 +102,18 @@ export class AuthService {
         username: findOneResult.user.username,
         id: findOneResult.user.id,
       });
+    } else {
+      const socialAccount = await this.saveNewSocialUser(req);
+      return this.login({
+        username: socialAccount!.user.username,
+        id: socialAccount!.user.id,
+      });
     }
+  }
 
+  private async saveNewSocialUser(req: {
+    user: { id: string; email: string; lastName: string; firstName: string };
+  }) {
     const createdUser = await this.usersService.save({
       username: req.user.email,
     });
@@ -116,10 +126,7 @@ export class AuthService {
     const socialAccount = await this.socialAccountService.findOne({
       id: createdSocialAccount.id,
     });
-    return this.login({
-      username: socialAccount!.user.username,
-      id: socialAccount!.user.id,
-    });
+    return socialAccount;
   }
 
   async refresh(refreshToken: string, username: string) {
