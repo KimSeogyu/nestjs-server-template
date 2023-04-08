@@ -45,12 +45,10 @@ export class AuthService {
       refreshToken: this.getRefreshToken(username, id),
     };
 
-    const saltOrRounds = await bcrypt.genSalt(10);
     await this.usersService.save({
       id,
       username,
-      salt: saltOrRounds,
-      refreshToken: await bcrypt.hash(res.refreshToken, saltOrRounds),
+      refreshToken: await bcrypt.hash(res.refreshToken, 10),
     });
 
     return res;
@@ -131,12 +129,13 @@ export class AuthService {
     }
 
     const isValid = await bcrypt.compare(refreshToken, user.refreshToken);
-    if (isValid) {
-      return {
-        accessToken: this.getAccessToken(username, user.id),
-        refreshToken,
-      };
+    if (!isValid) {
+      return null;
     }
-    return null;
+
+    return {
+      accessToken: this.getAccessToken(username, user.id),
+      refreshToken,
+    };
   }
 }
