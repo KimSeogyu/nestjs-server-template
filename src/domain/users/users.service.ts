@@ -14,7 +14,7 @@ import { DeepPartial, FindOptionsWhere } from 'typeorm';
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async findSaltAndPasswordByUsername(user: FindOptionsWhere<User>) {
+  async findSecretValues(user: FindOptionsWhere<User>) {
     return await this.usersRepository.findSecretValues(user);
   }
 

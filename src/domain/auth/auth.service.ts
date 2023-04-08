@@ -23,7 +23,7 @@ export class AuthService {
 
   async validateUser(username: string, password: string) {
     const user = await this.usersService.findOne({ username });
-    const privateData = await this.usersService.findSaltAndPasswordByUsername({
+    const privateData = await this.usersService.findSecretValues({
       username,
     });
 
