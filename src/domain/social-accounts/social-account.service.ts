@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { SocialAccountRepository } from './social-account.repository.js';
-import { FindOptionsWhere } from 'typeorm';
+import { DeepPartial, FindOptionsWhere } from 'typeorm';
 import { SocialAccount } from './social-account.entity.js';
+import { User } from '../users/user.entity.js';
 
 @Injectable()
 export class SocialAccountService {
@@ -9,13 +10,8 @@ export class SocialAccountService {
     private readonly socialAccountRepository: SocialAccountRepository,
   ) {}
 
-  save(providerId: string, email: string, username: string, provider: string) {
-    return this.socialAccountRepository.save({
-      providerId: providerId,
-      email: email,
-      provider: provider,
-      user: { username: username },
-    });
+  save(socialAccount: DeepPartial<SocialAccount>) {
+    return this.socialAccountRepository.save(socialAccount);
   }
 
   findOne(socialAccount: FindOptionsWhere<SocialAccount>) {

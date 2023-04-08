@@ -15,17 +15,16 @@ export class JwtRefreshStrategy extends PassportStrategy(
     private authService: AuthService,
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromExtractors([
-        (request) => request?.body?.refreshToken,
-      ]),
-      ignoreExpiration: false,
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: configService.getOrThrow('JWT_SECRET'),
+      passReqToCallback: true,
     });
   }
 
   async validate(request: Request, payload: { id: number; username: string }) {
     const refreshToken = request.body?.refreshToken;
-    const user = await this.authService.refresh(refreshToken, payload.id);
+    console.log(payload);
+    const user = await this.authService.refresh(refreshToken, payload.username);
     if (!user) {
       throw new UnauthorizedException(
         `NOT FOUND USER, username=${payload.username} id=${payload.id}`,

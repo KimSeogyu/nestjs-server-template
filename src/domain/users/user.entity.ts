@@ -17,18 +17,23 @@ import { SocialAccount } from '../social-accounts/social-account.entity.js';
 
 @Entity('user')
 export class User extends CoreEntity {
-  @Column()
+  @Column({
+    unique: true,
+    nullable: false,
+  })
   @Index('ux_user_username', { unique: true })
   username!: string;
 
   @Column({
     select: false,
+    nullable: true,
   })
   @ApiHideProperty()
   password!: string;
 
   @Column({
     select: false,
+    nullable: true,
   })
   @ApiHideProperty()
   salt!: string;

@@ -29,7 +29,7 @@ describe('HealthController (e2e)', () => {
     const dto = new CreateUserDto();
     dto.username = 'test';
     dto.password = '1234';
-    await usersService.create(dto);
+    await usersService.save(dto);
     return request(app.getHttpServer())
       .post('/auth/login')
       .auth(dto.username, dto.password)
@@ -40,7 +40,7 @@ describe('HealthController (e2e)', () => {
     const dto = new CreateUserDto();
     dto.username = 'test';
     dto.password = '1234';
-    const user = await usersService.create(dto);
+    const user = await usersService.save(dto);
     const { accessToken } = await authService.login({
       username: user.username,
       id: +user.id,

@@ -5,11 +5,10 @@ import {
 } from '@nestjs/common';
 import { UsersRepository } from './users.repository.js';
 import { createHashedPassword, User } from './user.entity.js';
-import { SignUpDto } from '../auth/auth.zod.js';
 import { UpdatePasswordDto, UpdateUsernameDto } from './user.zod.js';
 import { UseCache } from '../../common/decorators/index.js';
 import { GeneralQueryFilter } from '../../applications/api/api.zod.js';
-import { FindOptionsWhere } from 'typeorm';
+import { DeepPartial, FindOptionsWhere } from 'typeorm';
 
 @Injectable()
 export class UsersService {
@@ -19,8 +18,8 @@ export class UsersService {
     return await this.usersRepository.findSecretValues(user);
   }
 
-  async create(dto: SignUpDto) {
-    return await this.usersRepository.saveUser(dto);
+  async save(dto: DeepPartial<User>) {
+    return await this.usersRepository.save(dto);
   }
 
   @UseCache()

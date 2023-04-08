@@ -52,7 +52,7 @@ export class AuthService {
         `USERNAME IS NOT UNIQUE, found ${JSON.stringify(user)}`,
       );
 
-    return this.usersService.create(userDto);
+    return this.usersService.save(userDto);
   }
 
   async googleLogin(req: {
@@ -66,31 +66,35 @@ export class AuthService {
       provider: 'google',
       providerId: req.user.id,
     });
-    if (findOneResult?.user) {
+    if (findOneResult) {
       return this.login({
         username: findOneResult.user.username,
         id: findOneResult.user.id,
       });
     }
 
-    const socialAccount = await this.socialAccountService.save(
-      req.user.id,
-      req.user.email,
-      `${req.user.lastName} ${req.user.firstName}`,
-      'google',
-    );
+    const createdUser = await this.usersService.save({
+      username: req.user.email,
+    });
+    const socialAccount = await this.socialAccountService.save({
+      providerId: req.user.id,
+      email: req.user.email,
+      provider: 'google',
+      userId: createdUser.id,
+    });
     return this.login({
       username: socialAccount.user.username,
       id: socialAccount.user.id,
     });
   }
 
-  async refresh(refreshToken: string, userId: number) {
-    const user = await this.usersService.findOne({ id: userId });
+  async refresh(refreshToken: string, username: string) {
+    const user = await this.usersService.findOne({ username });
     if (!user) {
-      throw new BadRequestException(`NOT FOUND USER, id=${userId}`);
+      throw new BadRequestException(`NOT FOUND USER, username=${username}`);
     }
 
+    console.log(user);
     return (await bcrypt.compare(refreshToken, user.refreshToken))
       ? user
       : null;

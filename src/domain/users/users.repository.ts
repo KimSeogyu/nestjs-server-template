@@ -1,7 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Between, DataSource, FindOptionsWhere, Repository } from 'typeorm';
+import {
+  Between,
+  DataSource,
+  DeepPartial,
+  FindOptionsWhere,
+  Repository,
+} from 'typeorm';
 import { User } from './user.entity.js';
-import { SignUpDto } from '../auth/auth.zod.js';
 import { UpdateUsernameDto } from './user.zod.js';
 import {
   MYSQL_DATASOURCE_KEY,
@@ -32,7 +37,7 @@ export class UsersRepository {
     });
   }
 
-  async saveUser(dto: SignUpDto) {
+  async save(dto: DeepPartial<User>) {
     const created = this.usersRepository.create(dto);
     const { salt, password, ...result } = await this.usersRepository.save(
       created,

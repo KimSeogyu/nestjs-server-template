@@ -45,7 +45,7 @@ export class UsersController {
     status: HttpStatus.CREATED,
   })
   async create(@Body() createUserDto: CreateUserDto) {
-    return await this.usersService.create(createUserDto);
+    return await this.usersService.save(createUserDto);
   }
 
   @Get()

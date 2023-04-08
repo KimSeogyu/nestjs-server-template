@@ -64,7 +64,7 @@ describe('AuthService', function () {
 
   it('유저검사 (BasicAuth) 비밀번호가 다른 경우', async () => {
     const dto = { username: 'hello', password: '1234' };
-    await usersService.create(dto);
+    await usersService.save(dto);
     await service.validateUser(dto.username, '1235').catch((err: unknown) => {
       expect(err).instanceOf(UnauthorizedException);
       expect((err as UnauthorizedException).message).eq(
@@ -75,7 +75,7 @@ describe('AuthService', function () {
 
   it('유저검사 (BasicAuth) 통과 케이스', async () => {
     const dto = { username: 'hello', password: '1234' };
-    await usersService.create(dto);
+    await usersService.save(dto);
     const userEntity = await service.validateUser(dto.username, dto.password);
     expect(userEntity.username).eq(dto.username);
   });
