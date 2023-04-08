@@ -55,7 +55,7 @@ describe('AuthController', function () {
 
   it('[로그인] 성공', async () => {
     const req = {
-      user: { username: 'hello', id: 1 },
+      user: { username: 'hello1', id: 1 },
     };
     const res = await controller.login(req);
     expect(res).haveOwnProperty('accessToken');

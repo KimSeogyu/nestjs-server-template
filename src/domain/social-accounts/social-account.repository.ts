@@ -16,20 +16,13 @@ export class SocialAccountRepository {
   ) {}
 
   save(socialAccount: DeepPartial<SocialAccount>) {
-    return this.socialAccountRepository.save({
-      providerId: socialAccount.providerId,
-      email: socialAccount.email,
-      provider: socialAccount.provider,
-      user: {
-        username: socialAccount.user?.username ?? socialAccount.email,
-      },
-    });
+    return this.socialAccountRepository.save(socialAccount);
   }
 
   findOne(socialAccount: FindOptionsWhere<SocialAccount>) {
     return this.socialAccountRepository.findOne({
       where: socialAccount,
-      relations: ['user'],
+      relations: { user: true },
     });
   }
 }

@@ -10,6 +10,8 @@ export const commonConfig = registerAs(
       APP_VERSION: process.env.APP_VERSION,
       JWT_SECRET: process.env.JWT_SECRET,
       JWT_EXPIRE_TIME: process.env.JWT_EXPIRE_TIME,
+      REFRESH_JWT_SECRET: process.env.REFRESH_JWT_SECRET,
+      REFRESH_JWT_EXPIRATION: process.env.REFRESH_JWT_EXPIRATIONy,
       SLACK_WEBHOOK_URL: process.env.SLACK_WEBHOOK_URL,
       GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
       GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,

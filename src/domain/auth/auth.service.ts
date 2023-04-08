@@ -10,10 +10,12 @@ import { createHashedPassword } from '../users/user.entity.js';
 import { UsersService } from '../users/users.service.js';
 import { SignUpDto } from './auth.zod.js';
 import { SocialAccountService } from '../social-accounts/social-account.service.js';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
+    private configService: ConfigService,
     private jwtService: JwtService,
     private usersService: UsersService,
     private socialAccountService: SocialAccountService,
@@ -38,9 +40,40 @@ export class AuthService {
   async login(user: { username: string; id: number }) {
     const { username, id } = user;
 
-    return {
-      accessToken: this.jwtService.sign({ username, id }),
+    const res = {
+      accessToken: this.getAccessToken(username, id),
+      refreshToken: this.getRefreshToken(username, id),
     };
+
+    const saltOrRounds = await bcrypt.genSalt(10);
+    await this.usersService.save({
+      id,
+      username,
+      salt: saltOrRounds,
+      refreshToken: await bcrypt.hash(res.refreshToken, saltOrRounds),
+    });
+
+    return res;
+  }
+
+  private getRefreshToken(username: string, id: number) {
+    return this.jwtService.sign(
+      { username, id },
+      {
+        secret: this.configService.getOrThrow('REFRESH_JWT_SECRET'),
+        expiresIn: this.configService.getOrThrow('REFRESH_JWT_EXPIRATION'),
+      },
+    );
+  }
+
+  private getAccessToken(username: string, id: number) {
+    return this.jwtService.sign(
+      { username, id },
+      {
+        secret: this.configService.getOrThrow('JWT_SECRET'),
+        expiresIn: this.configService.getOrThrow('JWT_EXPIRE_TIME'),
+      },
+    );
   }
 
   async signup(userDto: SignUpDto) {
@@ -76,15 +109,18 @@ export class AuthService {
     const createdUser = await this.usersService.save({
       username: req.user.email,
     });
-    const socialAccount = await this.socialAccountService.save({
+    const createdSocialAccount = await this.socialAccountService.save({
       providerId: req.user.id,
       email: req.user.email,
       provider: 'google',
       userId: createdUser.id,
     });
+    const socialAccount = await this.socialAccountService.findOne({
+      id: createdSocialAccount.id,
+    });
     return this.login({
-      username: socialAccount.user.username,
-      id: socialAccount.user.id,
+      username: socialAccount!.user.username,
+      id: socialAccount!.user.id,
     });
   }
 
@@ -94,9 +130,13 @@ export class AuthService {
       throw new BadRequestException(`NOT FOUND USER, username=${username}`);
     }
 
-    console.log(user);
-    return (await bcrypt.compare(refreshToken, user.refreshToken))
-      ? user
-      : null;
+    const isValid = await bcrypt.compare(refreshToken, user.refreshToken);
+    if (isValid) {
+      return {
+        accessToken: this.getAccessToken(username, user.id),
+        refreshToken,
+      };
+    }
+    return null;
   }
 }
