@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Between, DataSource, Repository } from 'typeorm';
+import { Between, DataSource, FindOptionsWhere, Repository } from 'typeorm';
 import { User } from './user.entity.js';
 import { SignUpDto } from '../auth/auth.zod.js';
 import { UpdateUsernameDto } from './user.zod.js';
@@ -18,17 +18,13 @@ export class UsersRepository {
     private mysqlProvider: DataSource,
   ) {}
 
-  async findOneByUsername(username: string) {
-    return await this.usersRepository.findOneBy({
-      username,
-    });
+  async findOne(user: FindOptionsWhere<User>) {
+    return await this.usersRepository.findOneBy(user);
   }
 
-  async findSecretValuesByUsername(username: string) {
+  async findSecretValues(user: FindOptionsWhere<User>) {
     return await this.usersRepository.findOne({
-      where: {
-        username,
-      },
+      where: user,
       select: {
         salt: true,
         password: true,
@@ -72,16 +68,5 @@ export class UsersRepository {
   async updateUsernameById(id: number, updateUserDto: UpdateUsernameDto) {
     const updated = await this.usersRepository.update(id, updateUserDto);
     return !!updated.affected;
-  }
-  async findOneUserById(id: number) {
-    return await this.usersRepository.findOneOrFail({
-      where: {
-        id,
-      },
-      select: {
-        salt: true,
-        password: true,
-      },
-    });
   }
 }

@@ -15,11 +15,13 @@ export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
   async findOneByUsername(username: string): Promise<User | null> {
-    return await this.usersRepository.findOneByUsername(username);
+    return await this.usersRepository.findOne({ username: username });
   }
 
   async findSaltAndPasswordByUsername(username: string) {
-    return await this.usersRepository.findSecretValuesByUsername(username);
+    return await this.usersRepository.findSecretValues({
+      username: username,
+    });
   }
 
   async create(dto: SignUpDto) {
@@ -35,7 +37,10 @@ export class UsersService {
     id: number,
     { password, confirmPassword, currentPassword }: UpdatePasswordDto,
   ) {
-    const user = await this.usersRepository.findOneUserById(id);
+    const user = await this.usersRepository.findSecretValues({ id });
+    if (!user) {
+      throw new BadRequestException(`NOT FOUND USER, id=${id}`);
+    }
 
     const [curHash, newHash] = await Promise.allSettled([
       createHashedPassword(currentPassword, user?.salt),
@@ -93,5 +98,9 @@ export class UsersService {
     if (confirmPassword !== password) {
       throw new BadRequestException(`Passwords are not same`);
     }
+  }
+
+  findOneById(userId: number) {
+    return this.usersRepository.findOne({ id: userId });
   }
 }

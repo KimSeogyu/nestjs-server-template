@@ -13,6 +13,7 @@ import { ApiResponse } from '@nestjs/swagger';
 import {
   ApiController,
   ApiJwtAuthGuard,
+  UserId,
 } from '../../common/decorators/index.js';
 
 import {
@@ -22,12 +23,13 @@ import {
   FindManyUserResponseDto,
   FindManyUsersDto,
   FindOneUserByUsernameDto,
-  FindOneyUsernameResponseDto,
+  FindOneByUsernameResponseDto,
   QueryByUserIdDto,
   UpdatePasswordDto,
   UpdatePasswordResponseDto,
   UpdateUsernameDto,
   UpdateUsernameResponseDto,
+  FindOneByIdResponseDto,
 } from './user.zod.js';
 import { UsersService } from './users.service.js';
 
@@ -59,7 +61,7 @@ export class UsersController {
   @Get(':username')
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
-    type: FindOneyUsernameResponseDto,
+    type: FindOneByUsernameResponseDto,
     status: HttpStatus.OK,
   })
   async findOne(@Query() dto: FindOneUserByUsernameDto) {
@@ -100,5 +102,15 @@ export class UsersController {
   })
   async remove(@Param() dto: QueryByUserIdDto) {
     return await this.usersService.remove(dto.id);
+  }
+
+  @Get('me')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    type: FindOneByIdResponseDto,
+    status: HttpStatus.OK,
+  })
+  async me(@UserId() userId: number) {
+    return this.usersService.findOneById(userId);
   }
 }

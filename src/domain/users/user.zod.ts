@@ -79,10 +79,20 @@ export class CreateUserResponseDto extends createZodDto(
 export class FindOneUserByUsernameDto extends createZodDto(
   FindOneUserZ.pick({ username: true }).required(),
 ) {}
-export class FindOneyUsernameResponseDto extends createZodDto(
+export class FindOneByUsernameResponseDto extends createZodDto(
   z.object({
     input: z.object({
       param: FindOneUserZ.pick({ username: true }).required(),
+    }),
+    output: FindOneUserZ,
+    meta: MetadataSchema,
+  }),
+) {}
+
+export class FindOneByIdResponseDto extends createZodDto(
+  z.object({
+    input: z.object({
+      param: FindOneUserZ.pick({ id: true }).required(),
     }),
     output: FindOneUserZ,
     meta: MetadataSchema,
