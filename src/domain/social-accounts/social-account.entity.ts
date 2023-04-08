@@ -10,7 +10,11 @@ import { CoreEntity } from '../../infra/database/database.util.js';
 import { User } from '../users/user.entity.js';
 
 @Entity('social_accounts')
-@Index(['email', 'provider', 'providerId'], { unique: true })
+@Index(
+  'idx_social_account_email_provider_provider_id',
+  ['email', 'provider', 'providerId'],
+  { unique: true },
+)
 export class SocialAccount extends CoreEntity {
   @Column({
     nullable: false,
