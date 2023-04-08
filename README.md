@@ -75,6 +75,7 @@ src
 │   │   ├── auth.service.ts
 │   │   ├── auth.zod.ts
 │   │   ├── basic-auth.strategy.ts
+│   │   ├── google.strategy.ts
 │   │   └── jwt-auth.strategy.ts
 │   ├── health
 │   │   ├── health.controller.ts
@@ -88,6 +89,7 @@ src
 │   │   ├── order.service.ts
 │   │   └── order.zod.ts
 │   └── users
+│       ├── social-account.repository.ts
 │       ├── user.entity.ts
 │       ├── user.zod.ts
 │       ├── users.controller.ts
@@ -108,5 +110,5 @@ src
     ├── init.utils.ts
     └── sleep.utils.ts
 
-19 directories, 48 files
+20 directories, 50 files
 ```
