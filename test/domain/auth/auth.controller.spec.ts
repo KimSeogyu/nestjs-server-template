@@ -13,6 +13,7 @@ import { AppMode } from '../../../src/common/constants.js';
 import { dbConfig } from '../../../src/config/db.config.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { SocialAccountsModule } from '../../../src/domain/social-accounts/social-accounts.module.js';
 
 describe('AuthController', function () {
   let controller: AuthController;
@@ -20,6 +21,7 @@ describe('AuthController', function () {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         PassportModule,
+        SocialAccountsModule,
         UsersModule,
         ConfigModule.forRoot({
           load: [commonConfig, dbConfig],

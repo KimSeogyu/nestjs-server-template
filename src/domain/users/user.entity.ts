@@ -8,13 +8,12 @@ import {
   Column,
   Entity,
   Index,
-  JoinColumn,
-  ManyToOne,
   OneToMany,
   Relation,
 } from 'typeorm';
 import { CoreEntity } from '../../infra/database/database.util.js';
 import { Order } from '../order/order.entity.js';
+import { SocialAccount } from '../social-accounts/social-account.entity.js';
 
 @Entity('user')
 export class User extends CoreEntity {
@@ -49,25 +48,6 @@ export class User extends CoreEntity {
       this.salt = salt;
     }
   }
-}
-
-@Entity('social_accounts')
-export class SocialAccount extends CoreEntity {
-  @ManyToOne(() => User, (user) => user.orders)
-  @JoinColumn({
-    name: 'user_id',
-    referencedColumnName: 'id',
-  })
-  user: Relation<User>;
-
-  @Column()
-  email!: string;
-
-  @Column()
-  provider: string;
-
-  @Column()
-  providerId: string;
 }
 
 const randomBytesPromise = util.promisify(crypto.randomBytes);

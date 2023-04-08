@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { SocialAccount } from './user.entity.js';
 import {
   MYSQL_DATASOURCE_KEY,
   SOCIAL_ACCOUNT_REPOSITORY_KEY,
 } from '../../common/constants.js';
+import { SocialAccount } from './social-account.entity.js';
 
 @Injectable()
 export class SocialAccountRepository {

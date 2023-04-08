@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service.js';
 
@@ -10,6 +10,7 @@ import { AuthController } from './auth.controller.js';
 import { UsersModule } from '../users/users.module.js';
 import { GoogleStrategy } from './strategies/google.strategy.js';
 import { SessionSerializer } from './session.serializer.js';
+import { SocialAccountsModule } from '../social-accounts/social-accounts.module.js';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { SessionSerializer } from './session.serializer.js';
       session: true,
     }),
     UsersModule,
+    SocialAccountsModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -30,6 +32,7 @@ import { SessionSerializer } from './session.serializer.js';
   ],
   providers: [
     AuthService,
+    JwtService,
     BasicAuthStrategy,
     JwtAuthStrategy,
     GoogleStrategy,

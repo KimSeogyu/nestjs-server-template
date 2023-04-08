@@ -9,14 +9,10 @@ import { SignUpDto } from '../auth/auth.zod.js';
 import { UpdatePasswordDto, UpdateUsernameDto } from './user.zod.js';
 import { UseCache } from '../../common/decorators/index.js';
 import { GeneralQueryFilter } from '../../applications/api/api.zod.js';
-import { SocialAccountRepository } from './social-account.repository.js';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    private readonly usersRepository: UsersRepository,
-    private readonly socialAccountRepository: SocialAccountRepository,
-  ) {}
+  constructor(private readonly usersRepository: UsersRepository) {}
 
   async findOneByUsername(username: string): Promise<User | null> {
     return await this.usersRepository.findOneByUsername(username);
@@ -97,19 +93,5 @@ export class UsersService {
     if (confirmPassword !== password) {
       throw new BadRequestException(`Passwords are not same`);
     }
-  }
-
-  async saveSocialAccount(
-    id: string,
-    email: string,
-    username: string,
-    provider: string,
-  ) {
-    return this.socialAccountRepository.saveSocialAccount(
-      id,
-      email,
-      username,
-      provider,
-    );
   }
 }

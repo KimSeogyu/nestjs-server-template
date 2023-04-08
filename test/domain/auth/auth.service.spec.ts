@@ -15,6 +15,7 @@ import { UsersService } from '../../../src/domain/users/users.service.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { UnauthorizedException } from '@nestjs/common';
+import { SocialAccountsModule } from '../../../src/domain/social-accounts/social-accounts.module.js';
 
 describe('AuthService', function () {
   let service: AuthService;
@@ -24,6 +25,7 @@ describe('AuthService', function () {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         PassportModule,
+        SocialAccountsModule,
         UsersModule,
         ConfigModule.forRoot({
           load: [commonConfig, dbConfig],

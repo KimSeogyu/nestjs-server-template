@@ -8,12 +8,14 @@ import { JwtService } from '@nestjs/jwt';
 import { createHashedPassword } from '../users/user.entity.js';
 import { UsersService } from '../users/users.service.js';
 import { SignUpDto } from './auth.zod.js';
+import { SocialAccountService } from '../social-accounts/social-account.service.js';
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
     private usersService: UsersService,
+    private socialAccountService: SocialAccountService,
   ) {}
 
   async validateUser(username: string, password: string) {
@@ -55,7 +57,7 @@ export class AuthService {
       throw new UnauthorizedException(`Can't get google user`);
     }
 
-    return await this.usersService.saveSocialAccount(
+    return await this.socialAccountService.saveSocialAccount(
       req.user.id,
       req.user.email,
       `${req.user.lastName} ${req.user.firstName}`,

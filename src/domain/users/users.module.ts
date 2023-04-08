@@ -3,7 +3,7 @@ import { UsersService } from './users.service.js';
 import { UsersController } from './users.controller.js';
 import { UsersRepository } from './users.repository.js';
 import { DataSource } from 'typeorm';
-import { SocialAccount, User } from './user.entity.js';
+import { User } from './user.entity.js';
 import { DatabaseModule } from '../../infra/database/database.module.js';
 import { databaseProviders } from '../../infra/database/database.provider.js';
 import {
@@ -11,7 +11,7 @@ import {
   SOCIAL_ACCOUNT_REPOSITORY_KEY,
   USER_REPOSITORY_KEY,
 } from '../../common/constants.js';
-import { SocialAccountRepository } from './social-account.repository.js';
+import { SocialAccount } from '../social-accounts/social-account.entity.js';
 
 @Module({
   imports: [DatabaseModule.register()],
@@ -19,7 +19,6 @@ import { SocialAccountRepository } from './social-account.repository.js';
   providers: [
     UsersService,
     UsersRepository,
-    SocialAccountRepository,
     ...databaseProviders,
     {
       inject: [MYSQL_DATASOURCE_KEY],
