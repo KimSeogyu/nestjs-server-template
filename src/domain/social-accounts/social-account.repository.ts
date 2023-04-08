@@ -27,7 +27,6 @@ export class SocialAccountRepository {
       provider: provider,
       user: {
         username: username,
-        password: providerId,
       },
     });
   }
