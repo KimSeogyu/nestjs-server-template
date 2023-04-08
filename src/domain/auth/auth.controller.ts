@@ -20,6 +20,7 @@ import {
 } from './auth.zod.js';
 import { ApiResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { GoogleAuthGuard } from './guards/google-auth.guard.js';
 
 @ApiController('auth')
 export class AuthController {
@@ -46,7 +47,7 @@ export class AuthController {
 
   @Get('google/redirect')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(AuthGuard('google'))
+  @UseGuards(GoogleAuthGuard)
   @ApiResponse({
     type: LoginResponseDto,
   })
@@ -56,7 +57,7 @@ export class AuthController {
 
   @Get('google')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(AuthGuard('google'))
+  @UseGuards(GoogleAuthGuard)
   @ApiResponse({
     type: GoogleLoginResponseDto,
   })

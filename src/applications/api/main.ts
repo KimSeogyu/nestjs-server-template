@@ -7,6 +7,8 @@ import { ConfigService } from '@nestjs/config';
 
 import { createCustomLogger, initSwaggerDocs } from '../../utils/init.utils.js';
 import { AppMode } from '../../common/constants.js';
+import passport from 'passport';
+import session from 'express-session';
 
 export async function bootstrap() {
   const app = await NestFactory.create(ApiModule);
@@ -25,6 +27,15 @@ export async function bootstrap() {
   });
 
   app.use(helmet());
+  app.use(
+    session({
+      secret: configService.getOrThrow('SESSION_SECRET'),
+      resave: false,
+      saveUninitialized: false,
+      cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    }),
+  );
+  app.use(passport.session());
 
   initSwaggerDocs(app);
 

@@ -9,10 +9,13 @@ import { JwtAuthStrategy } from './strategies/jwt-auth.strategy.js';
 import { AuthController } from './auth.controller.js';
 import { UsersModule } from '../users/users.module.js';
 import { GoogleStrategy } from './strategies/google.strategy.js';
+import { SessionSerializer } from './session.serializer.js';
 
 @Module({
   imports: [
-    PassportModule,
+    PassportModule.register({
+      session: true,
+    }),
     UsersModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -25,7 +28,13 @@ import { GoogleStrategy } from './strategies/google.strategy.js';
       }),
     }),
   ],
-  providers: [AuthService, BasicAuthStrategy, JwtAuthStrategy, GoogleStrategy],
+  providers: [
+    AuthService,
+    BasicAuthStrategy,
+    JwtAuthStrategy,
+    GoogleStrategy,
+    SessionSerializer,
+  ],
   controllers: [AuthController],
 })
 export class AuthModule {}

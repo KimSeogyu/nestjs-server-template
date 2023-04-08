@@ -1,6 +1,9 @@
 import { Body, Get, HttpCode, HttpStatus, Post, Query } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
-import { ApiController, JwtAuthGuard } from '../../common/decorators/index.js';
+import {
+  ApiController,
+  ApiJwtAuthGuard,
+} from '../../common/decorators/index.js';
 import { OrderService } from './order.service.js';
 import {
   CreateOrderDto,
@@ -10,7 +13,7 @@ import {
 } from './order.zod.js';
 
 @ApiController('orders')
-@JwtAuthGuard()
+@ApiJwtAuthGuard()
 export class OrderController {
   constructor(private orderService: OrderService) {}
 

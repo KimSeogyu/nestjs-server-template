@@ -8,6 +8,7 @@ import {
 } from '@nestjs/swagger';
 
 import * as crypto from 'crypto';
+import { JwtAuthGuard } from '../../domain/auth/guards/jwt-auth.guard.js';
 
 export const ApiController = (name: string) =>
   applyDecorators(Controller(name.toLowerCase()), ApiTags(name.toUpperCase()));
@@ -48,5 +49,5 @@ export const AdminController = (name: string) => {
 export const BasicAuthGuard = () =>
   applyDecorators(UseGuards(AuthGuard('basic')), ApiBasicAuth());
 
-export const JwtAuthGuard = () =>
-  applyDecorators(UseGuards(AuthGuard('jwt')), ApiBearerAuth());
+export const ApiJwtAuthGuard = () =>
+  applyDecorators(UseGuards(JwtAuthGuard), ApiBearerAuth());

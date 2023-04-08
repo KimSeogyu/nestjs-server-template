@@ -10,7 +10,10 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
-import { ApiController, JwtAuthGuard } from '../../common/decorators/index.js';
+import {
+  ApiController,
+  ApiJwtAuthGuard,
+} from '../../common/decorators/index.js';
 
 import {
   CreateUserDto,
@@ -29,7 +32,7 @@ import {
 import { UsersService } from './users.service.js';
 
 @ApiController('users')
-@JwtAuthGuard()
+@ApiJwtAuthGuard()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
