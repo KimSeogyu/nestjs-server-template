@@ -8,6 +8,8 @@ import {
   Column,
   Entity,
   Index,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   Relation,
 } from 'typeorm';
@@ -35,6 +37,9 @@ export class User extends CoreEntity {
   @OneToMany(() => Order, (order) => order.user)
   orders: Relation<Order>[];
 
+  @OneToMany(() => SocialAccount, (socialAccount) => socialAccount.user)
+  socialAccounts: Relation<SocialAccount>[];
+
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword() {
@@ -44,6 +49,25 @@ export class User extends CoreEntity {
       this.salt = salt;
     }
   }
+}
+
+@Entity('social_accounts')
+export class SocialAccount extends CoreEntity {
+  @ManyToOne(() => User, (user) => user.orders)
+  @JoinColumn({
+    name: 'user_id',
+    referencedColumnName: 'id',
+  })
+  user: Relation<User>;
+
+  @Column()
+  email!: string;
+
+  @Column()
+  provider: string;
+
+  @Column()
+  providerId: string;
 }
 
 const randomBytesPromise = util.promisify(crypto.randomBytes);

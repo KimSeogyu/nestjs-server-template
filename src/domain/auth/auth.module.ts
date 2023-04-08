@@ -8,6 +8,7 @@ import { BasicAuthStrategy } from './basic-auth.strategy.js';
 import { JwtAuthStrategy } from './jwt-auth.strategy.js';
 import { AuthController } from './auth.controller.js';
 import { UsersModule } from '../users/users.module.js';
+import { GoogleStrategy } from './google.strategy.js';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { UsersModule } from '../users/users.module.js';
       }),
     }),
   ],
-  providers: [AuthService, BasicAuthStrategy, JwtAuthStrategy],
+  providers: [AuthService, BasicAuthStrategy, JwtAuthStrategy, GoogleStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}

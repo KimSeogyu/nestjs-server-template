@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { DB_CONFIG_KEY, AppMode, EnvMode } from '../common/constants.js';
+import { AppMode, DB_CONFIG_KEY, EnvMode } from '../common/constants.js';
 import { DataSourceOptions } from 'typeorm';
 import { DbConfigSchema } from './config.zod.js';
 import { dirname } from 'path';

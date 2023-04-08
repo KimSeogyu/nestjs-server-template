@@ -1,4 +1,5 @@
 export const USER_REPOSITORY_KEY = 'repository.user';
+export const SOCIAL_ACCOUNT_REPOSITORY_KEY = 'repository.social_account';
 export const ORDER_REPOSITORY_KEY = 'repository.order';
 export const MYSQL_DATASOURCE_KEY = 'datasource.mysql';
 export const DB_CONFIG_KEY = 'config.database';

@@ -49,4 +49,17 @@ export class AuthService {
 
     return this.usersService.create(userDto);
   }
+
+  async googleLogin(req: any) {
+    if (!req.user) {
+      throw new UnauthorizedException(`Can't get google user`);
+    }
+
+    return await this.usersService.saveSocialAccount(
+      req.user.id,
+      req.user.email,
+      `${req.user.lastName} ${req.user.firstName}`,
+      'google',
+    );
+  }
 }

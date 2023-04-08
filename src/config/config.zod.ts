@@ -8,6 +8,9 @@ export const GlobalConfigSchema = z
     JWT_SECRET: z.string(),
     JWT_EXPIRE_TIME: z.string(),
     SLACK_WEBHOOK_URL: z.string(),
+    GOOGLE_CLIENT_ID: z.string(),
+    GOOGLE_CLIENT_SECRET: z.string(),
+    GOOGLE_REDIRECT_URIS: z.string(),
   })
   .required();
 

@@ -1,6 +1,7 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
 import {
+  EmptyObjectSchema,
   MetadataSchema,
   PASSWORD_REGEX,
 } from '../../applications/api/api.zod.js';
@@ -61,3 +62,11 @@ export const LoginResponseZ = z.object({
 export class SignupResponseDto extends createZodDto(SignupResponseZ) {}
 
 export class LoginResponseDto extends createZodDto(LoginResponseZ) {}
+
+export class GoogleLoginResponseDto extends createZodDto(
+  z.object({
+    input: EmptyObjectSchema,
+    output: EmptyObjectSchema,
+    meta: MetadataSchema,
+  }),
+) {}

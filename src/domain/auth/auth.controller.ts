@@ -2,10 +2,24 @@ import {
   ApiController,
   BasicAuthGuard,
 } from '../../common/decorators/index.js';
-import { Body, HttpCode, HttpStatus, Post, Request } from '@nestjs/common';
+import {
+  Body,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service.js';
-import { LoginResponseDto, SignUpDto, SignupResponseDto } from './auth.zod.js';
+import {
+  GoogleLoginResponseDto,
+  LoginResponseDto,
+  SignUpDto,
+  SignupResponseDto,
+} from './auth.zod.js';
 import { ApiResponse } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiController('auth')
 export class AuthController {
@@ -17,7 +31,7 @@ export class AuthController {
     type: LoginResponseDto,
   })
   @BasicAuthGuard()
-  async login(@Request() req: any) {
+  async login(@Req() req: any) {
     return await this.authService.login(req.user);
   }
 
@@ -28,5 +42,25 @@ export class AuthController {
   })
   async signUp(@Body() dto: SignUpDto) {
     return await this.authService.signup(dto);
+  }
+
+  @Get('google/redirect')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard('google'))
+  @ApiResponse({
+    type: LoginResponseDto,
+  })
+  googleRedirect(@Req() req: any) {
+    return this.authService.googleLogin(req);
+  }
+
+  @Get('google')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard('google'))
+  @ApiResponse({
+    type: GoogleLoginResponseDto,
+  })
+  googleLogin() {
+    return 'ok';
   }
 }

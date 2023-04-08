@@ -60,3 +60,16 @@ CREATE TABLE user
     CONSTRAINT ux_user_username UNIQUE INDEX (username)
 ) ENGINE = InnoDB
   DEFAULT CHARSET utf8;
+
+create table social_accounts
+(
+    id          int auto_increment
+        primary key,
+    created_at  datetime(6) default CURRENT_TIMESTAMP(6) not null,
+    updated_at  datetime(6) default CURRENT_TIMESTAMP(6) not null on update CURRENT_TIMESTAMP(6),
+    email       varchar(255)                             not null,
+    provider    varchar(255)                             not null,
+    provider_id varchar(255)                             not null,
+    user_id     int                                      null
+) ENGINE = InnoDB
+  DEFAULT CHARSET utf8;

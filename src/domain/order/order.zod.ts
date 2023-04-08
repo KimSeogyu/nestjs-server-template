@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { createZodDto } from '@anatine/zod-nestjs';
 import {
-  MetadataSchema,
   GeneralQueryFilterDto,
+  MetadataSchema,
 } from '../../applications/api/api.zod.js';
 
 export const OrderStatusZ = z.object({
