@@ -49,7 +49,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(GoogleAuthGuard)
   @ApiResponse({
-    type: LoginResponseDto,
+    type: GoogleLoginResponseDto,
   })
   googleRedirect(@Req() req: any) {
     return this.authService.googleLogin(req);
