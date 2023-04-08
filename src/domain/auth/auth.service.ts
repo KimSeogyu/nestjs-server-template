@@ -41,8 +41,8 @@ export class AuthService {
     const { username, id } = user;
 
     const res = {
-      accessToken: this.getAccessToken(username, id),
-      refreshToken: this.getRefreshToken(username, id),
+      accessToken: this.generateAccessToken(username, id),
+      refreshToken: this.generateRefreshToken(username, id),
     };
 
     await this.usersService.save({
@@ -54,7 +54,7 @@ export class AuthService {
     return res;
   }
 
-  private getRefreshToken(username: string, id: number) {
+  private generateRefreshToken(username: string, id: number) {
     return this.jwtService.sign(
       { username, id },
       {
@@ -64,7 +64,7 @@ export class AuthService {
     );
   }
 
-  private getAccessToken(username: string, id: number) {
+  private generateAccessToken(username: string, id: number) {
     return this.jwtService.sign(
       { username, id },
       {
@@ -141,7 +141,7 @@ export class AuthService {
     }
 
     return {
-      accessToken: this.getAccessToken(username, user.id),
+      accessToken: this.generateAccessToken(username, user.id),
       refreshToken,
     };
   }
