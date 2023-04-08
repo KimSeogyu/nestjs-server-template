@@ -39,6 +39,11 @@ export class User extends CoreEntity {
   @OneToMany(() => SocialAccount, (socialAccount) => socialAccount.user)
   socialAccounts: Relation<SocialAccount>[];
 
+  @Column({
+    nullable: true,
+  })
+  refreshToken: string;
+
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword() {

@@ -3,6 +3,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import bcrypt from 'bcrypt';
 
 import { JwtService } from '@nestjs/jwt';
 import { createHashedPassword } from '../users/user.entity.js';
@@ -19,10 +20,10 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, password: string) {
-    const user = await this.usersService.findOneByUsername(username);
-    const privateData = await this.usersService.findSaltAndPasswordByUsername(
+    const user = await this.usersService.findOne({ username });
+    const privateData = await this.usersService.findSaltAndPasswordByUsername({
       username,
-    );
+    });
 
     if (!user || !privateData)
       throw new UnauthorizedException(`INVALID USERNAME, username=${username}`);
@@ -43,7 +44,9 @@ export class AuthService {
   }
 
   async signup(userDto: SignUpDto) {
-    const user = await this.usersService.findOneByUsername(userDto.username);
+    const user = await this.usersService.findOne({
+      username: userDto.username,
+    });
     if (user)
       throw new BadRequestException(
         `USERNAME IS NOT UNIQUE, found ${JSON.stringify(user)}`,
@@ -52,16 +55,44 @@ export class AuthService {
     return this.usersService.create(userDto);
   }
 
-  async googleLogin(req: any) {
+  async googleLogin(req: {
+    user: { id: string; email: string; lastName: string; firstName: string };
+  }) {
     if (!req.user) {
       throw new UnauthorizedException(`Can't get google user`);
     }
 
-    return await this.socialAccountService.saveSocialAccount(
+    const findOneResult = await this.socialAccountService.findOne({
+      provider: 'google',
+      providerId: req.user.id,
+    });
+    if (findOneResult?.user) {
+      return this.login({
+        username: findOneResult.user.username,
+        id: findOneResult.user.id,
+      });
+    }
+
+    const socialAccount = await this.socialAccountService.save(
       req.user.id,
       req.user.email,
       `${req.user.lastName} ${req.user.firstName}`,
       'google',
     );
+    return this.login({
+      username: socialAccount.user.username,
+      id: socialAccount.user.id,
+    });
+  }
+
+  async refresh(refreshToken: string, userId: number) {
+    const user = await this.usersService.findOne({ id: userId });
+    if (!user) {
+      throw new BadRequestException(`NOT FOUND USER, id=${userId}`);
+    }
+
+    return (await bcrypt.compare(refreshToken, user.refreshToken))
+      ? user
+      : null;
   }
 }

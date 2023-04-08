@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, FindOptionsWhere, DeepPartial, Repository } from 'typeorm';
 import {
   MYSQL_DATASOURCE_KEY,
   SOCIAL_ACCOUNT_REPOSITORY_KEY,
@@ -15,19 +15,21 @@ export class SocialAccountRepository {
     private mysqlProvider: DataSource,
   ) {}
 
-  saveSocialAccount(
-    providerId: string,
-    email: string,
-    username: string,
-    provider: string,
-  ) {
+  save(socialAccount: DeepPartial<SocialAccount>) {
     return this.socialAccountRepository.save({
-      providerId: providerId,
-      email: email,
-      provider: provider,
+      providerId: socialAccount.providerId,
+      email: socialAccount.email,
+      provider: socialAccount.provider,
       user: {
-        username: username,
+        username: socialAccount.user?.username ?? socialAccount.email,
       },
+    });
+  }
+
+  findOne(socialAccount: FindOptionsWhere<SocialAccount>) {
+    return this.socialAccountRepository.findOne({
+      where: socialAccount,
+      relations: ['user'],
     });
   }
 }

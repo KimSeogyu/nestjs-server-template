@@ -65,7 +65,7 @@ export class UsersController {
     status: HttpStatus.OK,
   })
   async findOne(@Query() dto: FindOneUserByUsernameDto) {
-    return await this.usersService.findOneByUsername(dto.username);
+    return await this.usersService.findOne({ username: dto.username });
   }
 
   @Patch(':id/password')
@@ -111,6 +111,6 @@ export class UsersController {
     status: HttpStatus.OK,
   })
   async me(@UserId() userId: number) {
-    return this.usersService.findOneById(userId);
+    return this.usersService.findOne({ id: userId });
   }
 }

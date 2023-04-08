@@ -9,19 +9,14 @@ import { SignUpDto } from '../auth/auth.zod.js';
 import { UpdatePasswordDto, UpdateUsernameDto } from './user.zod.js';
 import { UseCache } from '../../common/decorators/index.js';
 import { GeneralQueryFilter } from '../../applications/api/api.zod.js';
+import { FindOptionsWhere } from 'typeorm';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async findOneByUsername(username: string): Promise<User | null> {
-    return await this.usersRepository.findOne({ username: username });
-  }
-
-  async findSaltAndPasswordByUsername(username: string) {
-    return await this.usersRepository.findSecretValues({
-      username: username,
-    });
+  async findSaltAndPasswordByUsername(user: FindOptionsWhere<User>) {
+    return await this.usersRepository.findSecretValues(user);
   }
 
   async create(dto: SignUpDto) {
@@ -100,7 +95,7 @@ export class UsersService {
     }
   }
 
-  findOneById(userId: number) {
-    return this.usersRepository.findOne({ id: userId });
+  findOne(user: FindOptionsWhere<User>) {
+    return this.usersRepository.findOne(user);
   }
 }

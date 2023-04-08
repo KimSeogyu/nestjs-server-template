@@ -9,6 +9,7 @@ import { createCustomLogger, initSwaggerDocs } from '../../utils/init.utils.js';
 import { AppMode } from '../../common/constants.js';
 import passport from 'passport';
 import session from 'express-session';
+import compression from 'compression';
 
 export async function bootstrap() {
   const app = await NestFactory.create(ApiModule);
@@ -36,6 +37,7 @@ export async function bootstrap() {
     }),
   );
   app.use(passport.session());
+  app.use(compression());
 
   initSwaggerDocs(app);
 

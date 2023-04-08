@@ -18,8 +18,9 @@ import {
   SignUpDto,
   SignupResponseDto,
 } from './auth.zod.js';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { GoogleAuthGuard } from './guards/google-auth.guard.js';
+import { JwtRefreshGuard } from './guards/jwt-refresh.guard.js';
 
 @ApiController('auth')
 export class AuthController {
@@ -31,13 +32,13 @@ export class AuthController {
     type: LoginResponseDto,
   })
   @BasicAuthGuard()
-  async login(@Req() req: any) {
-    return await this.authService.login(req.user);
+  login(@Req() req: any) {
+    return this.authService.login(req.user);
   }
 
   @Get('logout')
   @HttpCode(HttpStatus.OK)
-  async logout(@Req() req: any) {
+  logout(@Req() req: any) {
     req.session.destroy();
     return 'ok';
   }
@@ -47,15 +48,15 @@ export class AuthController {
   @ApiResponse({
     type: SignupResponseDto,
   })
-  async signUp(@Body() dto: SignUpDto) {
-    return await this.authService.signup(dto);
+  signUp(@Body() dto: SignUpDto) {
+    return this.authService.signup(dto);
   }
 
   @Get('google/redirect')
   @HttpCode(HttpStatus.OK)
   @UseGuards(GoogleAuthGuard)
   @ApiResponse({
-    type: GoogleLoginResponseDto,
+    type: LoginResponseDto,
   })
   googleRedirect(@Req() req: any) {
     return this.authService.googleLogin(req);
@@ -69,5 +70,13 @@ export class AuthController {
   })
   googleLogin() {
     return 'ok';
+  }
+
+  @Post('refresh')
+  @ApiBearerAuth()
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtRefreshGuard)
+  refreshToken(@Req() req: any) {
+    return this.authService.refresh(req.user.refreshToken, req.user.id);
   }
 }
