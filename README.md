@@ -53,7 +53,7 @@ src
 │   │   ├── index.ts
 │   │   ├── request-id.decorator.ts
 │   │   ├── swagger.decorator.ts
-│   │   └── user-id.decorator.ts
+│   │   └── user.decorator.ts
 │   ├── filters
 │   │   └── all-exception.filter.ts
 │   ├── interceptors

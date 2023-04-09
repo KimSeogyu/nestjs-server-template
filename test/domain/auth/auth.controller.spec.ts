@@ -53,15 +53,6 @@ describe('AuthController', function () {
     expect(controller).instanceOf(AuthController);
   });
 
-  it('[로그인] 성공', async () => {
-    const req = {
-      user: { username: 'hello1', id: 1 },
-    };
-    const res = await controller.login(req);
-    expect(res).haveOwnProperty('accessToken');
-    expect(res.accessToken.length).greaterThan(0);
-  });
-
   it('[회원가입] 성공', async () => {
     const dto = {
       username: 'user',

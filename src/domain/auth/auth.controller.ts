@@ -1,7 +1,4 @@
-import {
-  ApiController,
-  BasicAuthGuard,
-} from '../../common/decorators/index.js';
+import { ApiController, CurrentUser } from '../../common/decorators/index.js';
 import {
   Body,
   Get,
@@ -26,16 +23,6 @@ import { JwtRefreshGuard } from './guards/jwt-refresh.guard.js';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('login')
-  @HttpCode(HttpStatus.OK)
-  @ApiResponse({
-    type: LoginResponseDto,
-  })
-  @BasicAuthGuard()
-  login(@Req() req: any) {
-    return this.authService.login(req.user);
-  }
-
   @Get('logout')
   @HttpCode(HttpStatus.OK)
   logout(@Req() req: any) {
@@ -58,8 +45,8 @@ export class AuthController {
   @ApiResponse({
     type: LoginResponseDto,
   })
-  googleRedirect(@Req() req: any) {
-    return this.authService.googleLogin(req);
+  googleRedirect(@CurrentUser() user: any) {
+    return this.authService.googleLogin(user);
   }
 
   @Get('google')

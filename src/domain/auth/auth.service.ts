@@ -86,16 +86,19 @@ export class AuthService {
     return this.usersService.save(userDto);
   }
 
-  async googleLogin(req: {
-    user: { id: string; email: string; lastName: string; firstName: string };
+  async googleLogin(user: {
+    id: string;
+    email: string;
+    lastName: string;
+    firstName: string;
   }) {
-    if (!req.user) {
+    if (!user) {
       throw new UnauthorizedException(`Can't get google user`);
     }
 
     const findOneResult = await this.socialAccountService.findOne({
       provider: 'google',
-      providerId: req.user.id,
+      providerId: user.id,
     });
     if (findOneResult) {
       return this.login({
@@ -103,7 +106,7 @@ export class AuthService {
         id: findOneResult.user.id,
       });
     } else {
-      const socialAccount = await this.saveNewSocialUser(req);
+      const socialAccount = await this.saveNewSocialUser(user);
       return this.login({
         username: socialAccount!.user.username,
         id: socialAccount!.user.id,
@@ -111,15 +114,18 @@ export class AuthService {
     }
   }
 
-  private async saveNewSocialUser(req: {
-    user: { id: string; email: string; lastName: string; firstName: string };
+  private async saveNewSocialUser(user: {
+    id: string;
+    email: string;
+    lastName: string;
+    firstName: string;
   }) {
     const createdUser = await this.usersService.save({
-      username: req.user.email,
+      username: user.email,
     });
     const createdSocialAccount = await this.socialAccountService.save({
-      providerId: req.user.id,
-      email: req.user.email,
+      providerId: user.id,
+      email: user.email,
       provider: 'google',
       userId: createdUser.id,
     });
