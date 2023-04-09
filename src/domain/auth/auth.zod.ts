@@ -70,3 +70,9 @@ export class GoogleLoginResponseDto extends createZodDto(
     meta: MetadataSchema,
   }),
 ) {}
+
+export class TokenRefreshDto extends createZodDto(
+  z.object({
+    refreshToken: z.string(),
+  }),
+) {}

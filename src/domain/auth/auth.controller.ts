@@ -1,4 +1,8 @@
-import { ApiController, CurrentUser } from '../../common/decorators/index.js';
+import {
+  ApiController,
+  CurrentUser,
+  CurrentUserType,
+} from '../../common/decorators/index.js';
 import {
   Body,
   Get,
@@ -14,6 +18,7 @@ import {
   LoginResponseDto,
   SignUpDto,
   SignupResponseDto,
+  TokenRefreshDto,
 } from './auth.zod.js';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { GoogleAuthGuard } from './guards/google-auth.guard.js';
@@ -63,7 +68,10 @@ export class AuthController {
   @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtRefreshGuard)
-  refreshToken(@Req() req: any) {
-    return this.authService.refresh(req.user.refreshToken, req.user.id);
+  refreshToken(
+    @CurrentUser() user: CurrentUserType,
+    @Body() dto: TokenRefreshDto,
+  ) {
+    return this.authService.refresh(dto.refreshToken, user.username);
   }
 }

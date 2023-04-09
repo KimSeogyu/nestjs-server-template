@@ -148,7 +148,6 @@ export class AuthService {
 
     return {
       accessToken: this.generateAccessToken(username, user.id),
-      refreshToken,
     };
   }
 }

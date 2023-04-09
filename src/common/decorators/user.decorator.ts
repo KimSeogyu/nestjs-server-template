@@ -10,14 +10,12 @@ export const UserId = createParamDecorator(userIdHandler);
 
 export function userHandler(_data: unknown, context: ExecutionContext) {
   const request = context.switchToHttp().getRequest();
-  console.log(
-    '------------------------------------------------------------------------------',
-  );
-  console.log(request);
-  console.log(
-    '------------------------------------------------------------------------------',
-  );
-  const user = request.user;
-  return user;
+  return request.user;
 }
 export const CurrentUser = createParamDecorator(userHandler);
+export type CurrentUserType = {
+  username: string;
+  id: number;
+  iat: number;
+  exp: number;
+};
