@@ -18,7 +18,6 @@ export class JwtRefreshStrategy extends PassportStrategy(
   constructor(
     private configService: ConfigService,
     private authService: AuthService,
-    private jwtService: JwtService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
