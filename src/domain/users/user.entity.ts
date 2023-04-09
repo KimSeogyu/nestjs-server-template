@@ -15,7 +15,7 @@ import { CoreEntity } from '../../infra/database/database.util.js';
 import { Order } from '../order/order.entity.js';
 import { SocialAccount } from '../social-accounts/social-account.entity.js';
 
-@Entity('user')
+@Entity('users')
 export class User extends CoreEntity {
   @Column({
     unique: true,
