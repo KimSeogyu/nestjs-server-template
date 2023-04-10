@@ -15,7 +15,6 @@ export const MetadataSchema = z
   })
   .required();
 
-export const EmptyObjectSchema = z.object({}).required();
 export const GeneralQueryFilterDto = z
   .object({
     offset: z.coerce.number().default(0),

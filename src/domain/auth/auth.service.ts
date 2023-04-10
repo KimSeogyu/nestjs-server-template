@@ -8,7 +8,6 @@ import bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { createHashedPassword } from '../users/user.entity.js';
 import { UsersService } from '../users/users.service.js';
-import { SignUpDto } from './auth.zod.js';
 import { SocialAccountService } from '../social-accounts/social-account.service.js';
 import { ConfigService } from '@nestjs/config';
 
@@ -72,18 +71,6 @@ export class AuthService {
         expiresIn: this.configService.getOrThrow('JWT_EXPIRE_TIME'),
       },
     );
-  }
-
-  async signup(userDto: SignUpDto) {
-    const user = await this.usersService.findOne({
-      username: userDto.username,
-    });
-    if (user)
-      throw new BadRequestException(
-        `USERNAME IS NOT UNIQUE, found ${JSON.stringify(user)}`,
-      );
-
-    return this.usersService.save(userDto);
   }
 
   async googleLogin(user: {

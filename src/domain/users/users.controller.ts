@@ -58,16 +58,6 @@ export class UsersController {
     return await this.usersService.findAll(dto);
   }
 
-  @Get(':username')
-  @HttpCode(HttpStatus.OK)
-  @ApiResponse({
-    type: FindOneByUsernameResponseDto,
-    status: HttpStatus.OK,
-  })
-  async findOne(@Query() dto: FindOneUserByUsernameDto) {
-    return await this.usersService.findOne({ username: dto.username });
-  }
-
   @Patch(':id/password')
   @HttpCode(HttpStatus.OK)
   @ApiResponse({

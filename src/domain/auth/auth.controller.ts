@@ -17,10 +17,9 @@ import {
 import { AuthService } from './auth.service.js';
 import {
   GoogleLoginResponseDto,
+  LogoutResponseDto,
   RefreshTokenDto,
   RefreshTokenResponseDto,
-  SignUpDto,
-  SignupResponseDto,
 } from './auth.zod.js';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { GoogleAuthGuard } from './guards/google-auth.guard.js';
@@ -32,18 +31,12 @@ export class AuthController {
 
   @Get('logout')
   @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    type: LogoutResponseDto,
+  })
   logout(@Req() req: any) {
     req.session.destroy();
-    return 'ok';
-  }
-
-  @Post('signup')
-  @HttpCode(HttpStatus.OK)
-  @ApiResponse({
-    type: SignupResponseDto,
-  })
-  signUp(@Body() dto: SignUpDto) {
-    return this.authService.signup(dto);
+    return { success: true };
   }
 
   @Get('google/redirect')
