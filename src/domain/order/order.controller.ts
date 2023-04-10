@@ -24,7 +24,7 @@ export class OrderController {
     status: HttpStatus.CREATED,
   })
   async createOrder(@Body() dto: CreateOrderDto) {
-    return await this.orderService.create(dto);
+    return await this.orderService.save(dto);
   }
 
   @Get()

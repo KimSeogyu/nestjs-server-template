@@ -3,7 +3,7 @@ import {
   MYSQL_DATASOURCE_KEY,
   ORDER_REPOSITORY_KEY,
 } from '../../common/constants.js';
-import { DataSource, FindManyOptions, Repository } from 'typeorm';
+import { DataSource, DeepPartial, FindManyOptions, Repository } from 'typeorm';
 import { Order } from './order.entity.js';
 import { CreateOrderDto } from './order.zod.js';
 
@@ -15,19 +15,8 @@ export class OrderRepository {
     @Inject(MYSQL_DATASOURCE_KEY) private mysqlProvider: DataSource,
   ) {}
 
-  async createOrder(dto: CreateOrderDto) {
-    return await this.ordersRepository.save({
-      orderType: {
-        id: dto.orderTypeId,
-      },
-      orderStatus: {
-        id: dto.orderStatusId,
-      },
-      amount: dto.amount,
-      user: {
-        id: dto.userId,
-      },
-    });
+  async save(dto: DeepPartial<Order>) {
+    return await this.ordersRepository.save(dto);
   }
 
   async findAll(option: FindManyOptions<Order>) {

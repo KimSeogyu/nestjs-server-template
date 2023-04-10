@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './order.zod.js';
 import { OrderRepository } from './order.repository.js';
-import { FindManyOptions } from 'typeorm';
+import { DeepPartial, FindManyOptions } from 'typeorm';
 import { Order } from './order.entity.js';
 import { GeneralQueryFilter } from 'src/applications/api/api.zod.js';
 
@@ -9,8 +9,8 @@ import { GeneralQueryFilter } from 'src/applications/api/api.zod.js';
 export class OrderService {
   constructor(private orderRepository: OrderRepository) {}
 
-  async create(dto: CreateOrderDto) {
-    return await this.orderRepository.createOrder(dto);
+  async save(dto: DeepPartial<Order>) {
+    return await this.orderRepository.save(dto);
   }
 
   async findAll(

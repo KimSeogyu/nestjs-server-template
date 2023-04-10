@@ -65,6 +65,9 @@ export class OrderType extends CoreEntity {
 
 @Entity('orders')
 export class Order extends CoreEntity {
+  @Column()
+  orderTypeId: number;
+
   @ManyToOne((type) => OrderStatus, (orderStatus) => orderStatus.orders, {
     cascade: ['insert', 'update'],
   })
@@ -74,6 +77,9 @@ export class Order extends CoreEntity {
   })
   orderType: OrderType;
 
+  @Column()
+  orderStatusId: number;
+
   @ManyToOne(() => OrderStatus, (orderStatus) => orderStatus.orders, {
     cascade: ['insert', 'update'],
   })
@@ -82,6 +88,9 @@ export class Order extends CoreEntity {
     referencedColumnName: 'id',
   })
   orderStatus: OrderStatus;
+
+  @Column()
+  userId: number;
 
   @ManyToOne(() => User, (user) => user.orders)
   @JoinColumn({

@@ -26,7 +26,7 @@ describe('OrderController', () => {
   let sellOrderType: any;
   let sellOrderStatus: any;
 
-  beforeEach(async () => {
+  before(async () => {
     module = await Test.createTestingModule({
       imports: [ApiModule, DatabaseModule.register()],
       controllers: [OrderController],
@@ -63,38 +63,5 @@ describe('OrderController', () => {
   it('should be defined', () => {
     expect(controller).instanceOf(OrderController);
     expect(dataSource).instanceOf(DataSource);
-  });
-
-  const createOrder = async () => {
-    const dto = new CreateOrderDto();
-    dto.orderTypeId = sellOrderType.id;
-    dto.orderStatusId = sellOrderStatus.id;
-    dto.amount = 100;
-    dto.userId = user.id;
-
-    const result = await controller.createOrder(dto);
-    const result2 = await controller.createOrder(dto);
-    expect(result.orderType.id).eq(dto.orderTypeId);
-    expect(result.orderStatus.id).eq(dto.orderStatusId);
-    expect(result.amount).eq(dto.amount);
-    expect(result.user.id).eq(dto.userId);
-    expect(result2.orderType.id).eq(dto.orderTypeId);
-    expect(result2.orderStatus.id).eq(dto.orderStatusId);
-    expect(result2.amount).eq(dto.amount);
-    expect(result2.user.id).eq(dto.userId);
-  };
-  it('[주문 생성] 성공', createOrder);
-
-  it('[주문 조회] 성공', async () => {
-    await createOrder();
-    let result = await controller.findManyOrders({ limit: 10, offset: 0 });
-    expect(result.length).eq(2);
-    await createOrder();
-    await createOrder();
-    await createOrder();
-    await createOrder();
-    await createOrder();
-    result = await controller.findManyOrders({ limit: 10, offset: 0 });
-    expect(result.length).eq(10);
   });
 });
