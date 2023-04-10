@@ -14,6 +14,7 @@ import {
 import { CoreEntity } from '../../infra/database/database.util.js';
 import { Order } from '../order/order.entity.js';
 import { SocialAccount } from '../social-accounts/social-account.entity.js';
+import { Wallet } from '../wallets/wallet.entity.js';
 
 @Entity('users')
 export class User extends CoreEntity {
@@ -43,6 +44,9 @@ export class User extends CoreEntity {
 
   @OneToMany(() => SocialAccount, (socialAccount) => socialAccount.user)
   socialAccounts: Relation<SocialAccount>[];
+
+  @OneToMany(() => Wallet, (wallet) => wallet.user)
+  wallets: Relation<Wallet>[];
 
   @Column({
     nullable: true,
