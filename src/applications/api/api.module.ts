@@ -20,6 +20,7 @@ import { LoggerMiddleware } from '../../common/middlewares/logger.middlewares.js
 import { ResponseTransformerInterceptor } from '../../common/interceptors/response-transformer.interceptor.js';
 import { AllExceptionFilter } from '../../common/filters/all-exception.filter.js';
 import { LifecycleService } from '../../common/lifecycle/lifecycle.service.js';
+import { WalletModule } from '../../domain/wallets/wallet.module.js';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { LifecycleService } from '../../common/lifecycle/lifecycle.service.js';
     OrderModule,
     HealthModule,
     AppCacheModule.forRoot(),
+    WalletModule,
   ],
   providers: [
     LifecycleService,
