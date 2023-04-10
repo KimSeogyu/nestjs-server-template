@@ -15,22 +15,11 @@ export const MetadataSchema = z
   })
   .required();
 
-export const numericString = (schema: ZodTypeAny) =>
-  z.preprocess((a) => {
-    if (typeof a === 'string') {
-      return parseInt(a, 10);
-    } else if (typeof a === 'number') {
-      return a;
-    } else {
-      return undefined;
-    }
-  }, schema) as z.ZodEffects<z.ZodTypeAny, number, number>;
-
 export const EmptyObjectSchema = z.object({}).required();
 export const GeneralQueryFilterDto = z
   .object({
-    offset: numericString(z.number().default(0)),
-    limit: numericString(z.number().default(20)),
+    offset: z.coerce.number().default(0),
+    limit: z.coerce.number().default(20),
     startDt: z.coerce
       .date()
       .min(new Date('2000-01-01'), { message: 'Too old' }),

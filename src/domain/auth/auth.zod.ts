@@ -65,14 +65,32 @@ export class LoginResponseDto extends createZodDto(LoginResponseZ) {}
 
 export class GoogleLoginResponseDto extends createZodDto(
   z.object({
-    input: EmptyObjectSchema,
-    output: EmptyObjectSchema,
+    input: z.object({
+      query: z.object({
+        code: z.string(), //'4/0AVHEtk5SjJzB-wx7zmaSoqthFxTg3mjtaJ2CrpqJK7KEeoAQz4vzT-7X7NC8NeB5Gnrqfg'
+        scope: z.string(), //'email profile https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/userinfo.profile'
+        authuser: z.coerce.number(), // '0'
+        prompt: z.string(), // 'none'
+      }),
+    }),
+    output: z.object({
+      refreshToken: z.string(),
+      accessToken: z.string(),
+    }),
     meta: MetadataSchema,
   }),
 ) {}
 
-export class TokenRefreshDto extends createZodDto(
+const RefreshTokenZ = z.object({
+  refreshToken: z.string(),
+});
+
+export class RefreshTokenDto extends createZodDto(RefreshTokenZ) {}
+
+export class RefreshTokenResponseDto extends createZodDto(
   z.object({
-    refreshToken: z.string(),
+    input: RefreshTokenZ,
+    output: LoginOutputZ,
+    meta: MetadataSchema,
   }),
 ) {}

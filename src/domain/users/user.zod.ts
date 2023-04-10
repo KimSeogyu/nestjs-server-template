@@ -5,7 +5,6 @@ import {
   GeneralQueryFilterDto,
   IsWriteSuccessOutputZ,
   MetadataSchema,
-  numericString,
   PASSWORD_REGEX,
 } from '../../applications/api/api.zod.js';
 
@@ -57,7 +56,7 @@ export const UpdateUserPasswordInputZ = z
 
 export const FindOneUserZ = z.object({
   username: z.string(),
-  id: numericString(z.number()),
+  id: z.coerce.number(),
   createdAt: z.date(),
   updatedAt: z.date(),
 });

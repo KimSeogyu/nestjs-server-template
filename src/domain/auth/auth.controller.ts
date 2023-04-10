@@ -20,7 +20,8 @@ import {
   LoginResponseDto,
   SignUpDto,
   SignupResponseDto,
-  TokenRefreshDto,
+  RefreshTokenDto,
+  RefreshTokenResponseDto,
 } from './auth.zod.js';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { GoogleAuthGuard } from './guards/google-auth.guard.js';
@@ -50,7 +51,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(GoogleAuthGuard)
   @ApiResponse({
-    type: LoginResponseDto,
+    type: GoogleLoginResponseDto,
   })
   googleRedirect(@CurrentGoogleUser() user: CurrentGoogleUserType) {
     return this.authService.googleLogin(user);
@@ -70,9 +71,12 @@ export class AuthController {
   @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtRefreshGuard)
+  @ApiResponse({
+    type: RefreshTokenResponseDto,
+  })
   refreshToken(
     @CurrentJwtUser() user: CurrentJwtUserType,
-    @Body() dto: TokenRefreshDto,
+    @Body() dto: RefreshTokenDto,
   ) {
     return this.authService.refresh(dto.refreshToken, user.username);
   }
