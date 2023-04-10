@@ -1,3 +1,4 @@
+import { DeepPartial } from 'typeorm';
 import { z } from 'zod';
 
 export const PASSWORD_REGEX =
@@ -25,20 +26,6 @@ export const GeneralQueryFilterDto = z
     endDt: z.coerce.date().max(new Date(), { message: 'Too young!' }),
   })
   .deepPartial();
-
-export declare type DeepPartial<T> =
-  | T
-  | (T extends Array<infer U>
-      ? DeepPartial<U>[]
-      : T extends Map<infer K, infer V>
-      ? Map<DeepPartial<K>, DeepPartial<V>>
-      : T extends Set<infer M>
-      ? Set<DeepPartial<M>>
-      : T extends object
-      ? {
-          [K in keyof T]?: DeepPartial<T[K]>;
-        }
-      : T);
 
 export type GeneralQueryFilter<T = void> = DeepPartial<
   T & z.infer<typeof GeneralQueryFilterDto>

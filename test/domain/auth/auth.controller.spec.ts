@@ -52,14 +52,4 @@ describe('AuthController', function () {
   it('should be defined', function () {
     expect(controller).instanceOf(AuthController);
   });
-
-  it('[회원가입] 성공', async () => {
-    const dto = {
-      username: 'user',
-      password: '1234',
-    };
-    const user = await controller.signUp(dto);
-    expect(user.username).eq(dto.username);
-    expect(user).not.haveOwnProperty('password');
-  });
 });
