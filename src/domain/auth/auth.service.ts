@@ -92,10 +92,6 @@ export class AuthService {
     lastName: string;
     firstName: string;
   }) {
-    if (!user) {
-      throw new UnauthorizedException(`Can't get google user`);
-    }
-
     const findOneResult = await this.socialAccountService.findOne({
       provider: 'google',
       providerId: user.id,
@@ -129,10 +125,9 @@ export class AuthService {
       provider: 'google',
       userId: createdUser.id,
     });
-    const socialAccount = await this.socialAccountService.findOne({
+    return await this.socialAccountService.findOne({
       id: createdSocialAccount.id,
     });
-    return socialAccount;
   }
 
   async refresh(refreshToken: string, username: string) {

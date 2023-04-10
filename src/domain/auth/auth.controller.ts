@@ -1,7 +1,9 @@
 import {
   ApiController,
-  CurrentUser,
-  CurrentUserType,
+  CurrentGoogleUser,
+  CurrentGoogleUserType,
+  CurrentJwtUser,
+  CurrentJwtUserType,
 } from '../../common/decorators/index.js';
 import {
   Body,
@@ -50,7 +52,7 @@ export class AuthController {
   @ApiResponse({
     type: LoginResponseDto,
   })
-  googleRedirect(@CurrentUser() user: any) {
+  googleRedirect(@CurrentGoogleUser() user: CurrentGoogleUserType) {
     return this.authService.googleLogin(user);
   }
 
@@ -69,7 +71,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtRefreshGuard)
   refreshToken(
-    @CurrentUser() user: CurrentUserType,
+    @CurrentJwtUser() user: CurrentJwtUserType,
     @Body() dto: TokenRefreshDto,
   ) {
     return this.authService.refresh(dto.refreshToken, user.username);
