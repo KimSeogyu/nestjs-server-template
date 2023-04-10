@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DataSource, FindOptionsWhere, DeepPartial, Repository } from 'typeorm';
+import { DataSource, DeepPartial, FindOptionsWhere, Repository } from 'typeorm';
 import {
   MYSQL_DATASOURCE_KEY,
   SOCIAL_ACCOUNT_REPOSITORY_KEY,

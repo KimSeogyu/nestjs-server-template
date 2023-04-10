@@ -17,11 +17,10 @@ import {
 import { AuthService } from './auth.service.js';
 import {
   GoogleLoginResponseDto,
-  LoginResponseDto,
-  SignUpDto,
-  SignupResponseDto,
   RefreshTokenDto,
   RefreshTokenResponseDto,
+  SignUpDto,
+  SignupResponseDto,
 } from './auth.zod.js';
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { GoogleAuthGuard } from './guards/google-auth.guard.js';

@@ -1,7 +1,6 @@
 import { createZodDto } from '@anatine/zod-nestjs';
 import { z } from 'zod';
 import {
-  EmptyObjectSchema,
   MetadataSchema,
   PASSWORD_REGEX,
 } from '../../applications/api/api.zod.js';

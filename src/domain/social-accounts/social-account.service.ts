@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { SocialAccountRepository } from './social-account.repository.js';
 import { DeepPartial, FindOptionsWhere } from 'typeorm';
 import { SocialAccount } from './social-account.entity.js';
-import { User } from '../users/user.entity.js';
 
 @Injectable()
 export class SocialAccountService {
