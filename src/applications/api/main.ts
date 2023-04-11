@@ -3,17 +3,21 @@ import { ApiModule } from './api.module.js';
 import helmet from 'helmet';
 
 import { Logger, RequestMethod } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { createCustomLogger, initSwaggerDocs } from '../../utils/init.utils.js';
 import { AppMode } from '../../common/constants.js';
 import passport from 'passport';
 import session from 'express-session';
 import compression from 'compression';
+import { Redis } from 'ioredis';
+import connectRedis from 'connect-redis';
+import { cacheConfig } from '../../config/cache.config.js';
 
 export async function bootstrap() {
   const app = await NestFactory.create(ApiModule);
   const configService = app.get<ConfigService>(ConfigService);
+  await ConfigModule.envVariablesLoaded;
   app.useLogger(
     createCustomLogger(configService.getOrThrow('SLACK_WEBHOOK_URL')),
   );
@@ -26,21 +30,7 @@ export async function bootstrap() {
       { path: 'health', method: RequestMethod.GET },
     ],
   });
-
-  // const RedisStore = createRedisStore(session);
-  // const redisHost: string = configService.get('REDIS_HOST');
-  // const redisPort: number = configService.get('REDIS_PORT');
-  // const redisClient = createClient({
-  //   host: redisHost,
-  //   port: redisPort,
-  // });
-  //
-  // redisClient.on('error', (err) =>
-  //   Logger.error('Could not establish a connection with redis. ' + err),
-  // );
-  // redisClient.on('connect', () =>
-  //   Logger.verbose('Connected to redis successfully'),
-  // );
+  const cacheCfg = app.get(cacheConfig.KEY);
 
   app.use(helmet());
   app.use(
@@ -49,7 +39,12 @@ export async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       cookie: { maxAge: 1000 * 60 * 60 * 24 },
-      // store: new RedisStore({client: redisClient as any}),
+      store: new connectRedis({
+        client: new Redis({
+          host: cacheCfg.host,
+          port: cacheCfg.port,
+        }),
+      }),
     }),
   );
   app.use(passport.session());
