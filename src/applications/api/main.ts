@@ -27,6 +27,21 @@ export async function bootstrap() {
     ],
   });
 
+  // const RedisStore = createRedisStore(session);
+  // const redisHost: string = configService.get('REDIS_HOST');
+  // const redisPort: number = configService.get('REDIS_PORT');
+  // const redisClient = createClient({
+  //   host: redisHost,
+  //   port: redisPort,
+  // });
+  //
+  // redisClient.on('error', (err) =>
+  //   Logger.error('Could not establish a connection with redis. ' + err),
+  // );
+  // redisClient.on('connect', () =>
+  //   Logger.verbose('Connected to redis successfully'),
+  // );
+
   app.use(helmet());
   app.use(
     session({
@@ -34,6 +49,7 @@ export async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       cookie: { maxAge: 1000 * 60 * 60 * 24 },
+      // store: new RedisStore({client: redisClient as any}),
     }),
   );
   app.use(passport.session());
