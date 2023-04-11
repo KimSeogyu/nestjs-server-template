@@ -17,7 +17,7 @@
 <p align='center'>
     <img src="https://img.shields.io/badge/Node-v18.15.0-2C8EBB?style=for-the-badge&logo=node.js&logoColor=green"/>
     <img src="https://img.shields.io/badge/Typescript-v4.9.4-2C8EBB?style=for-the-badge&logoColor=blue&logo=typescript"/>
-    <img src="https://img.shields.io/badge/pnpm-v8.1.1-2C8EBB?style=for-the-badge&logo=pnpm&logoColor=blue"/>
+    <img src="https://img.shields.io/badge/pnpm-v8.2.0-2C8EBB?style=for-the-badge&logo=pnpm&logoColor=blue"/>
     <img src="https://img.shields.io/badge/nestjs-v9.1.6-2C8EBB?style=for-the-badge&logoColor=red&logo=nestjs"/>
     <img src="https://img.shields.io/badge/mocha-v10.2.0-2C8EBB?style=for-the-badge&logoColor=red&logo=mocha"/>
     <img src="https://img.shields.io/badge/chai-v4.3.7-2C8EBB?style=for-the-badge&logoColor=red&logo=chai"/>

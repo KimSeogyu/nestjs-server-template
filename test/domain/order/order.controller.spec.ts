@@ -15,7 +15,6 @@ import {
 } from '../../../src/domain/order/order.entity.js';
 import { OrderRepository } from '../../../src/domain/order/order.repository.js';
 import { OrderService } from '../../../src/domain/order/order.service.js';
-import { CreateOrderDto } from '../../../src/domain/order/order.zod.js';
 import { User } from '../../../src/domain/users/user.entity.js';
 
 describe('OrderController', () => {
