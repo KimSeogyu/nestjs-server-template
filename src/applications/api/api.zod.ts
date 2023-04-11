@@ -18,12 +18,12 @@ export const MetadataSchema = z
 
 export const GeneralQueryFilterDto = z
   .object({
-    offset: z.coerce.number().default(0),
+    cursor: z.coerce.number().default(0),
     limit: z.coerce.number().default(20),
     startDt: z.coerce
       .date()
-      .min(new Date('2000-01-01'), { message: 'Too old' }),
-    endDt: z.coerce.date().max(new Date(), { message: 'Too young!' }),
+      .min(new Date('2000-01-01'), { message: '너무 먼 과거입니다.' }),
+    endDt: z.coerce.date().max(new Date(), { message: `미래시간입니다.` }),
   })
   .deepPartial();
 

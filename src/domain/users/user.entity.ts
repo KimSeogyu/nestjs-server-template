@@ -51,6 +51,7 @@ export class User extends CoreEntity {
   @Column({
     nullable: true,
   })
+  @ApiHideProperty()
   refreshToken: string;
 
   @BeforeInsert()

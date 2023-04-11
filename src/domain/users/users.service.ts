@@ -24,7 +24,7 @@ export class UsersService {
 
   @UseCache()
   async findAll(query: GeneralQueryFilter<User>) {
-    return await this.usersRepository.findAllUsers(query);
+    return await this.usersRepository.findAll(query);
   }
 
   async updatePassword(

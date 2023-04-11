@@ -1,11 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import {
-  Between,
-  DataSource,
-  DeepPartial,
-  FindOptionsWhere,
-  Repository,
-} from 'typeorm';
+import { DataSource, DeepPartial, FindOptionsWhere, Repository } from 'typeorm';
 import { User } from './user.entity.js';
 import { UpdateUsernameDto } from './user.zod.js';
 import {
@@ -13,6 +7,7 @@ import {
   USER_REPOSITORY_KEY,
 } from '../../common/constants.js';
 import { GeneralQueryFilter } from '../../applications/api/api.zod.js';
+import { SocialAccount } from '../social-accounts/social-account.entity.js';
 
 @Injectable()
 export class UsersRepository {
@@ -45,17 +40,28 @@ export class UsersRepository {
     return result;
   }
 
-  async findAllUsers(q: GeneralQueryFilter) {
-    const where: { createdAt?: any } = {};
+  async findAll(q: GeneralQueryFilter<User>) {
+    const queryBuilder = this.usersRepository
+      .createQueryBuilder('user')
+      .select(['user.id', 'user.createdAt', 'user.updatedAt', 'user.username'])
+      .leftJoinAndSelect(
+        'user.socialAccounts',
+        'socialAccount',
+        'socialAccount.userId = user.id',
+      )
+      .where('user.id > :cursor', { cursor: q.cursor ?? 0 });
 
-    if (q.startDt && q.endDt) {
-      where.createdAt = Between(q.startDt, q.endDt);
+    if (q.endDt) {
+      queryBuilder.andWhere('user.createdAt <= :endDt', { endDt: q.endDt });
     }
-    return await this.usersRepository.find({
-      where,
-      skip: q.offset,
-      take: q.limit,
-    });
+
+    if (q.startDt) {
+      queryBuilder.andWhere('user.createdAt >= :startDt', {
+        startDt: q.startDt,
+      });
+    }
+
+    return queryBuilder.getMany();
   }
 
   async updatePasswordById(id: number, password: string) {

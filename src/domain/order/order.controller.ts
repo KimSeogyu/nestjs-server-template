@@ -33,7 +33,7 @@ export class OrderController {
     type: FindManyOrdersResponseDto,
     status: HttpStatus.OK,
   })
-  async findManyOrders(@Query() dto: FindManyOrdersDto) {
+  async findAll(@Query() dto: FindManyOrdersDto) {
     return await this.orderService.findAll({
       user: {
         id: dto.userId,
@@ -48,7 +48,7 @@ export class OrderController {
         enName: dto.orderTypeEnName,
       },
       limit: dto.limit,
-      offset: dto.offset,
+      cursor: dto.cursor,
     });
   }
 }
