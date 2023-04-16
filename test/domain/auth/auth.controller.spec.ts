@@ -8,8 +8,8 @@ import { AuthService } from '../../../src/domain/auth/auth.service.js';
 import { BasicAuthStrategy } from '../../../src/domain/auth/strategies/basic-auth.strategy.js';
 import { JwtAuthStrategy } from '../../../src/domain/auth/strategies/jwt-auth.strategy.js';
 import { expect } from 'chai';
-import { commonConfig } from '../../../src/config/index.js';
-import { dbConfig } from '../../../src/config/db.config.js';
+import { commonConfig } from '../../../src/configs/index.js';
+import { dbConfig } from '../../../src/configs/db.config.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { SocialAccountsModule } from '../../../src/domain/social-accounts/social-accounts.module.js';
@@ -27,7 +27,7 @@ describe('AuthController', function () {
           envFilePath: [
             `${dirname(
               fileURLToPath(import.meta.url),
-            )}/../../../src/config/env/.${process.env.NODE_ENV}.env`,
+            )}/../../../src/configs/env/.${process.env.NODE_ENV}.env`,
           ],
           isGlobal: true,
         }),

@@ -38,5 +38,5 @@ lerna-debug.log*
 ./src/config/env/.local.env
 
 # ENV FILES
-src/config/env/*
-!src/config/env/.example.env
+src/configs/env/*
+!src/configs/env/.example.env

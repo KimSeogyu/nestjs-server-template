@@ -11,8 +11,8 @@ import {
   USER_REPOSITORY_KEY,
 } from '../../../src/common/constants.js';
 import { ConfigModule } from '@nestjs/config';
-import { commonConfig } from '../../../src/config/index.js';
-import { dbConfig } from '../../../src/config/db.config.js';
+import { commonConfig } from '../../../src/configs/index.js';
+import { dbConfig } from '../../../src/configs/db.config.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { databaseProviders } from '../../../src/infra/database/database.provider.js';
@@ -32,7 +32,7 @@ describe('UsersService', () => {
           envFilePath: [
             `${dirname(
               fileURLToPath(import.meta.url),
-            )}/../../../src/config/env/.${process.env.NODE_ENV}.env`,
+            )}/../../../src/configs/env/.${process.env.NODE_ENV}.env`,
           ],
           isGlobal: true,
         }),

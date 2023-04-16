@@ -1,10 +1,10 @@
 export const USER_REPOSITORY_KEY = 'repository.user';
 export const WALLET_REPOSITORY_KEY = 'repository.wallet';
 export const SOCIAL_ACCOUNT_REPOSITORY_KEY = 'repository.social_account';
-export const ORDER_REPOSITORY_KEY = 'repository.order';
+export const ORDER_REPOSITORY_KEY = 'repository.orders';
 export const MYSQL_DATASOURCE_KEY = 'datasource.mysql';
-export const DB_CONFIG_KEY = 'config.database';
-export const CACHE_CONFIG_KEY = 'config.cache';
+export const DB_CONFIG_KEY = 'configs.database';
+export const CACHE_CONFIG_KEY = 'configs.cache';
 
 export enum APP_MODE {
   LOCAL = 'local',

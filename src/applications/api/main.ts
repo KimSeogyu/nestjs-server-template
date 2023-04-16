@@ -11,7 +11,7 @@ import session from 'express-session';
 import compression from 'compression';
 import { Redis } from 'ioredis';
 import connectRedis from 'connect-redis';
-import { cacheConfig } from '../../config/cache.config.js';
+import { cacheConfig } from '../../configs/cache.config.js';
 
 export async function bootstrap() {
   const app = await NestFactory.create(ApiModule);

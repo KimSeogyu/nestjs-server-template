@@ -3,6 +3,7 @@
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
 # Nestjs Server Template
@@ -38,77 +39,81 @@
 
 ## Project structure
 
-```bash
-src
-├── applications
-│   └── api
-│       ├── api.module.ts
-│       ├── api.zod.ts
-│       └── main.ts
-├── common
-│   ├── common.zod.ts
-│   ├── constants.ts
-│   ├── decorators
-│   │   ├── cache.decorator.ts
-│   │   ├── index.ts
-│   │   ├── request-id.decorator.ts
-│   │   ├── swagger.decorator.ts
-│   │   └── user.decorator.ts
-│   ├── filters
-│   │   └── all-exception.filter.ts
-│   ├── interceptors
-│   │   └── response-transformer.interceptor.ts
-│   ├── lifecycle
-│   │   └── lifecycle.service.ts
-│   └── middlewares
-│       └── logger.middlewares.ts
-├── config
-│   ├── cache.config.ts
-│   ├── config.zod.ts
-│   ├── db.config.ts
-│   ├── env
-│   └── index.ts
-├── domain
-│   ├── auth
-│   │   ├── auth.controller.ts
-│   │   ├── auth.module.ts
-│   │   ├── auth.service.ts
-│   │   ├── auth.zod.ts
-│   │   ├── basic-auth.strategy.ts
-│   │   ├── google.strategy.ts
-│   │   └── jwt-auth.strategy.ts
-│   ├── health
-│   │   ├── health.controller.ts
-│   │   ├── health.module.ts
-│   │   └── health.service.ts
-│   ├── order
-│   │   ├── order.controller.ts
-│   │   ├── order.entity.ts
-│   │   ├── order.module.ts
-│   │   ├── order.repository.ts
-│   │   ├── order.service.ts
-│   │   └── order.zod.ts
-│   └── users
-│       ├── social-account.repository.ts
-│       ├── user.entity.ts
-│       ├── user.zod.ts
-│       ├── users.controller.ts
-│       ├── users.module.ts
-│       ├── users.repository.ts
-│       └── users.service.ts
-├── infra
-│   ├── cache
-│   │   ├── cache.module.ts
-│   │   └── cache.zod.ts
-│   └── database
-│       ├── database.module.ts
-│       ├── database.provider.ts
-│       └── database.util.ts
-├── main.ts
-└── utils
-    ├── index.ts
-    ├── init.utils.ts
-    └── sleep.utils.ts
+### Applications
 
-20 directories, 50 files
-```
+>
+
+- Api
+
+  >
+
+### Common
+
+>
+
+- Decorators
+  >
+
+- Filters
+
+  >
+
+- Interceptors
+
+  >
+
+- Lifecycle
+
+  >
+
+- Middlewares
+
+  >
+
+### Configs
+
+>
+
+### Domain
+
+>
+
+- Health
+
+  >
+
+- Auth
+
+  >
+
+- Users
+
+  >
+
+- SocialAccounts
+
+  >
+
+- Wallets
+
+  >
+
+- Orders
+
+  >
+
+### Infra
+
+>
+
+- Cache
+
+  >
+
+- Database
+
+  >
+
+### Utils
+
+> 

@@ -7,14 +7,14 @@ import {
   ORDER_REPOSITORY_KEY,
 } from '../../../src/common/constants.js';
 import { DatabaseModule } from '../../../src/infra/database/database.module.js';
-import { OrderController } from '../../../src/domain/order/order.controller.js';
+import { OrderController } from '../../../src/domain/orders/order.controller.js';
 import {
   Order,
   OrderStatus,
   OrderType,
-} from '../../../src/domain/order/order.entity.js';
-import { OrderRepository } from '../../../src/domain/order/order.repository.js';
-import { OrderService } from '../../../src/domain/order/order.service.js';
+} from '../../../src/domain/orders/order.entity.js';
+import { OrderRepository } from '../../../src/domain/orders/order.repository.js';
+import { OrderService } from '../../../src/domain/orders/order.service.js';
 import { User } from '../../../src/domain/users/user.entity.js';
 
 describe('OrderController', () => {

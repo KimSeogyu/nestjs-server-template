@@ -12,7 +12,7 @@ import {
   Relation,
 } from 'typeorm';
 import { CoreEntity } from '../../infra/database/database.util.js';
-import { Order } from '../order/order.entity.js';
+import { Order } from '../orders/order.entity.js';
 import { SocialAccount } from '../social-accounts/social-account.entity.js';
 import { Wallet } from '../wallets/wallet.entity.js';
 

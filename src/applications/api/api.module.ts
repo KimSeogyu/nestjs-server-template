@@ -2,7 +2,7 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 
-import { commonConfig } from '../../config/index.js';
+import { commonConfig } from '../../configs/index.js';
 
 import { AuthModule } from '../../domain/auth/auth.module.js';
 import { UsersModule } from '../../domain/users/users.module.js';
@@ -11,9 +11,9 @@ import { ZodValidationPipe } from '@anatine/zod-nestjs';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { AppCacheModule } from '../../infra/cache/cache.module.js';
-import { OrderModule } from '../../domain/order/order.module.js';
-import { dbConfig } from '../../config/db.config.js';
-import { cacheConfig } from '../../config/cache.config.js';
+import { OrderModule } from '../../domain/orders/order.module.js';
+import { dbConfig } from '../../configs/db.config.js';
+import { cacheConfig } from '../../configs/cache.config.js';
 import { HealthModule } from '../../domain/health/health.module.js';
 import { LoggerMiddleware } from '../../common/middlewares/logger.middlewares.js';
 import { ResponseTransformerInterceptor } from '../../common/interceptors/response-transformer.interceptor.js';
@@ -26,7 +26,7 @@ import { WalletModule } from '../../domain/wallets/wallet.module.js';
     ConfigModule.forRoot({
       load: [commonConfig, dbConfig, cacheConfig],
       envFilePath: [
-        `${dirname(fileURLToPath(import.meta.url))}/../../config/env/.${
+        `${dirname(fileURLToPath(import.meta.url))}/../../configs/env/.${
           process.env.NODE_ENV
         }.env`,
       ],
