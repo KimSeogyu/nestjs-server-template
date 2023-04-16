@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { HealthController } from '../src/domain/health/health.controller.js';
 import { HealthService } from '../src/domain/health/health.service.js';
 
-describe('AppController', () => {
+describe('HealthController', () => {
   let appController: HealthController;
 
   beforeEach(async () => {

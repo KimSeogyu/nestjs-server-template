@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { ApiModule } from '../src/applications/api/api.module.js';
-import { UsersService } from '../src/domain/users/users.service.js';
-import { CreateUserDto } from '../src/domain/users/user.zod.js';
-import { AuthService } from '../src/domain/auth/auth.service.js';
+import { ApiModule } from '../../src/applications/api/api.module.js';
+import { UsersService } from '../../src/domain/users/users.service.js';
+import { CreateUserDto } from '../../src/domain/users/user.zod.js';
+import { AuthService } from '../../src/domain/auth/auth.service.js';
 
-describe('HealthController (e2e)', () => {
+describe('ApiController (e2e)', () => {
   let app: INestApplication;
   let usersService: UsersService;
   let authService: AuthService;
