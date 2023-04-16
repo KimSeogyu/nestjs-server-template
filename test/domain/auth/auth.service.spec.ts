@@ -10,7 +10,6 @@ import { JwtAuthStrategy } from '../../../src/domain/auth/strategies/jwt-auth.st
 import { expect } from 'chai';
 import { commonConfig } from '../../../src/config/index.js';
 import { dbConfig } from '../../../src/config/db.config.js';
-import { AppMode } from '../../../src/common/constants.js';
 import { UsersService } from '../../../src/domain/users/users.service.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -32,7 +31,7 @@ describe('AuthService', function () {
           envFilePath: [
             `${dirname(
               fileURLToPath(import.meta.url),
-            )}/../../../src/config/env/.${AppMode}.env`,
+            )}/../../../src/config/env/.${process.env.NODE_ENV}.env`,
           ],
           isGlobal: true,
           cache: true,

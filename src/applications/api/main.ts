@@ -6,7 +6,6 @@ import { Logger, RequestMethod } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { createCustomLogger, initSwaggerDocs } from '../../utils/init.utils.js';
-import { AppMode } from '../../common/constants.js';
 import passport from 'passport';
 import session from 'express-session';
 import compression from 'compression';
@@ -53,5 +52,5 @@ export async function bootstrap() {
   initSwaggerDocs(app);
 
   await app.listen(configService.get('PORT', 8080));
-  Logger.log(`Server starts with ${AppMode} mode ...`);
+  Logger.log(`Server starts with ${process.env.NODE_ENV} mode ...`);
 }

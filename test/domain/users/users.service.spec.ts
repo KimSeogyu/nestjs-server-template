@@ -6,7 +6,6 @@ import { UsersController } from '../../../src/domain/users/users.controller.js';
 import { UsersRepository } from '../../../src/domain/users/users.repository.js';
 import { UsersService } from '../../../src/domain/users/users.service.js';
 import {
-  AppMode,
   MYSQL_DATASOURCE_KEY,
   SOCIAL_ACCOUNT_REPOSITORY_KEY,
   USER_REPOSITORY_KEY,
@@ -33,7 +32,7 @@ describe('UsersService', () => {
           envFilePath: [
             `${dirname(
               fileURLToPath(import.meta.url),
-            )}/../../../src/config/env/.${AppMode}.env`,
+            )}/../../../src/config/env/.${process.env.NODE_ENV}.env`,
           ],
           isGlobal: true,
         }),

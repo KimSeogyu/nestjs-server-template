@@ -9,7 +9,6 @@ import { BasicAuthStrategy } from '../../../src/domain/auth/strategies/basic-aut
 import { JwtAuthStrategy } from '../../../src/domain/auth/strategies/jwt-auth.strategy.js';
 import { expect } from 'chai';
 import { commonConfig } from '../../../src/config/index.js';
-import { AppMode } from '../../../src/common/constants.js';
 import { dbConfig } from '../../../src/config/db.config.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -28,7 +27,7 @@ describe('AuthController', function () {
           envFilePath: [
             `${dirname(
               fileURLToPath(import.meta.url),
-            )}/../../../src/config/env/.${AppMode}.env`,
+            )}/../../../src/config/env/.${process.env.NODE_ENV}.env`,
           ],
           isGlobal: true,
         }),

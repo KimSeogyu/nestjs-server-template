@@ -1,4 +1,3 @@
-import { AppMode } from '../common/constants.js';
 import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,
@@ -19,13 +18,13 @@ export const createCustomLogger = (WEBHOOK_URL: string) => {
       format: winston.format.combine(
         winston.format.timestamp(),
         nestWinstonModuleUtilities.format.nestLike('Server', {
-          prettyPrint: AppMode !== 'prod',
-          colors: AppMode !== 'prod',
+          prettyPrint: process.env.NODE_ENV !== 'prod',
+          colors: process.env.NODE_ENV !== 'prod',
         }),
       ),
     }),
   ];
-  if (AppMode === 'prod') {
+  if (process.env.NODE_ENV === 'prod') {
     transports.push(
       new SlackTransport({
         level: 'error',
@@ -39,7 +38,7 @@ export const createCustomLogger = (WEBHOOK_URL: string) => {
                   type: 'mrkdwn',
                   text:
                     '```' +
-                    `[${AppMode.toUpperCase()}][${data.level.toUpperCase()}] ${
+                    `[${process.env.NODE_ENV?.toUpperCase()}][${data.level.toUpperCase()}] ${
                       data.message
                     }` +
                     '```',

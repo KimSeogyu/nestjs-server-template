@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { AppMode, DB_CONFIG_KEY, EnvMode } from '../common/constants.js';
+import { DB_CONFIG_KEY, APP_MODE } from '../common/constants.js';
 import { DataSourceOptions } from 'typeorm';
 import { DbConfigSchema } from './config.zod.js';
 import { dirname } from 'path';
@@ -12,17 +12,7 @@ export const dbConfig = registerAs(
   async (): Promise<DataSourceOptions> => {
     let dbConfig: DataSourceOptions;
 
-    if (AppMode === EnvMode.Test) {
-      dbConfig = {
-        type: 'sqlite',
-        database: ':memory:',
-        logging: true,
-        entities: [__dirname + '/../**/*.entity.{ts,js}'],
-        synchronize: true,
-        dropSchema: true,
-        namingStrategy: new SnakeNamingStrategy(),
-      };
-    } else {
+    if (process.env.NODE_ENV !== APP_MODE.Test) {
       const env = await DbConfigSchema.parseAsync({
         DATABASE_HOST: process.env.DATABASE_HOST,
         DATABASE_PORT: Number(process.env.DATABASE_PORT),
@@ -38,6 +28,16 @@ export const dbConfig = registerAs(
         password: env['DATABASE_PASSWORD'],
         database: env['DATABASE_SCHEMA'],
         entities: [__dirname + '/../**/*.entity.{ts,js}'],
+        namingStrategy: new SnakeNamingStrategy(),
+      };
+    } else {
+      dbConfig = {
+        type: 'sqlite',
+        database: ':memory:',
+        logging: true,
+        entities: [__dirname + '/../**/*.entity.{ts,js}'],
+        synchronize: true,
+        dropSchema: true,
         namingStrategy: new SnakeNamingStrategy(),
       };
     }
