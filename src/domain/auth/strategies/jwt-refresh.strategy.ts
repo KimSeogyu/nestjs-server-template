@@ -19,7 +19,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
     });
   }
 
-  async validate(payload: { id: number; username: string }) {
-    return payload;
+  async validate({ id, username }: { id: number; username: string }) {
+    return await this.authService.validateUser({ id: id, username: username });
   }
 }

@@ -13,12 +13,17 @@ import { dbConfig } from '../../../src/configs/db.config.js';
 import { UsersService } from '../../../src/domain/users/users.service.js';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { UnauthorizedException } from '@nestjs/common';
 import { SocialAccountsModule } from '../../../src/domain/social-accounts/social-accounts.module.js';
+import { databaseProviders } from '../../../src/infra/database/database.provider.js';
+import { DatabaseModule } from '../../../src/infra/database/database.module.js';
+import { DataSource } from 'typeorm';
+import { User } from '../../../src/domain/users/user.entity.js';
+import { MYSQL_DATASOURCE_KEY } from '../../../src/common/constants.js';
 
 describe('AuthService', function () {
   let service: AuthService;
   let usersService: UsersService;
+  let dataSource: DataSource;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -46,36 +51,40 @@ describe('AuthService', function () {
             },
           }),
         }),
+        DatabaseModule.register(),
       ],
-      providers: [AuthService, BasicAuthStrategy, JwtAuthStrategy],
+      providers: [
+        AuthService,
+        BasicAuthStrategy,
+        JwtAuthStrategy,
+        ...databaseProviders,
+      ],
       controllers: [AuthController],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
     usersService = module.get<UsersService>(UsersService);
+    dataSource = module.get<DataSource>(MYSQL_DATASOURCE_KEY);
+  });
+
+  afterEach(async () => {
+    await dataSource.getRepository(User).clear();
   });
 
   it('유저 검사 (BasicAuth) 유저이름이 다른 경우', async () => {
-    await service.validateUser('hello', '1234').catch((e) => {
-      expect(e.message).eq(`INVALID USERNAME, username=hello`);
-    });
-  });
-
-  it('유저검사 (BasicAuth) 비밀번호가 다른 경우', async () => {
-    const dto = { username: 'hello', password: '1234' };
-    await usersService.save(dto);
-    await service.validateUser(dto.username, '1235').catch((err: unknown) => {
-      expect(err).instanceOf(UnauthorizedException);
-      expect((err as UnauthorizedException).message).eq(
-        'PASSWORD DOES NOT MATCHED',
-      );
-    });
+    await service
+      .validateUser({ username: 'hello', password: '1234' })
+      .catch((e) => {
+        expect(e.message).eq(`INVALID USERNAME, username=hello`);
+      });
   });
 
   it('유저검사 (BasicAuth) 통과 케이스', async () => {
-    const dto = { username: 'hello', password: '1234' };
+    const dto = { username: 'hello' };
     await usersService.save(dto);
-    const userEntity = await service.validateUser(dto.username, dto.password);
+    const userEntity = await service.validateUser({
+      username: dto.username,
+    });
     expect(userEntity.username).eq(dto.username);
   });
 });

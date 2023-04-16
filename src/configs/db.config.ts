@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { DB_CONFIG_KEY, APP_MODE } from '../common/constants.js';
+import { APP_MODE, DB_CONFIG_KEY } from '../common/constants.js';
 import { DataSourceOptions } from 'typeorm';
 import { DbConfigSchema } from './config.zod.js';
 import { dirname } from 'path';
@@ -10,17 +10,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export const dbConfig = registerAs(
   DB_CONFIG_KEY,
   async (): Promise<DataSourceOptions> => {
-    let dbConfig: DataSourceOptions;
-
     if (process.env.NODE_ENV !== APP_MODE.Test) {
-      const env = await DbConfigSchema.parseAsync({
-        DATABASE_HOST: process.env.DATABASE_HOST,
-        DATABASE_PORT: Number(process.env.DATABASE_PORT),
-        DATABASE_USERNAME: process.env.DATABASE_USERNAME,
-        DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
-        DATABASE_SCHEMA: process.env.DATABASE_SCHEMA,
-      });
-      dbConfig = {
+      const env = await DbConfigSchema.parseAsync(process.env);
+      return {
         type: 'mysql',
         host: env['DATABASE_HOST'],
         port: env['DATABASE_PORT'],
@@ -31,7 +23,7 @@ export const dbConfig = registerAs(
         namingStrategy: new SnakeNamingStrategy(),
       };
     } else {
-      dbConfig = {
+      return {
         type: 'sqlite',
         database: ':memory:',
         logging: true,
@@ -41,7 +33,5 @@ export const dbConfig = registerAs(
         namingStrategy: new SnakeNamingStrategy(),
       };
     }
-
-    return dbConfig;
   },
 );

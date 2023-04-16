@@ -20,15 +20,8 @@ export function userHandler(_data: unknown, context: ExecutionContext) {
   return user;
 }
 
-export const CurrentJwtUser = createParamDecorator(userHandler);
-export type CurrentJwtUserType = {
-  username: string;
-  id: number;
-  iat: number;
-  exp: number;
-};
+export const CurrentUser = createParamDecorator(userHandler);
 
-export const CurrentGoogleUser = createParamDecorator(userHandler);
 export type CurrentGoogleUserType = {
   id: string;
   email: string;

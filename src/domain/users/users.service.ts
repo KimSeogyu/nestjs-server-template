@@ -14,10 +14,6 @@ import { DeepPartial, FindOptionsWhere } from 'typeorm';
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async findSecretValues(user: FindOptionsWhere<User>) {
-    return await this.usersRepository.findSecretValues(user);
-  }
-
   async save(dto: DeepPartial<User>) {
     return await this.usersRepository.save(dto);
   }
@@ -27,12 +23,22 @@ export class UsersService {
     return await this.usersRepository.findAll(query);
   }
 
+  async findSecretValues(user: FindOptionsWhere<User>) {
+    return await this.usersRepository.findOne({
+      where: user,
+      select: {
+        salt: true,
+        password: true,
+      },
+    });
+  }
+
   async updatePassword(
     id: number,
     { password, confirmPassword, currentPassword }: UpdatePasswordDto,
   ) {
     const user = await this.usersRepository.findSecretValues({ id });
-    if (!user) {
+    if (user === null) {
       throw new BadRequestException(`NOT FOUND USER, id=${id}`);
     }
 
@@ -95,6 +101,6 @@ export class UsersService {
   }
 
   findOne(user: FindOptionsWhere<User>) {
-    return this.usersRepository.findOne(user);
+    return this.usersRepository.findOne({ where: user });
   }
 }

@@ -1,8 +1,7 @@
 import {
   ApiController,
   ApiJwtAuthGuard,
-  CurrentJwtUser,
-  CurrentJwtUserType,
+  CurrentUser,
 } from '../../common/decorators/index.js';
 import {
   Body,
@@ -12,11 +11,15 @@ import {
   HttpStatus,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { WalletService } from './wallet.service.js';
 import { SaveWalletDto } from './wallets.zod.js';
+import { User } from '../users/user.entity.js';
+import { GoogleAuthGuard } from '../auth/guards/google-auth.guard.js';
 
 @ApiController('wallets')
+@UseGuards(GoogleAuthGuard)
 @ApiJwtAuthGuard()
 export class WalletController {
   constructor(private walletService: WalletService) {}
@@ -30,19 +33,13 @@ export class WalletController {
 
   @Post()
   @HttpCode(HttpStatus.OK)
-  saveWallet(
-    @CurrentJwtUser() user: CurrentJwtUserType,
-    @Body() dto: SaveWalletDto,
-  ) {
+  saveWallet(@CurrentUser() user: User, @Body() dto: SaveWalletDto) {
     return this.walletService.save(user, dto);
   }
 
   @Delete()
   @HttpCode(HttpStatus.OK)
-  destroyWallet(
-    @CurrentJwtUser() user: CurrentJwtUserType,
-    @Body() dto: SaveWalletDto,
-  ) {
+  destroyWallet(@CurrentUser() user: User, @Body() dto: SaveWalletDto) {
     return this.walletService.destroy(user, dto);
   }
 }

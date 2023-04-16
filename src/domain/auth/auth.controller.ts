@@ -1,9 +1,7 @@
 import {
   ApiController,
-  CurrentGoogleUser,
   CurrentGoogleUserType,
-  CurrentJwtUser,
-  CurrentJwtUserType,
+  CurrentUser,
 } from '../../common/decorators/index.js';
 import {
   Body,
@@ -24,6 +22,7 @@ import {
 import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { GoogleAuthGuard } from './guards/google-auth.guard.js';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard.js';
+import { User } from '../users/user.entity.js';
 
 @ApiController('auth')
 export class AuthController {
@@ -45,7 +44,7 @@ export class AuthController {
   @ApiResponse({
     type: GoogleLoginResponseDto,
   })
-  googleRedirect(@CurrentGoogleUser() user: CurrentGoogleUserType) {
+  googleRedirect(@CurrentUser() user: CurrentGoogleUserType) {
     return this.authService.googleLogin(user);
   }
 
@@ -66,10 +65,7 @@ export class AuthController {
   @ApiResponse({
     type: RefreshTokenResponseDto,
   })
-  refreshToken(
-    @CurrentJwtUser() user: CurrentJwtUserType,
-    @Body() dto: RefreshTokenDto,
-  ) {
+  refreshToken(@CurrentUser() user: User, @Body() dto: RefreshTokenDto) {
     return this.authService.refresh(dto.refreshToken, user.username);
   }
 }

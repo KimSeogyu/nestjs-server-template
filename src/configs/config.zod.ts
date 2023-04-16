@@ -6,7 +6,7 @@ export const GlobalConfigSchema = z
     AUTH_PASSWORD: z.string(),
     APP_VERSION: z.string(),
     JWT_SECRET: z.string(),
-    JWT_EXPIRE_TIME: z.string(),
+    JWT_EXPIRE_TIME: z.coerce.string(),
     SLACK_WEBHOOK_URL: z.string(),
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
@@ -19,7 +19,7 @@ export type GlobalConfigSchemaType = z.infer<typeof GlobalConfigSchema>;
 export const DbConfigSchema = z
   .object({
     DATABASE_HOST: z.string(),
-    DATABASE_PORT: z.number(),
+    DATABASE_PORT: z.coerce.number(),
     DATABASE_USERNAME: z.string(),
     DATABASE_PASSWORD: z.string(),
     DATABASE_SCHEMA: z.string(),
@@ -29,8 +29,8 @@ export type DbConfigSchemaType = z.infer<typeof DbConfigSchema>;
 export const CacheConfigSchema = z
   .object({
     host: z.string().optional(),
-    port: z.number().optional(),
-    ttl: z.number().optional(),
+    port: z.coerce.number().optional(),
+    ttl: z.coerce.number().optional(),
     store: z.any(),
   })
   .required({ store: true });

@@ -1,5 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DataSource, DeepPartial, FindOptionsWhere, Repository } from 'typeorm';
+import {
+  DataSource,
+  DeepPartial,
+  FindOneOptions,
+  FindOptionsWhere,
+  Repository,
+} from 'typeorm';
 import { User } from './user.entity.js';
 import { UpdateUsernameDto } from './user.zod.js';
 import {
@@ -7,7 +13,6 @@ import {
   USER_REPOSITORY_KEY,
 } from '../../common/constants.js';
 import { GeneralQueryFilter } from '../../applications/api/api.zod.js';
-import { SocialAccount } from '../social-accounts/social-account.entity.js';
 
 @Injectable()
 export class UsersRepository {
@@ -18,8 +23,8 @@ export class UsersRepository {
     private mysqlProvider: DataSource,
   ) {}
 
-  async findOne(user: FindOptionsWhere<User>) {
-    return await this.usersRepository.findOneBy(user);
+  async findOne(options: FindOneOptions<User>) {
+    return await this.usersRepository.findOne(options);
   }
 
   async findSecretValues(user: FindOptionsWhere<User>) {

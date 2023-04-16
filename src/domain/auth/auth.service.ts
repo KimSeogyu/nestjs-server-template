@@ -6,10 +6,11 @@ import {
 import bcrypt from 'bcrypt';
 
 import { JwtService } from '@nestjs/jwt';
-import { createHashedPassword } from '../users/user.entity.js';
+import { User } from '../users/user.entity.js';
 import { UsersService } from '../users/users.service.js';
 import { SocialAccountService } from '../social-accounts/social-account.service.js';
 import { ConfigService } from '@nestjs/config';
+import { FindOptionsWhere } from 'typeorm';
 
 @Injectable()
 export class AuthService {
@@ -20,20 +21,20 @@ export class AuthService {
     private socialAccountService: SocialAccountService,
   ) {}
 
-  async validateUser(username: string, password: string) {
-    const user = await this.usersService.findOne({ username });
-    const privateData = await this.usersService.findSecretValues({
-      username,
-    });
+  async validateUser(userEntity: FindOptionsWhere<User>) {
+    const user = await this.usersService.findOne(userEntity);
 
-    if (!user || !privateData)
-      throw new UnauthorizedException(`INVALID USERNAME, username=${username}`);
-    const hashed = await createHashedPassword(password, privateData.salt);
-
-    if (hashed.password !== privateData.password) {
-      throw new UnauthorizedException(`PASSWORD DOES NOT MATCHED`);
+    if (user === null) {
+      throw new UnauthorizedException(
+        `INVALID USERNAME, username=${userEntity.username}`,
+      );
     }
+
     return user;
+  }
+
+  async findSecretValues(user: FindOptionsWhere<User>) {
+    return await this.usersService.findSecretValues(user);
   }
 
   async login(user: { username: string; id: number }) {
@@ -119,7 +120,7 @@ export class AuthService {
 
   async refresh(refreshToken: string, username: string) {
     const user = await this.usersService.findOne({ username });
-    if (!user) {
+    if (user === null) {
       throw new BadRequestException(`NOT FOUND USER, username=${username}`);
     }
 

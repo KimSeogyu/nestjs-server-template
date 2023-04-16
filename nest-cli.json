@@ -5,7 +5,7 @@
   "compilerOptions": {
     "assets": [
       {
-        "include": "./config/env/*.env",
+        "include": "./configs/env/*.env",
         "outDir": "./dist",
         "watchAssets": true
       }
